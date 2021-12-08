@@ -1,7 +1,6 @@
 #ifndef MYVECTOR_HPP
 #define MYVECTOR_HPP
 
-//#include <vector>
 #include <utility>
 #include <memory>
 
@@ -10,7 +9,7 @@
 //============//
 namespace ft{
 
-	template <typename _Tp, typename _Allocator = std::allocator<_Tp>>
+	template < typename _Tp, typename _Allocator = std::allocator<_Tp> >
 	class vector{
 
 		//==============//
@@ -21,13 +20,13 @@ namespace ft{
 			//==================//
 			//Typedef / typename//
 			//==================//
-			//value_type is an alias to template T
+			//value_type is the type that represent _Tp
 			typedef				_Tp														value_type;
 
-			//allocator_type is an alias to std::allocator
+			//allocator_type is the type that represent std::allocator
 			typedef 			_Allocator 												allocator_type;
 
-			//aliases of member of std::allocator as our members
+			//define type of std::allocator as our
 			typedef typename 	allocator_type::reference								reference;
 	    	typedef typename 	allocator_type::const_reference							const_reference;
 			typedef typename 	allocator_type::size_type								size_type;
@@ -38,18 +37,30 @@ namespace ft{
 			//=======================//
 			//Constructors/Destructor//
 			//=======================//
-			//Default
+			//Default constructor (Build an empty container with no elements)
 			explicit	vector(allocator_type const& alloc = allocator_type());
-			//Fill
-			explicit	vector(size_type n, value_type const& val = value_type(), allocator_type const& alloc = allocator_type());
-			//Range
+			//Fill (Build an array with <count> times <val> stocked in)
+			explicit	vector(size_type n, value_type const& val, allocator_type const& alloc = allocator_type());
+			//Range (Build a contaienerwith as many elements in the range)
 			template <class InputIterator>
 						vector(InputIterator first, InputIterator last, allocator_type const& alloc = allocator_type());
 			//Copy
-						vector(vector& const src);
+						vector(vector const& src);
 
 			//Destructor
 						~vector();
+
+			//==================//
+			//Operator overloads//
+			//==================//
+			//Assignement operator
+			vector&		operator=(vector const& rhs);
+
+			//Access operator
+			reference	operator[](size_type n);
+			const_reference	operator[](size_type n) const;
+
+
 
 		//===============//
 		//Private members//

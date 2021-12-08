@@ -13,12 +13,12 @@ CCFLAGS = -Wall -Wextra -Werror -std=c++98
 RM = rm -rf
 
 #PROJECT
-EXEC =
+EXEC = 42Containers
 
 #FILES
-MAIN =
-SRCSDIR =
-SRCS =
+MAIN = main.cpp
+SRCSDIR = sources
+SRCS = myVector.cpp
 SRCSPATH = $(addprefix $(SRCSDIR), $(SRCS))
 OBJSDIR = objects
 OBJS = $(SRCS:%.cpp=$(OBJSDIR)/%.o)

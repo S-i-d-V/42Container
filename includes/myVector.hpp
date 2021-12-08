@@ -26,13 +26,16 @@ namespace ft{
 			//allocator_type is the type that represent std::allocator
 			typedef 			_Allocator 												allocator_type;
 
-			//define type of std::allocator as our
+			//define types of std::allocator as ours
 			typedef typename 	allocator_type::reference								reference;
 	    	typedef typename 	allocator_type::const_reference							const_reference;
 			typedef typename 	allocator_type::size_type								size_type;
 	    	typedef typename 	allocator_type::difference_type							difference_type;
 			typedef typename	allocator_type::pointer									pointer;
 			typedef typename	allocator_type::const_pointer							const_pointer;
+
+			//define iterators as ours
+			//typedef typename	std::iterator<random_access_iterator_tag, value_type>	iterator;
 
 			//=======================//
 			//Constructors/Destructor//
@@ -59,6 +62,20 @@ namespace ft{
 			//Access operator
 			reference	operator[](size_type n);
 			const_reference	operator[](size_type n) const;
+
+			//===========//
+			// Iterators //
+			//===========//
+			//normal
+			iterator				begin();
+			iterator				end();
+			reverse_iterator		rbegin();
+			reverse_iterator		rend();
+			//const
+			const_iterator			cbegin()	const;
+			const_iterator			cend()		const;
+			const_reverse_iterator	crbegin()	const;
+			const_reverse_iterator	crend()		const;
 
 
 

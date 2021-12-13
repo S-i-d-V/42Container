@@ -4,12 +4,16 @@
 #include <utility>
 #include <memory>
 
+//Header temporaires
+#include <iostream>
+#include <limits>
+
 //============//
 //namespace ft//
 //============//
 namespace ft{
 
-	template < typename _Tp, typename _Allocator = std::allocator<_Tp> >
+	template < typename T, class Alloc = std::allocator<T> >
 	class vector{
 
 		//==============//
@@ -20,11 +24,11 @@ namespace ft{
 			//==================//
 			//Typedef / typename//
 			//==================//
-				//value_type is the type that represent _Tp
-			typedef				_Tp																	value_type;
+				//value_type is the type that represent T
+			typedef				T																	value_type;
 
 				//allocator_type is the type that represent std::allocator
-			typedef 			_Allocator 															allocator_type;
+			typedef 			Alloc 																allocator_type;
 
 				//define types of std::allocator as ours
 			typedef typename 	allocator_type::reference											reference;
@@ -47,40 +51,40 @@ namespace ft{
 			//=======================//
 				//Default constructor (Build an empty container with no elements)
 			explicit	vector(allocator_type const& alloc = allocator_type()) : _alloc(alloc){
-				_n = 0;
-    			_alloc.allocate(_n, 0);
+				std::cout << "Default constructor called" << std::endl;
+				_size = 0;
+				_capacity = 0;
+    			_data = _alloc.allocate(_size);
     			return;
 			}
 				//Fill (Build an array with <count> times <val> stocked in)
 			explicit	vector(size_type n, value_type const& val, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
-				n = n;
-    			_alloc.allocate(_n, 0);
+				std::cout << "Fill constructor called" << std::endl;
+				_size = n;
+				_capacity = n;
+    			_data = _alloc.allocate(_size);
+
+				for (int i = 0; i < _size; i++){
+					std::cout << val << std::endl;
+					_alloc.construct(&_data[i], val);
+				}
     			return;
 			}
 				//Range (Build a contaienerwith as many elements in the range)
 			template <class inputIterator>
 			vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
-				unsigned int i = 1;
-
-   				while (first != last){
-   				    _alloc.allocate(i);
-   				    _alloc.construct(_array, *first);
-   				    _n = i;
-   				    i++;
-   				    first++;
-   				}
+				std::cout << "Range constructor called" << std::endl;
    				return;
 			}
 				//Copy
 			vector(vector const& src){
-				*this = src;
-    			return;
+				std::cout << "Range constructor called" << std::endl;
+				return;
 			}
 
 				//Destructor
 			~vector(){
-				_alloc.destroy(_array);
-				_alloc.deallocate(_array, _n);
+				std::cout << "Destructor called" << std::endl;
 				return;
 			}
 
@@ -89,14 +93,14 @@ namespace ft{
 			//==================//
 				//Assignement operator
 			vector&		operator=(vector const& rhs){
-				if (this->_n != 0){
-					_alloc.destroy(_array);
-					_alloc.deallocate(_array, _n);
+				if (this->_size != 0){
+					_alloc.destroy(_data);
+					_alloc.deallocate(_data, _size);
 				}
-				_alloc.allocate(rhs._n, 0);
-				for (int i = 0; i < rhs._n); i++
-					_array[i] = rhs._array[i];
-				return;
+				_alloc.allocate(rhs._size, 0);
+				for (int i = 0; i < rhs._size; i++)
+					_data[i] = rhs._data[i];
+				return (*this);
 			}
 
 	/*
@@ -197,7 +201,7 @@ namespace ft{
 			// Allocator //
 			//===========//
 				//Return a copy of the allocator object associated with the vector;
-			allocator_type	get_allocator()		const;
+			allocator_type	get_Alloc()		const;
 
 	*/
 
@@ -205,8 +209,9 @@ namespace ft{
 		// Private members //
 		//=================//
 		private:
-			size_type _n;
-			value_type *_array;
+			size_type _size;
+			size_type _capacity;
+			value_type *_data;
 			allocator_type _alloc;
 
 	}; //end of vector class

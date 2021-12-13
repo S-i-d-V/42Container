@@ -5,17 +5,23 @@
 #include <vector>
 
 int	main(){
-	//My vector
 	//Default constructor
-	ft::vector<int> myvect1;
-	ft::vector<int>::iterator it = myvect1.begin();
-	ft::vector<int>::iterator ite = myvect1.end();
+	{
+		std::cout << "Default constructor :" << std::endl;
+		ft::vector<int> myvect1;
+	}
+
 	//Fill constructor
-	ft::vector<int> myvect2(5, 0);
-	it = myvect2.begin();
-	ite = myvect2.end();
+	{
+		std::cout << std::endl << "Fill constructor :" << std::endl;
+		ft::vector<int> myvect2(5, 0);
+	}
+
 	//Range constructor
-	ft::vector<int> myvect3(it, ite);
-	//Copy constructor
-	ft::vector<int> myvect4(myvect3);
+	{
+		std::cout << std::endl << "Range constructor :" << std::endl;
+		std::vector<int> realvect3(5, 0);
+		ft::vector<int> myvect3(realvect3.begin(), realvect3.end());
+	}
+
 }

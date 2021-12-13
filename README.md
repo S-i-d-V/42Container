@@ -2,8 +2,8 @@ Notions ft_container :
 
 -Typedef
     Permet de definir un nouveau type.
-        example : typedef   _Tp     value_type;
-        *Dans cet exemple, typedef indique que le type value_type representera le type _Tp.*
+        example : typedef   T     value_type;
+        *Dans cet exemple, typedef indique que le type value_type representera le type T.*
 
 -Typename
     Permet de signaler au compilateur que ce qui suit est un type et non un membre statique.

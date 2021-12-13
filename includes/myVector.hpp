@@ -117,7 +117,7 @@ namespace ft{
 			const_reference			back()			const;
 				//Return a direct pointer to the array used internally by the container to store elements.
 			value_type*				data()			noexcept;
-			value_type const*		data()			noexcept const;
+			const value_type*		data()			noexcept const;
 
 			//==========//
 			// Modifier //
@@ -149,8 +149,12 @@ namespace ft{
 			void					swap(vector& x);
 				//Remove all elements of the vector and put the size at 0
 			void					clear();
-				//EMPLACE
-				//EMPLACE BACK
+				//Extend the container by inserting a new element at position.
+			template <class... Args>
+			iterator				emplace(const position, Args&&... args);
+				//Extend the container by inserting a new element at the end right after current last element.
+			template <class... Args>
+			iterator				emplace(const position, Args&&... args);
 
 
 			//===========//
@@ -190,5 +194,7 @@ namespace ft{
 	void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y);
 
 }//end of namespace my
+
+#include "myVector.ipp"
 
 #endif

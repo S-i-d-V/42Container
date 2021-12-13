@@ -15,4 +15,8 @@ Notions ft_container :
         exemple : typedef typename  allocator_type::reference	reference;
         *Dans cet exemple, typename indique que reference est un type de allocator_type typedef permet de l'apeller reference*.
 
--Explicit
+-Explicit :
+    Aucune conversion implicit n'est possible pour un constructeur avec le tag explicit. Il ne peut pas non plus etre 
+    instancier par copy.
+        exemlace : explicit     vector(size_type n);
+        *Dans cet exemple, le constructeur de vector ne pourras pas prendre un autre type que size_type (pas de conversion implicit possible).*

@@ -5,57 +5,17 @@
 #include <vector>
 
 int	main(){
+	//My vector
 	//Default constructor
-	//Construit un container vector vide;
-	std::cout << "Constructeur (Default):" << std::endl;
-	std::vector<int>	vect1;
-	//Display
-	std::vector<int>::iterator it = vect1.begin();
-	std::vector<int>::iterator ite = vect1.end();
-	while (it != ite){
-		printf("%d ", *it);
-		it++;
-	}
-	printf("\n\n");
-
+	ft::vector<int> myvect1;
+	ft::vector<int>::iterator it = myvect1.begin();
+	ft::vector<int>::iterator ite = myvect1.end();
 	//Fill constructor
-	//Construit un container vector contenant 5 fois (premier arg) la valeur 0 (deuxieme arg);
-	std::cout << "Constructeur (Fill) :" << std::endl;
-	std::vector<int>	vect2(5, 0);
-	//Display
-	it = vect2.begin();
-	ite = vect2.end();
-	while (it != ite){
-		printf("%d ", *it);
-		it++;
-	}
-	printf("\n\n");
-
+	ft::vector<int> myvect2(5, 0);
+	it = myvect2.begin();
+	ite = myvect2.end();
 	//Range constructor
-	//Construit un container a partir des elements allant de first (premier arg) a last (deuxieme arg)
-	std::cout << "Constructeur (Range) :" << std::endl;
-	std::vector<int>	vect3(vect2.begin(), vect2.end());
-	//Display
-	it = vect3.begin();
-	ite = vect3.end();
-	while (it != ite){
-		printf("%d ", *it);
-		it++;
-	}
-	printf("\n\n");
-
+	ft::vector<int> myvect3(it, ite);
 	//Copy constructor
-	//Construit une copy du container src (premier arg);
-	std::cout << "Constructeur (Copy) :" << std::endl;
-	std::vector<int>	vect4(vect3);
-	//Display
-	it = vect4.begin();
-	ite = vect4.end();
-	while (it != ite){
-		printf("%d ", *it);
-		it++;
-	}
-	printf("\n\n");
-
-	return (0);	
+	ft::vector<int> myvect4(myvect3);
 }

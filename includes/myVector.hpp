@@ -21,49 +21,85 @@ namespace ft{
 			//Typedef / typename//
 			//==================//
 				//value_type is the type that represent _Tp
-			typedef				_Tp															value_type;
+			typedef				_Tp																	value_type;
 
 				//allocator_type is the type that represent std::allocator
-			typedef 			_Allocator 													allocator_type;
+			typedef 			_Allocator 															allocator_type;
 
 				//define types of std::allocator as ours
-			typedef typename 	allocator_type::reference									reference;
-	    	typedef typename 	allocator_type::const_reference								const_reference;
-			typedef typename	allocator_type::pointer										pointer;
-			typedef typename	allocator_type::const_pointer								const_pointer;
+			typedef typename 	allocator_type::reference											reference;
+	    	typedef typename 	allocator_type::const_reference										const_reference;
+			typedef typename	allocator_type::pointer												pointer;
+			typedef typename	allocator_type::const_pointer										const_pointer;
 
-			typedef typename 	allocator_type::size_type									size_type;
-	    	typedef typename 	allocator_type::difference_type								difference_type;
+			typedef typename 	allocator_type::size_type											size_type;
+	    	typedef typename 	allocator_type::difference_type										difference_type;
 
-				//define iterators as ours
-			typedef typename	std::iterator<random_access_iterator_tag, value_type>		iterator;
-			typedef typename	std::iterator<random_access_iterator_tag, value_type const>	const_iterator;
-			typedef typename	std::reverse_iterator<iterator, value_type>					reverse_iterator;
-			typedef typename	std::reverse_iterator<iterator, value_type const>			const_reverse_iterator;
+				//define iterators type as ours
+			typedef				std::iterator<std::random_access_iterator_tag, value_type>			iterator;
+			typedef				std::iterator<std::random_access_iterator_tag, value_type const>	const_iterator;
+			typedef				std::reverse_iterator<iterator>										reverse_iterator;
+			typedef				std::reverse_iterator<const_iterator>								const_reverse_iterator;
 
 
 			//=======================//
 			//Constructors/Destructor//
 			//=======================//
 				//Default constructor (Build an empty container with no elements)
-			explicit	vector(allocator_type const& alloc = allocator_type());
+			explicit	vector(allocator_type const& alloc = allocator_type()) : _alloc(alloc){
+				_n = 0;
+    			_alloc.allocate(_n, 0);
+    			return;
+			}
 				//Fill (Build an array with <count> times <val> stocked in)
-			explicit	vector(size_type n, value_type const& val, allocator_type const& alloc = allocator_type());
+			explicit	vector(size_type n, value_type const& val, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
+				n = n;
+    			_alloc.allocate(_n, 0);
+    			return;
+			}
 				//Range (Build a contaienerwith as many elements in the range)
 			template <class inputIterator>
-						vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type());
+			vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
+				unsigned int i = 1;
+
+   				while (first != last){
+   				    _alloc.allocate(i);
+   				    _alloc.construct(_array, *first);
+   				    _n = i;
+   				    i++;
+   				    first++;
+   				}
+   				return;
+			}
 				//Copy
-						vector(vector const& src);
+			vector(vector const& src){
+				*this = src;
+    			return;
+			}
 
 				//Destructor
-						~vector();
-
+			~vector(){
+				_alloc.destroy(_array);
+				_alloc.deallocate(_array, _n);
+				return;
+			}
 
 			//==================//
 			//Operator overloads//
 			//==================//
 				//Assignement operator
-			vector&		operator=(vector const& rhs);
+			vector&		operator=(vector const& rhs){
+				if (this->_n != 0){
+					_alloc.destroy(_array);
+					_alloc.deallocate(_array, _n);
+				}
+				_alloc.allocate(rhs._n, 0);
+				for (int i = 0; i < rhs._n); i++
+					_array[i] = rhs._array[i];
+				return;
+			}
+
+	/*
 
 				//Access operator
 			reference	operator[](size_type n);
@@ -163,16 +199,19 @@ namespace ft{
 				//Return a copy of the allocator object associated with the vector;
 			allocator_type	get_allocator()		const;
 
+	*/
+
 		//=================//
 		// Private members //
 		//=================//
 		private:
 			size_type _n;
-			value_type const& _val;
-			allocator_type const& _alloc;
+			value_type *_array;
+			allocator_type _alloc;
 
 	}; //end of vector class
 
+/*
 	//=======================//
 	// Non-members operators //
 	//=======================//
@@ -193,8 +232,10 @@ namespace ft{
 		//Non-member swap
 	void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y);
 
+*/
+
 }//end of namespace my
 
-#include "myVector.ipp"
+//#include "myVector.ipp"
 
 #endif

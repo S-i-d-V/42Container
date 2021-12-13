@@ -10,50 +10,72 @@
 //Constructors/Destructor//
 //=======================//
     //Default constructor
-explicit        vector(allocator_type const& alloc = allocator_type()){
+template < typename _Tp, typename _Allocator = std::allocator<_Tp> >
+ft::vector::vector<_Tp, Allocator>(allocator_type const& alloc = allocator_type()) : _alloc(alloc){
     _n = 0;
-    _val = value_type();
+    _alloc.allocate(_n, 0);
     return;
 }
 
     //Fill constructor
-explicit        vector(size_type n, value_type const& val, allocator_type const& alloc = allocator_type())  : _val(val){
+template < typename _Tp, typename _Allocator = std::allocator<_Tp> >
+ft::vector::vector<_Tp, Allocator>(size_type n, value_type const& val, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
     _n = n;
+    _alloc.allocate(_n, 0);
     return;
 }
 
     //Range constructor
-template <class inputIterator>
-                vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type()){
-    
+template < typename _Tp, typename _Allocator = std::allocator<_Tp, class inputIterator> >
+ft::vector::vector<_Tp, Allocator>(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
+    unsigned int i = 1;
+
+    while (first != last){
+        _alloc.allocate(i);
+        _alloc.construct(_array, *first);
+        _n = i;
+        i++;
+        first++;
+    }
     return;
 }
 
     //Copy constructor
-                vector(vector const& src){
+template < typename _Tp, typename _Allocator = std::allocator<_Tp> >
+ft::vector::vector<_Tp, Allocator>(vector const& src){
     this* = src;
     return;
 }
 
     //Destructor
-                ~vector(){
+template < typename _Tp, typename _Allocator = std::allocator<_Tp> >
+ft::vector::~vector<_Tp, Allocator>(){
+    iterator    it = begin();
+    iterator    ite = end();
+    while (it != ite){
+        destroy(it);
+        it++;
+    }
+    _alloc.deallocate(_array, _n);
     return;
 }
+
+/*
 
 //==================//
 //Operator overloads//
 //==================//
     //Assignement operator
-vector&         operator=(vector const& rhs){
+vector&                 operator=(vector const& rhs){
     
 }
 
 	//Access operator
-reference       operator[](size_type n){
+reference               operator[](size_type n){
 
 }
 
-const_reference	operator[](size_type n) const{
+const_reference	        operator[](size_type n) const{
 
 }
 
@@ -106,12 +128,13 @@ const_reverse_iterator	crend()		const{
 //==========//
 	//Return the number of elements of the container
 size_type				size()		const{
-
+    return(_n);
 }
 
 	//Return max number of element the container can hold
 size_type				max_size()	const{
-
+    return (pow(2, sizeof()))
+    (2^nativePointerBitWidth)/sizeof(dataType) - 1
 }
 
 	//Return the size (in elements) allocated storage capacity in the container
@@ -121,7 +144,9 @@ size_type				capacity()	const{
 
 	//Return true if empty, false if not
 bool					empty()		const{
-
+    if (_n == 0)
+        return (true);
+    return (false);
 }
 
 	//Resize the container so that it contains n elements;
@@ -256,6 +281,10 @@ allocator_type	get_allocator()		const{
 
 }
 
+*/
+/*
+
+
 //================================================================================//
 //                                                                                //
 //                      --- Non-Members functions/Utils ---                       //
@@ -267,32 +296,32 @@ allocator_type	get_allocator()		const{
 // Non-members operators //
 //=======================//
 	//Comparaison operators
-template <class T, class Alloc>
+template < class T, class Alloc >
 bool	operator==(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
 
 }
 
-template <class T, class Alloc>
+template < class T, class Alloc >
 bool	operator!=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
 
 }
 
-template <class T, class Alloc>
+template < class T, class Alloc >
 bool	operator<(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
 
 }
 
-template <class T, class Alloc>
+template < class T, class Alloc>
 bool	operator<=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
 
 }
 
-template <class T, class Alloc>
+template < class T, class Alloc>
 bool	operator>(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
 
 }
 
-template <class T, class Alloc>
+template < class T, class Alloc>
 bool	operator>=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
 
 }
@@ -304,5 +333,7 @@ bool	operator>=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
 void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y){
 
 }
+
+*/
 
 #endif

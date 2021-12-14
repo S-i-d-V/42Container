@@ -54,6 +54,16 @@ namespace ft{
 				return (*this);
 			}
 
+			vectorIterator &operator+=(int n){
+				_valPtr += n;
+				return (*this);
+			}
+
+			vectorIterator &operator-=(int n){
+				_valPtr -= n;
+				return (*this);
+			}
+
 			//Pointer operator
 			T &operator->(){
 				return (_valPtr);

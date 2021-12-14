@@ -99,6 +99,14 @@ namespace ft{
 
 			//Destructor
 			~vector(){
+				iterator it = begin();
+				iterator ite = end();
+				//while (it != ite){
+				//	_alloc.destroy(this->it);
+				//	it++;
+				//}
+				//_alloc.deallocate(_data, _capacity);
+
 				std::cout << "Destructor called" << std::endl;
 				return;
 			}
@@ -135,7 +143,7 @@ namespace ft{
 			}
 
 			reverse_iterator		rend(){
-				return (reverse_iterator(_data));
+				return (reverse_iterator(_data - 1));
 			}
 
 
@@ -153,7 +161,7 @@ namespace ft{
 			}
 
 			const_reverse_iterator	crend()		const{
-				return (const_reverse_iterator(_data));
+				return (const_reverse_iterator(_data - 1));
 			}
 
 			//==========//
@@ -170,9 +178,9 @@ namespace ft{
 			}
 
 			//Return the size (in elements) allocated storage capacity in the container
-			//size_type				capacity()	const{
-			//	
-			//}
+			size_type				capacity()	const{
+				return (_capacity);
+			}
 
 			//Return true if empty, false if not
 			bool					empty()		const{
@@ -235,37 +243,50 @@ namespace ft{
 			//==========//
 			// Modifier //
 			//==========//
-				//Assign new contents to the vector by replace current content and modifying its size.
-					//By range of iterators
+
+			//Assign new contents to the vector by replace current content and modifying its size.
+				//By range of iterators
 			template <class inputIterator>
 			void					assign(inputIterator first, inputIterator last);
-					//Fill
+
+				//Fill
 			void					assign(size_type n, value_type const& val);
-				//Add a new element at the end of the container and increases the storage space only if the new size surpasses the current capacity
+
+			//Add a new element at the end of the container and increases the storage space only if the new size surpasses the current capacity
 			void					push_back(value_type const& val);
-				//Destroy the last element in the container and reduce the size by one.
+
+			//Destroy the last element in the container and reduce the size by one.
 			void					pop_back(value_type const& val);
-				//Extend the container by inserting new element before the element at specified position and increase the size by the number of elements.
-					//Single element
+
+			//Extend the container by inserting new element before the element at specified position and increase the size by the number of elements.
+				//Single element
 			iterator				insert(iterator position, value_type const& val);
-					//Fill
+			
+				//Fill
 			void					insert(iterator position, size_type n, value_type const& val);
-					//By range of iterators
+
+				//By range of iterators
 			template <class inputIterator>
 			void					insert(iterator position, inputIterator first, inputIterator last);
-				//Remove 1 or a range of elements from the container and reduce the container size by the number of elements removed.
-					//Single element
+
+			//Remove 1 or a range of elements from the container and reduce the container size by the number of elements removed.
+				//Single element
 			iterator				erase(iterator position);
-					//By range of iterators
+
+				//By range of iterators
 			iterator				erase(iterator first, iterator last);
-				//Exchanges the content of the container by the content of src which is a container object of the same type.
+
+			//Exchanges the content of the container by the content of src which is a container object of the same type.
 			void					swap(vector& x);
-				//Remove all elements of the vector and put the size at 0
+
+			//Remove all elements of the vector and put the size at 0
 			void					clear();
-				//Extend the container by inserting a new element at position.
+
+			//Extend the container by inserting a new element at position.
 			template <class... Args>
 			iterator				emplace(const position, Args&&... args);
-				//Extend the container by inserting a new element at the end right after current last element.
+
+			//Extend the container by inserting a new element at the end right after current last element.
 			template <class... Args>
 			iterator				emplace(const position, Args&&... args);
 
@@ -286,8 +307,6 @@ namespace ft{
 			size_type		_capacity;
 			value_type		*_data;
 			allocator_type	_alloc;
-			value_type		*_start;
-			value_type 		*_end;
 
 	}; //end of vector class
 

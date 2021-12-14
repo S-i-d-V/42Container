@@ -16,7 +16,7 @@ int	main(){
 		std::cout << std::endl << "            My vector            |Real vector          " << std::endl;
 		std::cout << std::left << std::setw(12) << "Size      = " << std::setw(20) << myvect.size() << " | " << std::setw(20) << realvect2.size() << std::endl;
 		std::cout << std::setw(12) << "Max_size  = " << std::setw(20) << myvect.max_size() << " | " << std::setw(20) << realvect2.max_size() << std::endl;
-		std::cout << std::setw(12) << "Capacity  = " << std::setw(20) << myvect.max_size() << " | " << std::setw(20) << realvect2.capacity() << std::endl;
+		std::cout << std::setw(12) << "Capacity  = " << std::setw(20) << myvect.capacity() << " | " << std::setw(20) << realvect2.capacity() << std::endl;
 		std::cout << std::setw(12) << "Empty     = " << std::setw(20) << myvect.empty() << " | " << std::setw(20) << realvect2.empty() << std::endl;
 		std::cout << std::setw(12) << "Front     = " << std::setw(20) << myvect.front() << " | " << std::setw(20) << realvect2.front() << std::endl;
 		std::cout << std::setw(12) << "Back      = " << std::setw(20) << myvect.back() << " | " << std::setw(20) << realvect2.back() << std::endl;
@@ -53,7 +53,6 @@ int	main(){
 			rit++;
 			i++;
 		}
-		std::cout << "[" << i << "] " << *rit  << std::endl;
 
 		//Test des const_reverse_iterators
 		std::cout << std::endl << "Content displayed by const_reverse_iterators :" << std::endl;
@@ -65,7 +64,7 @@ int	main(){
 			crit++;
 			i++;
 		}
-		std::cout << "[" << i << "] " << *crit  << std::endl;
+
 	}
 
 }

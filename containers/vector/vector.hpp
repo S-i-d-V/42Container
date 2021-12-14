@@ -1,6 +1,15 @@
 #ifndef MYVECTOR_HPP
 #define MYVECTOR_HPP
 
+//Utils headers
+#include "../../utils/enable_if.hpp"
+#include "../../utils/out_of_range.hpp"
+
+//Iterators
+#include "vectorIterator.hpp"
+#include "vectorReverseIterator.hpp"
+
+//Header needed by vector
 #include <utility>
 #include <memory>
 
@@ -12,7 +21,9 @@
 //namespace ft//
 //============//
 namespace ft{
-
+	//============//
+	//vector class//
+	//============//
 	template < typename T, class Alloc = std::allocator<T> >
 	class vector{
 
@@ -24,13 +35,14 @@ namespace ft{
 			//==================//
 			//Typedef / typename//
 			//==================//
-				//value_type is the type that represent T
+
+			//value_type is the type that represent T
 			typedef				T																	value_type;
 
-				//allocator_type is the type that represent std::allocator
+			//allocator_type is the type that represent std::allocator
 			typedef 			Alloc 																allocator_type;
 
-				//define types of std::allocator as ours
+			//define types of std::allocator as ours
 			typedef typename 	allocator_type::reference											reference;
 	    	typedef typename 	allocator_type::const_reference										const_reference;
 			typedef typename	allocator_type::pointer												pointer;
@@ -39,17 +51,18 @@ namespace ft{
 			typedef typename 	allocator_type::size_type											size_type;
 	    	typedef typename 	allocator_type::difference_type										difference_type;
 
-				//define iterators type as ours
-			typedef				std::iterator<std::random_access_iterator_tag, value_type>			iterator;
-			typedef				std::iterator<std::random_access_iterator_tag, value_type const>	const_iterator;
-			typedef				std::reverse_iterator<iterator>										reverse_iterator;
-			typedef				std::reverse_iterator<const_iterator>								const_reverse_iterator;
+			//define iterators type as ours
+			typedef				ft::vectorIterator<T>												iterator;
+			typedef				ft::vectorIterator<T const>											const_iterator;
+			typedef				ft::vectorReverseIterator<T>										reverse_iterator;
+			typedef				ft::vectorReverseIterator<T const>									const_reverse_iterator;
 
 
 			//=======================//
 			//Constructors/Destructor//
 			//=======================//
-				//Default constructor (Build an empty container with no elements)
+
+			//Default constructor (Build an empty container with no elements)
 			explicit	vector(allocator_type const& alloc = allocator_type()) : _alloc(alloc){
 				std::cout << "Default constructor called" << std::endl;
 				_size = 0;
@@ -57,32 +70,34 @@ namespace ft{
     			_data = _alloc.allocate(_size);
     			return;
 			}
-				//Fill (Build an array with <count> times <val> stocked in)
+
+			//Fill (Build an array with <count> times <val> stocked in)
 			explicit	vector(size_type n, value_type const& val, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
 				std::cout << "Fill constructor called" << std::endl;
 				_size = n;
 				_capacity = n;
     			_data = _alloc.allocate(_size);
 
-				for (int i = 0; i < _size; i++){
-					std::cout << val << std::endl;
+				for (int i = 0; i < _size; i++)
 					_alloc.construct(&_data[i], val);
-				}
     			return;
 			}
-				//Range (Build a contaienerwith as many elements in the range)
+
+			//Range (Build a contaienerwith as many elements in the range)
 			template <class inputIterator>
-			vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
+			vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type(),
+			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0) : _alloc(alloc){
 				std::cout << "Range constructor called" << std::endl;
    				return;
 			}
-				//Copy
+
+			//Copy
 			vector(vector const& src){
 				std::cout << "Range constructor called" << std::endl;
 				return;
 			}
 
-				//Destructor
+			//Destructor
 			~vector(){
 				std::cout << "Destructor called" << std::endl;
 				return;
@@ -91,73 +106,131 @@ namespace ft{
 			//==================//
 			//Operator overloads//
 			//==================//
-				//Assignement operator
+
+			//Assignement operator
 			vector&		operator=(vector const& rhs){
-				if (this->_size != 0){
-					_alloc.destroy(_data);
-					_alloc.deallocate(_data, _size);
-				}
-				_alloc.allocate(rhs._size, 0);
-				for (int i = 0; i < rhs._size; i++)
-					_data[i] = rhs._data[i];
 				return (*this);
 			}
 
-	/*
-
-				//Access operator
-			reference	operator[](size_type n);
-			const_reference	operator[](size_type n) const;
+			//Access operator
+			//reference	operator[](size_type n);
+			//const_reference	operator[](size_type n) const;
 			
 
 			//===========//
 			// Iterators //
 			//===========//
+
 				//normal
-			iterator				begin();
-			iterator				end();
-			reverse_iterator		rbegin();
-			reverse_iterator		rend();
-				//const
-			const_iterator			cbegin()	const;
-			const_iterator			cend()		const;
-			const_reverse_iterator	crbegin()	const;
-			const_reverse_iterator	crend()		const;
+			iterator				begin(){
+				return (iterator(_data));
+			}
+
+			iterator				end(){
+				return (iterator(_data + _size));
+			}
+
+			reverse_iterator		rbegin(){
+				return (reverse_iterator(_data + _size - 1));
+			}
+
+			reverse_iterator		rend(){
+				return (reverse_iterator(_data));
+			}
+
+
+			//const
+			const_iterator			cbegin()	const{
+				return (const_iterator(_data));
+			}
+
+			const_iterator			cend()		const{
+				return (const_iterator(_data + _size));
+			}
+
+			const_reverse_iterator	crbegin()	const{
+				return (const_reverse_iterator(_data + _size - 1));
+			}
+
+			const_reverse_iterator	crend()		const{
+				return (const_reverse_iterator(_data));
+			}
 
 			//==========//
 			// Capacity //
 			//==========//
 				//Return the number of elements of the container
-			size_type				size()		const;
-				//Return max number of element the container can hold
-			size_type				max_size()	const;
-				//Return the size (in elements) allocated storage capacity in the container
-			size_type				capacity()	const;
-				//Return true if empty, false if not
-			bool					empty()		const;
-				//Resize the container so that it contains n elements;
+			size_type				size()		const{
+				return (_size);
+			}
+
+			//Return max number of element the container can hold
+			size_type				max_size()	const{
+				return (_alloc.max_size());
+			}
+
+			//Return the size (in elements) allocated storage capacity in the container
+			//size_type				capacity()	const{
+			//	
+			//}
+
+			//Return true if empty, false if not
+			bool					empty()		const{
+				if (_size == 0)
+					return (true);
+				return (false);
+			}
+
+	/*
+
+			//Resize the container so that it contains n elements;
 			void					resize(size_type n, value_type val = value_type());
-				//Request that the container capacity be at least enough to contain n elements
+
+			//Request that the container capacity be at least enough to contain n elements
 			void					reserve(size_type n);
-				//Reduce the capacity of the container to fit its size (number of elements);
+
+			//Reduce the capacity of the container to fit its size (number of elements);
 			void					shrink_to_fit();
 
+
+	*/
 
 			//================//
 			// Element access //
 			//================//
-				//Return a reference to the elements at positon n in the container
-			reference				at(size_type n);
-			const_reference			at(size_type n)	const;
-				//Return a reference to the first elements in the container.
-			reference				front();
-			const_reference			front()			const;
-				//Return a reference to the last elements in the container.
-			reference				back();
-			const_reference			back()			const;
-				//Return a direct pointer to the array used internally by the container to store elements.
-			value_type*				data()			noexcept;
-			const value_type*		data()			noexcept const;
+
+			//Return a reference to the elements at positon n in the container
+			reference				at(size_type n){
+				if (_size == 0 || n > _size || n < 0)
+					throw out_of_range();
+				return (_data[n]);
+			}
+
+			const_reference			at(size_type n)	const{
+				if (_size == 0 || n > _size || n < 0)
+					throw out_of_range();
+				return (_data[n]);
+			}
+
+			//Return a reference to the first elements in the container.
+			reference				front(){
+				return (_data[0]);
+			}
+
+			const_reference			front()			const{
+				return (_data[0]);
+			}
+
+			//Return a reference to the last elements in the container.
+			reference				back(){
+				return (_data[_size - 1]);
+			}
+
+			const_reference			back()			const{
+				return (_data[_size - 1]);
+			}
+
+	/*
 
 			//==========//
 			// Modifier //
@@ -209,10 +282,12 @@ namespace ft{
 		// Private members //
 		//=================//
 		private:
-			size_type _size;
-			size_type _capacity;
-			value_type *_data;
-			allocator_type _alloc;
+			size_type		_size;
+			size_type		_capacity;
+			value_type		*_data;
+			allocator_type	_alloc;
+			value_type		*_start;
+			value_type 		*_end;
 
 	}; //end of vector class
 

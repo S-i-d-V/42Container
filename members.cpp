@@ -41,11 +41,54 @@ int	main(){
 	std::cout << std::setw(12) << "Capacity  = " << std::setw(20) << myvect.capacity() << " | " << std::setw(20) << realvect.capacity() << std::endl;
 	std::cout << std::setw(12) << "Empty     = " << std::setw(20) << myvect.empty() << " | " << std::setw(20) << realvect.empty() << std::endl;
 
-	std::cout << std::endl << "Pushing back '42' :" << std::endl;
+	std::cout << std::endl << "Pushing back '-1' :" << std::endl;
 	realvect.push_back(-1);
 	myvect.push_back(-1);
 
-	//Test des return des fonctions membres
+	std::cout << std::endl << "Member functions returns :" << std::endl;
+	std::cout << std::endl << "            My vector            |Real vector          " << std::endl;
+	std::cout << std::left << std::setw(12) << "Size      = " << std::setw(20) << myvect.size() << " | " << std::setw(20) << realvect.size() << std::endl;
+	std::cout << std::setw(12) << "Max_size  = " << std::setw(20) << myvect.max_size() << " | " << std::setw(20) << realvect.max_size() << std::endl;
+	std::cout << std::setw(12) << "Capacity  = " << std::setw(20) << myvect.capacity() << " | " << std::setw(20) << realvect.capacity() << std::endl;
+	std::cout << std::setw(12) << "Empty     = " << std::setw(20) << myvect.empty() << " | " << std::setw(20) << realvect.empty() << std::endl;
+
+	std::cout << std::endl << "Popping back '-1' :" << std::endl;
+	realvect.pop_back();
+	myvect.pop_back();
+
+	std::cout << std::endl << "Member functions returns :" << std::endl;
+	std::cout << std::endl << "            My vector            |Real vector          " << std::endl;
+	std::cout << std::left << std::setw(12) << "Size      = " << std::setw(20) << myvect.size() << " | " << std::setw(20) << realvect.size() << std::endl;
+	std::cout << std::setw(12) << "Max_size  = " << std::setw(20) << myvect.max_size() << " | " << std::setw(20) << realvect.max_size() << std::endl;
+	std::cout << std::setw(12) << "Capacity  = " << std::setw(20) << myvect.capacity() << " | " << std::setw(20) << realvect.capacity() << std::endl;
+	std::cout << std::setw(12) << "Empty     = " << std::setw(20) << myvect.empty() << " | " << std::setw(20) << realvect.empty() << std::endl;
+
+	std::cout << std::endl << "Pushing back '1' :" << std::endl;
+	realvect.push_back(1);
+	myvect.push_back(1);
+
+	std::cout << std::endl << "Member functions returns :" << std::endl;
+	std::cout << std::endl << "            My vector            |Real vector          " << std::endl;
+	std::cout << std::left << std::setw(12) << "Size      = " << std::setw(20) << myvect.size() << " | " << std::setw(20) << realvect.size() << std::endl;
+	std::cout << std::setw(12) << "Max_size  = " << std::setw(20) << myvect.max_size() << " | " << std::setw(20) << realvect.max_size() << std::endl;
+	std::cout << std::setw(12) << "Capacity  = " << std::setw(20) << myvect.capacity() << " | " << std::setw(20) << realvect.capacity() << std::endl;
+	std::cout << std::setw(12) << "Empty     = " << std::setw(20) << myvect.empty() << " | " << std::setw(20) << realvect.empty() << std::endl;
+
+	std::cout << std::endl << "Pushing back '2' :" << std::endl;
+	realvect.push_back(2);
+	myvect.push_back(2);
+
+	std::cout << std::endl << "Member functions returns :" << std::endl;
+	std::cout << std::endl << "            My vector            |Real vector          " << std::endl;
+	std::cout << std::left << std::setw(12) << "Size      = " << std::setw(20) << myvect.size() << " | " << std::setw(20) << realvect.size() << std::endl;
+	std::cout << std::setw(12) << "Max_size  = " << std::setw(20) << myvect.max_size() << " | " << std::setw(20) << realvect.max_size() << std::endl;
+	std::cout << std::setw(12) << "Capacity  = " << std::setw(20) << myvect.capacity() << " | " << std::setw(20) << realvect.capacity() << std::endl;
+	std::cout << std::setw(12) << "Empty     = " << std::setw(20) << myvect.empty() << " | " << std::setw(20) << realvect.empty() << std::endl;
+
+	std::cout << std::endl << "Pushing back '3' :" << std::endl;
+	realvect.push_back(3);
+	myvect.push_back(3);
+
 	std::cout << std::endl << "Member functions returns :" << std::endl;
 	std::cout << std::endl << "            My vector            |Real vector          " << std::endl;
 	std::cout << std::left << std::setw(12) << "Size      = " << std::setw(20) << myvect.size() << " | " << std::setw(20) << realvect.size() << std::endl;

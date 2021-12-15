@@ -258,7 +258,10 @@ namespace ft{
 			}
 
 			//Destroy the last element in the container and reduce the size by one.
-			void					pop_back(value_type const& val);
+			void					pop_back(){
+				_alloc.destroy(&_data[_size]);
+				_size--;
+			}
 
 	/*
 

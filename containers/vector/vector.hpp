@@ -53,9 +53,7 @@ namespace ft{
 
 			//define iterators type as ours
 			typedef				ft::vectorIterator<T>												iterator;
-			typedef				ft::vectorIterator<T const>											const_iterator;
 			typedef				ft::vectorReverseIterator<T>										reverse_iterator;
-			typedef				ft::vectorReverseIterator<T const>									const_reverse_iterator;
 
 
 			//=======================//
@@ -93,20 +91,16 @@ namespace ft{
 
 			//Copy
 			vector(vector const& src){
-				std::cout << "Range constructor called" << std::endl;
+				std::cout << "Copy constructor called" << std::endl;
 				return;
 			}
 
 			//Destructor
 			~vector(){
-				iterator it = begin();
-				iterator ite = end();
-				//while (it != ite){
-				//	_alloc.destroy(this->it);
-				//	it++;
-				//}
-				//_alloc.deallocate(_data, _capacity);
-
+				for (int i = 0; i < _size; i++){
+					_alloc.destroy(&_data[i]);
+				}
+				_alloc.deallocate(_data, _capacity);
 				std::cout << "Destructor called" << std::endl;
 				return;
 			}
@@ -146,24 +140,6 @@ namespace ft{
 				return (reverse_iterator(_data - 1));
 			}
 
-
-			//const
-			const_iterator			cbegin()	const{
-				return (const_iterator(_data));
-			}
-
-			const_iterator			cend()		const{
-				return (const_iterator(_data + _size));
-			}
-
-			const_reverse_iterator	crbegin()	const{
-				return (const_reverse_iterator(_data + _size - 1));
-			}
-
-			const_reverse_iterator	crend()		const{
-				return (const_reverse_iterator(_data - 1));
-			}
-
 			//==========//
 			// Capacity //
 			//==========//
@@ -197,8 +173,6 @@ namespace ft{
 			//Request that the container capacity be at least enough to contain n elements
 			void					reserve(size_type n);
 
-			//Reduce the capacity of the container to fit its size (number of elements);
-			void					shrink_to_fit();
 
 
 	*/
@@ -252,11 +226,41 @@ namespace ft{
 				//Fill
 			void					assign(size_type n, value_type const& val);
 
+	*/
+
 			//Add a new element at the end of the container and increases the storage space only if the new size surpasses the current capacity
-			void					push_back(value_type const& val);
+			void					push_back(value_type const& val){
+				//Pas besoin de reallocation
+				if (_size + 1 <= _capacity){
+					_alloc.construct(&_data[_size], val);
+					_size++;
+				}
+				else{
+					int oldcapacity = _capacity;
+					value_type *tmp = this->_data;
+					for (int i = 0; i < _size; i++){
+						_alloc.destroy(&_data[i]);
+					}
+					_alloc.deallocate(_data, _capacity);
+					if (oldcapacity != 0){
+						_data = _alloc.allocate(oldcapacity * 2);
+						_capacity = oldcapacity * 2;
+					}
+					else{
+						_data = _alloc.allocate(1);
+						_capacity = 1;
+					}
+					for (int i = 0; i < _size; i++)
+						_alloc.construct(&_data[i], tmp[i]);
+					_alloc.construct(&_data[_size], val);
+					_size++;
+				}
+			}
 
 			//Destroy the last element in the container and reduce the size by one.
 			void					pop_back(value_type const& val);
+
+	/*
 
 			//Extend the container by inserting new element before the element at specified position and increase the size by the number of elements.
 				//Single element
@@ -279,25 +283,18 @@ namespace ft{
 			//Exchanges the content of the container by the content of src which is a container object of the same type.
 			void					swap(vector& x);
 
+	*/
+
 			//Remove all elements of the vector and put the size at 0
 			void					clear();
-
-			//Extend the container by inserting a new element at position.
-			template <class... Args>
-			iterator				emplace(const position, Args&&... args);
-
-			//Extend the container by inserting a new element at the end right after current last element.
-			template <class... Args>
-			iterator				emplace(const position, Args&&... args);
 
 
 			//===========//
 			// Allocator //
 			//===========//
 				//Return a copy of the allocator object associated with the vector;
-			allocator_type	get_Alloc()		const;
+			//allocator_type	get_Alloc()		const;
 
-	*/
 
 		//=================//
 		// Private members //

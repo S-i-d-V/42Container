@@ -22,7 +22,7 @@ namespace ft{
 
 			//Default constructor
 			vectorReverseIterator(){
-				_valPtr = nullptr;
+				_valPtr = NULL;
 				return;
 			}
 

@@ -53,7 +53,9 @@ namespace ft{
 
 			//define iterators type as ours
 			typedef		ft::vectorIterator<T>									iterator;
+			typedef		ft::vectorIterator<T const>								const_iterator;
 			typedef		ft::vectorReverseIterator<T>							reverse_iterator;
+			typedef		ft::vectorReverseIterator<T const>							const_reverse_iterator;
 
 
 			//=======================//
@@ -131,7 +133,6 @@ namespace ft{
 			// Iterators //
 			//===========//
 
-				//normal
 			iterator				begin(){
 				return (iterator(_data));
 			}
@@ -151,7 +152,8 @@ namespace ft{
 			//==========//
 			// Capacity //
 			//==========//
-				//Return the number of elements of the container
+
+			//Return the number of elements of the container
 			size_type				size()		const{
 				return (_size);
 			}
@@ -187,26 +189,25 @@ namespace ft{
 						push_back(0);
 				}
 				else if (n > _capacity){
-					value_type tmp[_size];
-					for (int i = 0; i < _size; i++)
-						tmp[i] = _data[i];
 					int tmpSize = _size;
-					clear();
-					_alloc.deallocate(_data, _capacity);
-					_capacity = n;
-					_data = _alloc.allocate(_capacity);
-					for (int i = 0; i < tmpSize; i++)
-						push_back(tmp[i]);
+					reserve(n);
 					for (int i = tmpSize; i < n; i++)
 						push_back(0);
 				}
 			}
 
 			//Request that the container capacity be at least enough to contain n elements
-			void					reserve(size_type n);
-
-
-
+			void					reserve(size_type n){
+				if (n > _capacity){
+					value_type *tmp = NULL;
+					tmp = _alloc.allocate(n);
+					for (int i = 0; i < _size; i++)
+						_alloc.construct(&tmp[i], _data[i]);
+					_alloc.deallocate(_data, _capacity);
+					_capacity = n;
+					_data = tmp;
+				}
+			}
 
 			//================//
 			// Element access //
@@ -267,26 +268,13 @@ namespace ft{
 					_size++;
 				}
 				else{
-					value_type tmp[_size];
-					for (int i = 0; i < _size; i++)
-						tmp[i] = _data[i];
-					for (int i = _size - 1; i >= 0; i--){
-						_alloc.destroy(&_data[i]);
-						_size--;
-					}
-					_alloc.deallocate(_data, _capacity);
-					if (_capacity != 0){
-						_data = _alloc.allocate(_capacity * 2);
-						_capacity = _capacity * 2;
-					}
+					if (_capacity != 0)
+						reserve(_capacity * 2);
 					else{
 						_data = _alloc.allocate(1);
 						_capacity = 1;
 					}
-					for (int i = 0; i < _size; i++)
-						_alloc.construct(&_data[i], tmp[i]);
-					_alloc.construct(&_data[_size], val);
-					_size++;
+					push_back(val);
 				}
 			}
 
@@ -372,7 +360,5 @@ namespace ft{
 */
 
 }//end of namespace my
-
-//#include "myVector.ipp"
 
 #endif

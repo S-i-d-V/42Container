@@ -37,23 +37,23 @@ namespace ft{
 			//==================//
 
 			//value_type is the type that represent T
-			typedef				T																	value_type;
+			typedef		T														value_type;
 
 			//allocator_type is the type that represent std::allocator
-			typedef 			Alloc 																allocator_type;
+			typedef 	Alloc 													allocator_type;
 
 			//define types of std::allocator as ours
-			typedef typename 	allocator_type::reference											reference;
-	    	typedef typename 	allocator_type::const_reference										const_reference;
-			typedef typename	allocator_type::pointer												pointer;
-			typedef typename	allocator_type::const_pointer										const_pointer;
+			typedef 	T&														reference;
+	    	typedef 	T const&												const_reference;
+			typedef 	T*														pointer;
+			typedef 	T const*												const_pointer;
 
-			typedef typename 	allocator_type::size_type											size_type;
-	    	typedef typename 	allocator_type::difference_type										difference_type;
+			typedef 	size_t													size_type;
+	    	typedef 	ptrdiff_t												difference_type;
 
 			//define iterators type as ours
-			typedef				ft::vectorIterator<T>												iterator;
-			typedef				ft::vectorReverseIterator<T>										reverse_iterator;
+			typedef		ft::vectorIterator<T>									iterator;
+			typedef		ft::vectorReverseIterator<T>							reverse_iterator;
 
 
 			//=======================//
@@ -92,16 +92,24 @@ namespace ft{
 			//Copy
 			vector(vector const& src){
 				std::cout << "Copy constructor called" << std::endl;
+				_alloc = src._alloc;
+				_size = src._size;
+				_capacity = src._capacity;
+				_data = _alloc.allocate(_capacity);
+				for (int i = 0; i < _size; i++)
+					_alloc.construct(&_data[i], src._data[i]);
 				return;
 			}
 
 			//Destructor
 			~vector(){
-				for (int i = 0; i < _size; i++){
+				std::cout << "Destructor called" << std::endl;
+				for (int i = _size - 1; i >= 0; i--){
 					_alloc.destroy(&_data[i]);
+					_size--;
 				}
 				_alloc.deallocate(_data, _capacity);
-				std::cout << "Destructor called" << std::endl;
+				_capacity = 0;
 				return;
 			}
 
@@ -165,17 +173,40 @@ namespace ft{
 				return (false);
 			}
 
-	/*
 
 			//Resize the container so that it contains n elements;
-			void					resize(size_type n, value_type val = value_type());
+			void					resize(size_type n, value_type val = value_type()){
+				if (n < _size){
+					for (int i = _size - 1; i >= n; i--){
+						_alloc.destroy(&_data[i]);
+						_size--;
+					}
+				}
+				else if (n > _size && n <= _capacity){
+					while (_size < n)
+						push_back(0);
+				}
+				else if (n > _capacity){
+					value_type tmp[_size];
+					for (int i = 0; i < _size; i++)
+						tmp[i] = _data[i];
+					int tmpSize = _size;
+					clear();
+					_alloc.deallocate(_data, _capacity);
+					_capacity = n;
+					_data = _alloc.allocate(_capacity);
+					for (int i = 0; i < tmpSize; i++)
+						push_back(tmp[i]);
+					for (int i = tmpSize; i < n; i++)
+						push_back(0);
+				}
+			}
 
 			//Request that the container capacity be at least enough to contain n elements
 			void					reserve(size_type n);
 
 
 
-	*/
 
 			//================//
 			// Element access //
@@ -236,15 +267,17 @@ namespace ft{
 					_size++;
 				}
 				else{
-					int oldcapacity = _capacity;
-					value_type *tmp = this->_data;
-					for (int i = 0; i < _size; i++){
+					value_type tmp[_size];
+					for (int i = 0; i < _size; i++)
+						tmp[i] = _data[i];
+					for (int i = _size - 1; i >= 0; i--){
 						_alloc.destroy(&_data[i]);
+						_size--;
 					}
 					_alloc.deallocate(_data, _capacity);
-					if (oldcapacity != 0){
-						_data = _alloc.allocate(oldcapacity * 2);
-						_capacity = oldcapacity * 2;
+					if (_capacity != 0){
+						_data = _alloc.allocate(_capacity * 2);
+						_capacity = _capacity * 2;
 					}
 					else{
 						_data = _alloc.allocate(1);
@@ -289,7 +322,12 @@ namespace ft{
 	*/
 
 			//Remove all elements of the vector and put the size at 0
-			void					clear();
+			void					clear(){
+				for (int i = _size - 1; i >= 0; i--){
+					_alloc.destroy(&_data[i]);
+					_size--;
+				}
+			}
 
 
 			//===========//

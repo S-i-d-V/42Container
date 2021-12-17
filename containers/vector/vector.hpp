@@ -49,13 +49,13 @@ namespace ft{
 			typedef 	T const*												const_pointer;
 
 			typedef 	size_t													size_type;
-	    	typedef 	ptrdiff_t												difference_type;
+	    	typedef 	std::ptrdiff_t												difference_type;
 
 			//define iterators type as ours
 			typedef		ft::vectorIterator<T>									iterator;
 			typedef		ft::vectorIterator<T const>								const_iterator;
 			typedef		ft::vectorReverseIterator<T>							reverse_iterator;
-			typedef		ft::vectorReverseIterator<T const>							const_reverse_iterator;
+			typedef		ft::vectorReverseIterator<T const>						const_reverse_iterator;
 
 
 			//=======================//
@@ -81,7 +81,7 @@ namespace ft{
     			return;
 			}
 
-			//Range (Build a contaienerwith as many elements in the range)
+			//Range (Build a contaiener with as many elements in the range)
 			template <class inputIterator>
 			vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type(),
 			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0) : _alloc(alloc){

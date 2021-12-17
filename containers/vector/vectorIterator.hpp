@@ -20,7 +20,7 @@ namespace ft{
 			//Typedef / typename//
 			//==================//
 
-			typedef 	std::ptrdiff_t												difference_type;
+			typedef 	std::ptrdiff_t											difference_type;
 			typedef		T														value_type;
 			typedef 	T&														reference;
 			typedef 	T*														pointer;

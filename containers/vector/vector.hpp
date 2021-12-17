@@ -64,7 +64,6 @@ namespace ft{
 
 			//Default constructor (Build an empty container with no elements)
 			explicit	vector(allocator_type const& alloc = allocator_type()) : _alloc(alloc){
-				std::cout << "Default constructor called" << std::endl;
 				_size = 0;
 				_capacity = 0;
     			_data = _alloc.allocate(_size);
@@ -73,7 +72,6 @@ namespace ft{
 
 			//Fill (Build an array with <count> times <val> stocked in)
 			explicit	vector(size_type n, value_type const& val, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
-				std::cout << "Fill constructor called" << std::endl;
 				_size = n;
 				_capacity = n;
     			_data = _alloc.allocate(_size);
@@ -87,13 +85,11 @@ namespace ft{
 			template <class inputIterator>
 			vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type(),
 			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0) : _alloc(alloc){
-				std::cout << "Range constructor called" << std::endl;
    				return;
 			}
 
 			//Copy
 			vector(vector const& src){
-				std::cout << "Copy constructor called" << std::endl;
 				_alloc = src._alloc;
 				_size = src._size;
 				_capacity = src._capacity;
@@ -105,7 +101,6 @@ namespace ft{
 
 			//Destructor
 			~vector(){
-				std::cout << "Destructor called" << std::endl;
 				for (int i = _size - 1; i >= 0; i--){
 					_alloc.destroy(&_data[i]);
 					_size--;
@@ -288,7 +283,9 @@ namespace ft{
 
 			//Extend the container by inserting new element before the element at specified position and increase the size by the number of elements.
 				//Single element
-			iterator				insert(iterator position, value_type const& val);
+			iterator				insert(iterator position, value_type const& val){
+
+			}
 			
 				//Fill
 			void					insert(iterator position, size_type n, value_type const& val);
@@ -304,10 +301,10 @@ namespace ft{
 				//By range of iterators
 			iterator				erase(iterator first, iterator last);
 
+	*/
+
 			//Exchanges the content of the container by the content of src which is a container object of the same type.
 			void					swap(vector& x);
-
-	*/
 
 			//Remove all elements of the vector and put the size at 0
 			void					clear(){

@@ -7,7 +7,8 @@
 
 //Iterators
 #include "vectorIterator.hpp"
-#include "vectorReverseIterator.hpp"
+#include "reverseIterator.hpp"
+//#include "vectorReverseIterator.hpp"
 
 //Header needed by vector
 #include <utility>
@@ -49,13 +50,13 @@ namespace ft{
 			typedef 	T const*												const_pointer;
 
 			typedef 	size_t													size_type;
-	    	typedef 	std::ptrdiff_t												difference_type;
+	    	typedef 	std::ptrdiff_t											difference_type;
 
 			//define iterators type as ours
 			typedef		ft::vectorIterator<T>									iterator;
 			typedef		ft::vectorIterator<T const>								const_iterator;
-			typedef		ft::vectorReverseIterator<T>							reverse_iterator;
-			typedef		ft::vectorReverseIterator<T const>						const_reverse_iterator;
+			typedef		ft::reverseIterator<iterator>							reverse_iterator;
+			typedef		ft::reverseIterator<const_iterator>						const_reverse_iterator;
 
 
 			//=======================//

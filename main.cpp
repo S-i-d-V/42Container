@@ -31,14 +31,16 @@ int	main(){
 		ft::vector<int>::reverse_iterator rite = myvect.rend();
 		std::vector<int>::reverse_iterator real_rit = realvect.rbegin();
 		std::vector<int>::reverse_iterator real_rite = realvect.rend();
+		std::cout << "REAL | rbegin : " << *real_rit << " - " << &(*(real_rit.base())) << " | rend : " << *real_rite << " - " << &(*(real_rite.base())) << std::endl; 
+		std::cout << "MINE | rbegin : " << *rit << " - " << &(*(rit.base())) << " | rend : " << *rite << " - " << &(*(rite.base())) << std::endl << std::endl;
+
 		i = 0;
-		while (rit != rite){
-			std::cout << "[" << i << "] " << *rit << " | " << *real_rit << std::endl;
+		while (real_rit != real_rite){
+			std::cout << "[" << i << "] " << *rit << " - " << &(*rit) << " | " << *real_rit << " - " << &(*real_rit) << std::endl;
 			rit++;
 			real_rit++;
 			i++;
 		}
-
 	}
 
 }

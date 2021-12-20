@@ -1,6 +1,8 @@
 #ifndef REVERSEITERATOR_HPP
 #define REVERSEITERATOR_HPP
 
+#include "../../utils/iterator_traits.hpp"
+
 //============//
 //namespace ft//
 //============//
@@ -93,7 +95,7 @@ namespace ft{
 
 			//Increment operator prefixe it++;
 			reverseIterator &operator++(){
-				++_base;
+				--_base;
 				return (*this);
 			}
 
@@ -106,7 +108,7 @@ namespace ft{
 
 			//Increment operator prefixe it--;
 			reverseIterator &operator--(){
-				--_base;
+				++_base;
 				return (*this);
 			}
 
@@ -139,7 +141,7 @@ namespace ft{
 
 			reverseIterator &operator-(difference_type n) const{
 				reverseIterator ret(*this);
-				ret.base() -= n;
+				ret.base() += n;
 				return (ret);
 			}
 

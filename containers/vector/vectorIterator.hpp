@@ -80,7 +80,7 @@ namespace ft{
 			}
 
 			//Dereferencement pointer operator
-			T operator*(){
+			T &operator*(){
 				return (*_valPtr);
 			}
 

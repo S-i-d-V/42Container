@@ -8,7 +8,6 @@
 //Iterators
 #include "vectorIterator.hpp"
 #include "reverseIterator.hpp"
-//#include "vectorReverseIterator.hpp"
 
 //Header needed by vector
 #include <utility>
@@ -138,11 +137,11 @@ namespace ft{
 			}
 
 			reverse_iterator		rbegin(){
-				return (reverse_iterator(_data + _size - 1));
+				return (reverse_iterator(_data + _size));
 			}
 
 			reverse_iterator		rend(){
-				return (reverse_iterator(_data - 1));
+				return (reverse_iterator(_data));
 			}
 
 			//==========//
@@ -334,28 +333,33 @@ namespace ft{
 
 	}; //end of vector class
 
-/*
+
 	//=======================//
 	// Non-members operators //
 	//=======================//
+
 		//Comparaison operators
+
 	template <class T, class Alloc>
 	bool	operator==(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+
 	template <class T, class Alloc>
 	bool	operator!=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+
 	template <class T, class Alloc>
 	bool	operator<(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+
 	template <class T, class Alloc>
 	bool	operator<=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+
 	template <class T, class Alloc>
 	bool	operator>(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+
 	template <class T, class Alloc>
 	bool	operator>=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
 
 		//Non-member swap
-	void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y);
-
-*/
+	//void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y);
 
 }//end of namespace my
 

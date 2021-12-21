@@ -1,5 +1,5 @@
-#ifndef VECTORITERATOR_HPP
-#define VECTORITERATOR_HPP
+#ifndef VECTOR_ITERATOR_HPP
+#define VECTOR_ITERATOR_HPP
 
 //============//
 //namespace ft//
@@ -7,10 +7,10 @@
 namespace ft{
 
 	//====================//
-	//vectorIterator class//
+	//vector_iterator class//
 	//====================//
 	template <class T>
-	class vectorIterator{
+	class vector_iterator{
 
 		//==============//
 		//Public members//
@@ -31,22 +31,22 @@ namespace ft{
 			//=======================//
 
 			//Default constructor
-			vectorIterator(){
+			vector_iterator(){
 				_valPtr = NULL;
 				return;
 			}
 
-			vectorIterator(T *valPtr){
+			vector_iterator(T *valPtr){
 				_valPtr = valPtr;
 				return;
 			}
 
-			vectorIterator(vectorIterator const& src){
+			vector_iterator(vector_iterator const& src){
 				*this = src;
 				return;
 			}
 
-			~vectorIterator(){
+			~vector_iterator(){
 				return;
 			}
 
@@ -59,17 +59,17 @@ namespace ft{
 				//================//
 
 			//Assignement operator
-			vectorIterator &operator=(vectorIterator const & rhs){
+			vector_iterator &operator=(vector_iterator const & rhs){
 				_valPtr = rhs._valPtr;
 				return (*this);
 			}
 
-			vectorIterator &operator+=(int n){
+			vector_iterator &operator+=(int n){
 				_valPtr += n;
 				return (*this);
 			}
 
-			vectorIterator &operator-=(int n){
+			vector_iterator &operator-=(int n){
 				_valPtr -= n;
 				return (*this);
 			}
@@ -89,27 +89,27 @@ namespace ft{
 				//=============================//
 
 			//Increment operator prefixe it++;
-			vectorIterator &operator++(){
+			vector_iterator &operator++(){
 				++_valPtr;
 				return (*this);
 			}
 
 			//Increment operator postfixe ++it; 
-			vectorIterator operator++(T){
-				vectorIterator tmp;
+			vector_iterator operator++(T){
+				vector_iterator tmp;
 				tmp._valPtr = _valPtr++;
 				return (tmp);
 			}
 
 			//Increment operator prefixe it--;
-			vectorIterator &operator--(){
+			vector_iterator &operator--(){
 				--_valPtr;
 				return (*this);
 			}
 
 			//Decrement operator postfixe --it; 
-			vectorIterator operator--(T){
-				vectorIterator tmp;
+			vector_iterator operator--(T){
+				vector_iterator tmp;
 				tmp._valPtr = _valPtr--;
 				return (tmp);
 			}
@@ -119,14 +119,24 @@ namespace ft{
 				//====================//
 
 			//Addition operator
-			T operator+(vectorIterator const &rhs) const{
-				vectorIterator tmp(_valPtr + rhs._valPtr);
+			difference_type operator+(vector_iterator const &rhs) const{
+				return (_valPtr + rhs._valPtr);
+			}
+
+			//Substraction operator
+			difference_type operator-(vector_iterator const &rhs) const{
+				return (_valPtr - rhs._valPtr);
+			}
+
+			//Addition operator
+			vector_iterator operator+(int n){
+				vector_iterator tmp(_valPtr + n);
 				return (tmp);
 			}
 
 			//Substraction operator
-			T operator-(vectorIterator const &rhs) const{
-				vectorIterator tmp(_valPtr - rhs._valPtr);
+			vector_iterator operator-(int n){
+				vector_iterator tmp(_valPtr - n);
 				return (tmp);
 			}
 
@@ -135,42 +145,42 @@ namespace ft{
 				//=====================//
 
 			//Equal operator
-			bool operator==(vectorIterator const& rhs) const{
+			bool operator==(vector_iterator const& rhs) const{
 				if (_valPtr == rhs._valPtr)
 					return (true);
 				return (false);
 			}
 
 			//Non-equal operator
-			bool operator!=(vectorIterator const& rhs) const{
+			bool operator!=(vector_iterator const& rhs) const{
 				if (_valPtr != rhs._valPtr)
 					return (true);
 				return (false);
 			}
 
 			//Superior or equal operator
-			bool operator>=(vectorIterator const& rhs) const{
+			bool operator>=(vector_iterator const& rhs) const{
 				if (_valPtr >= rhs._valPtr)
 					return (true);
 				return (false);
 			}
 
 			//Inferior or equal operator
-			bool operator<=(vectorIterator const& rhs) const{
+			bool operator<=(vector_iterator const& rhs) const{
 				if (_valPtr <= rhs._valPtr)
 					return (true);
 				return (false);
 			}
 
 			//Superior operator
-			bool operator>(vectorIterator const& rhs) const{
+			bool operator>(vector_iterator const& rhs) const{
 				if (_valPtr > rhs._valPtr)
 					return (true);
 				return (false);
 			}
 
 			//Inferior operator
-			bool operator<(vectorIterator const& rhs) const{
+			bool operator<(vector_iterator const& rhs) const{
 				if (_valPtr < rhs._valPtr)
 					return (true);
 				return (false);
@@ -182,7 +192,7 @@ namespace ft{
 		private:
 			T *_valPtr;
 
-	}; //End of vectorIterator class;
+	}; //End of vector_iterator class;
 
 /*
 	//====================//
@@ -191,7 +201,7 @@ namespace ft{
 
 	//Equal operator
 	template <class T>
-	bool operator==(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+	bool operator==(vector_iterator<T> const& lhs, vector_iterator<T> const& rhs){
 		if (*lhs == *rhs)
 			return (true);
 		return (false);
@@ -199,7 +209,7 @@ namespace ft{
 
 	//Non-equal operator
 	template <class T>
-	bool operator!=(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+	bool operator!=(vector_iterator<T> const& lhs, vector_iterator<T> const& rhs){
 		if (*lhs != *rhs)
 			return (true);
 		return (false);
@@ -207,7 +217,7 @@ namespace ft{
 	
 	//Superior or equal operator
 	template <class T>
-	bool operator>=(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+	bool operator>=(vector_iterator<T> const& lhs, vector_iterator<T> const& rhs){
 		if (*lhs >= *rhs)
 			return (true);
 		return (false);
@@ -215,7 +225,7 @@ namespace ft{
 
 	//Inferior or equal operator
 	template <class T>
-	bool operator<=(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+	bool operator<=(vector_iterator<T> const& lhs, vector_iterator<T> const& rhs){
 		if (*lhs <= *rhs)
 			return (true);
 		return (false);
@@ -223,7 +233,7 @@ namespace ft{
 
 	//Superior operator
 	template <class T>
-	bool operator>(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+	bool operator>(vector_iterator<T> const& lhs, vector_iterator<T> const& rhs){
 		if (*lhs > *rhs)
 			return (true);
 		return (false);
@@ -231,12 +241,13 @@ namespace ft{
 
 	//Inferior operator
 	template <class T>
-	bool operator<(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+	bool operator<(vector_iterator<T> const& lhs, vector_iterator<T> const& rhs){
 		if (*lhs < *rhs)
 			return (true);
 		return (false);
 	}
 */
+
 } //End of namespace ft
 
 #endif

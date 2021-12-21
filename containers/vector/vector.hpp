@@ -1,5 +1,5 @@
-#ifndef MYVECTOR_HPP
-#define MYVECTOR_HPP
+#ifndef VECTOR_HPP
+#define VECTOR_HPP
 
 //Utils headers
 #include "../../utils/enable_if.hpp"
@@ -8,8 +8,8 @@
 #include "../../utils/lexicographical_compare.hpp"
 
 //Iterators
-#include "vectorIterator.hpp"
-#include "reverseIterator.hpp"
+#include "vector_iterator.hpp"
+#include "reverse_iterator.hpp"
 
 //Header needed by vector
 #include <utility>
@@ -54,10 +54,10 @@ namespace ft{
 	    	typedef 	std::ptrdiff_t											difference_type;
 
 			//define iterators type as ours
-			typedef		ft::vectorIterator<T>									iterator;
-			typedef		ft::vectorIterator<T const>								const_iterator;
-			typedef		ft::reverseIterator<iterator>							reverse_iterator;
-			typedef		ft::reverseIterator<const_iterator>						const_reverse_iterator;
+			typedef		ft::vector_iterator<T>									iterator;
+			typedef		ft::vector_iterator<T const>							const_iterator;
+			typedef		ft::reverse_iterator<iterator>							reverse_iterator;
+			typedef		ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
 
 			//=======================//
@@ -72,13 +72,13 @@ namespace ft{
     			return;
 			}
 
-			//Fill (Build an array with <count> times <val> stocked in)
+			//Fill (Build an array with <n> times <val> stocked in)
 			explicit	vector(size_type n, value_type const& val, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
 				_size = n;
 				_capacity = n;
     			_data = _alloc.allocate(_size);
 
-				for (int i = 0; i < _size; i++)
+				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&_data[i], val);
     			return;
 			}
@@ -87,6 +87,11 @@ namespace ft{
 			template <class inputIterator>
 			vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type(),
 			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0) : _alloc(alloc){
+				for (inputIterator	tmp(first); tmp != last; tmp++)
+					_size++;
+				_data = _alloc.allocate(_size);
+				for (size_type i = 0; first != last; i++, first++)
+					_alloc.construct(&_data[i], *first);
    				return;
 			}
 
@@ -122,8 +127,13 @@ namespace ft{
 			}
 
 			//Access operator
-			//reference	operator[](size_type n);
-			//const_reference	operator[](size_type n) const;
+			reference	operator[](size_type n){
+				return (_data[n]);
+			}
+
+			const_reference	operator[](size_type n) const{
+				return (_data[n]);
+			}
 			
 
 			//===========//
@@ -281,20 +291,44 @@ namespace ft{
 				_size--;
 			}
 
-	/*
+	
 
 			//Extend the container by inserting new element before the element at specified position and increase the size by the number of elements.
 				//Single element
 			iterator				insert(iterator position, value_type const& val){
-
+				if (_size == _capacity)
+					reserve(_capacity * 2);
+				insert(position, 1, val);
 			}
 			
 				//Fill
-			void					insert(iterator position, size_type n, value_type const& val);
+			void					insert(iterator position, size_type n, value_type const& val){
+				//get the index of the iterator in the vector
+				difference_type index = position - begin();
+				//if the final size if bigger than capacity i realloc
+				if (_size + n > _capacity)
+					reserve(_size + n);
+				//i set an iterator pointing on the index got from position.
+				iterator newPos(&_data[index]);
+				//if the iterator isnt at the end of the vector, i shift every thing to the right
+				if (newPos != end()){
+					//i save the intial end iterator
+					iterator initialEnd(end());
+					//i shift to n place all elements from the end to ther new position end + n.
+					for (iterator initialEnd(end()); initialEnd != newPos; initialEnd--)
+						_alloc.construct(&(*(initialEnd + static_cast<int>(n) - 1)), *(initialEnd - 1));
+				}
+				//i put the elements to insert
+				for (size_type i = 0; i < static_cast<int>(n); i++, newPos++)
+					_alloc.construct(&(*newPos), val);
+				//i increase the size
+				_size += n;
+			}
 
 				//By range of iterators
 			template <class inputIterator>
-			void					insert(iterator position, inputIterator first, inputIterator last);
+			void					insert(iterator position, inputIterator first, inputIterator last,
+			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0);
 
 			//Remove 1 or a range of elements from the container and reduce the container size by the number of elements removed.
 				//Single element
@@ -303,7 +337,7 @@ namespace ft{
 				//By range of iterators
 			iterator				erase(iterator first, iterator last);
 
-	*/
+	
 
 			//Exchanges the content of the container by the content of src which is a container object of the same type.
 			void					swap(vector& x);
@@ -376,7 +410,12 @@ namespace ft{
 	}
 
 		//Non-member swap
-	//void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y);
+	template <class T, class Alloc>
+	void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y){
+		vector<T, Alloc> tmp = x;
+		x = y;
+		y = tmp;
+	}
 
 }//end of namespace my
 

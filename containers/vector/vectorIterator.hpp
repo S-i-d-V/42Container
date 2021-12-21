@@ -184,6 +184,59 @@ namespace ft{
 
 	}; //End of vectorIterator class;
 
+/*
+	//====================//
+	//Non-member overloads//
+	//====================//
+
+	//Equal operator
+	template <class T>
+	bool operator==(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+		if (*lhs == *rhs)
+			return (true);
+		return (false);
+	}
+
+	//Non-equal operator
+	template <class T>
+	bool operator!=(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+		if (*lhs != *rhs)
+			return (true);
+		return (false);
+	}
+	
+	//Superior or equal operator
+	template <class T>
+	bool operator>=(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+		if (*lhs >= *rhs)
+			return (true);
+		return (false);
+	}
+
+	//Inferior or equal operator
+	template <class T>
+	bool operator<=(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+		if (*lhs <= *rhs)
+			return (true);
+		return (false);
+	}
+
+	//Superior operator
+	template <class T>
+	bool operator>(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+		if (*lhs > *rhs)
+			return (true);
+		return (false);
+	}
+
+	//Inferior operator
+	template <class T>
+	bool operator<(vectorIterator<T> const& lhs, vectorIterator<T> const& rhs){
+		if (*lhs < *rhs)
+			return (true);
+		return (false);
+	}
+*/
 } //End of namespace ft
 
 #endif

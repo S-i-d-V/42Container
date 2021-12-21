@@ -4,6 +4,8 @@
 //Utils headers
 #include "../../utils/enable_if.hpp"
 #include "../../utils/out_of_range.hpp"
+#include "../../utils/equal.hpp"
+#include "../../utils/lexicographical_compare.hpp"
 
 //Iterators
 #include "vectorIterator.hpp"
@@ -334,29 +336,44 @@ namespace ft{
 	}; //end of vector class
 
 
-	//=======================//
-	// Non-members operators //
-	//=======================//
+	//====================//
+	//Non-member overloads//
+	//====================//
 
 		//Comparaison operators
+	template <class T, class Alloc>
+	bool	operator==(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
+		if (lhs.size() == rhs.size())
+			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+		return (false);
+	}
 
 	template <class T, class Alloc>
-	bool	operator==(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+	bool	operator!=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
+		if (!(lhs == rhs))
+			return (true);
+		return (false);
+	}
 
 	template <class T, class Alloc>
-	bool	operator!=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+	bool	operator<(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
 
 	template <class T, class Alloc>
-	bool	operator<(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+	bool	operator<=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
+		return (!(rhs < lhs));
+	}
 
 	template <class T, class Alloc>
-	bool	operator<=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+	bool	operator>(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
+		return (rhs < lhs);
+	}
 
 	template <class T, class Alloc>
-	bool	operator>(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
-
-	template <class T, class Alloc>
-	bool	operator>=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs);
+	bool	operator>=(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
+		return (!(lhs < rhs));
+	}
 
 		//Non-member swap
 	//void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y);

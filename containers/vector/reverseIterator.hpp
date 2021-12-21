@@ -154,9 +154,9 @@ namespace ft{
 
 	}; //End of reverseIterator class;
 
-	//=====================//
-	//Comparaison overloads//
-	//=====================//
+	//====================//
+	//Non-member overloads//
+	//====================//
 
 	//Equal operator
 	template<class Iterator>

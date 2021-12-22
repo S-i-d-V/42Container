@@ -305,7 +305,7 @@ namespace ft{
 				iterator newPos(&_data[index]);
 				//if the iterator isnt at the end of the vector, i shift every thing to the right
 				if (newPos != end()){
-					//i shift to n place all elements from the end to ther new position end + n.
+					//i shift to 1 place all elements from the end to ther new position end + 1.
 					for (iterator initialEnd(end()); initialEnd != newPos; initialEnd--)
 						_alloc.construct(&(*(initialEnd)), *(initialEnd - 1));
 				}
@@ -372,10 +372,49 @@ namespace ft{
 
 			//Remove 1 or a range of elements from the container and reduce the container size by the number of elements removed.
 				//Single element
-			iterator				erase(iterator position);
+			iterator				erase(iterator position){
+				//get the index of the iterator in the vector
+				difference_type index = &(*position) - &(*begin());
+				//i set an iterator pointing on the index got from position.
+				iterator newPos(&_data[index]);
+				//if the iterator isnt at the end of the vector, i shift every thing to the left
+				if (newPos != end()){
+					//i shift to 1 place all elements from newpos to ther new position newpos + 1;
+					while (newPos != end()){
+						_alloc.construct(&(*(newPos)), *(newPos + 1));
+						newPos++;
+					}
+				}
+				//i destroy the last elements
+				_alloc.destroy(&(*end()));
+				//i decrease the size
+				_size -= 1;
+			}
 
 				//By range of iterators
-			iterator				erase(iterator first, iterator last);
+			iterator				erase(iterator first, iterator last){
+				//get the index of the range in the vector
+				difference_type index = &(*first) - &(*begin());
+				//get the size of the range first last
+				difference_type n = last - first;
+				//i set an iterator pointing on the index got from position.
+				iterator newPos(&_data[index]);
+				//if the iterator isnt at the end of the vector, i shift every thing to the left
+				if (newPos != end()){
+					//i shift to 1 place all elements from newposto ther new position newPos + n.
+					while (newPos != last){
+						_alloc.destroy(&(*(newPos)));
+						_alloc.construct(&(*(newPos)), *(newPos + n));
+						newPos++;
+					}
+				}
+				//i destroy the n last elements and decreaze the size;
+				while (n > 0){
+					_alloc.destroy(&(*end()));
+					_size--;
+					n--;
+				}
+			}
 
 	
 

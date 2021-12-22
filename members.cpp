@@ -99,9 +99,9 @@ int	main(){
 	std::cout << std::setw(12) << "Front     = " << std::setw(20) << myvect.front() << " | " << std::setw(20) << realvect.front() << std::endl;
 	std::cout << std::setw(12) << "Back      = " << std::setw(20) << myvect.back() << " | " << std::setw(20) << realvect.back() << std::endl;
 
-	std::cout << std::endl << "Inserting 10 at the beginning:" << std::endl;
-	realvect.insert(realvect.end() - 1, 10);
-	myvect.insert(myvect.end() - 1, 10);
+	std::cout << std::endl << "Inserting 9 at the end:" << std::endl;
+	realvect.insert(realvect.end(), 9);
+	myvect.insert(myvect.end(), 9);
 
 	std::cout << "            My vector            |Real vector          " << std::endl;
 	std::cout << std::left << std::setw(12) << "Size      = " << std::setw(20) << myvect.size() << " | " << std::setw(20) << realvect.size() << std::endl;

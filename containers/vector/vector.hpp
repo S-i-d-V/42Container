@@ -296,24 +296,38 @@ namespace ft{
 			//Extend the container by inserting new element before the element at specified position and increase the size by the number of elements.
 				//Single element
 			iterator				insert(iterator position, value_type const& val){
-				if (_size == _capacity)
+				//get the index of the iterator in the vector
+				difference_type index = &(*position) - &(*begin());
+				//if the final size if bigger than capacity i realloc
+				if (_size + 1 > _capacity)
 					reserve(_capacity * 2);
-				insert(position, 1, val);
+				//i set an iterator pointing on the index got from position.
+				iterator newPos(&_data[index]);
+				//if the iterator isnt at the end of the vector, i shift every thing to the right
+				if (newPos != end()){
+					//i shift to n place all elements from the end to ther new position end + n.
+					for (iterator initialEnd(end()); initialEnd != newPos; initialEnd--)
+						_alloc.construct(&(*(initialEnd)), *(initialEnd - 1));
+				}
+				//i put the elements to insert
+				_alloc.construct(&(*newPos), val);
+				//i increase the size
+				_size += 1;
 			}
 			
 				//Fill
 			void					insert(iterator position, size_type n, value_type const& val){
 				//get the index of the iterator in the vector
-				difference_type index = position - begin();
+				difference_type index = &(*position) - &(*begin());
 				//if the final size if bigger than capacity i realloc
-				if (_size + n > _capacity)
+				if (_size + n > _capacity && _size + n <= _capacity * 2)
+					reserve(_capacity * 2);
+				else if (_size + n > _capacity * 2)
 					reserve(_size + n);
 				//i set an iterator pointing on the index got from position.
 				iterator newPos(&_data[index]);
 				//if the iterator isnt at the end of the vector, i shift every thing to the right
 				if (newPos != end()){
-					//i save the intial end iterator
-					iterator initialEnd(end());
 					//i shift to n place all elements from the end to ther new position end + n.
 					for (iterator initialEnd(end()); initialEnd != newPos; initialEnd--)
 						_alloc.construct(&(*(initialEnd + static_cast<int>(n) - 1)), *(initialEnd - 1));
@@ -328,7 +342,33 @@ namespace ft{
 				//By range of iterators
 			template <class inputIterator>
 			void					insert(iterator position, inputIterator first, inputIterator last,
-			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0);
+			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0){
+				//get the index of the iterator in the vector
+				difference_type index = &(*position) - &(*begin());
+				//get the size of the range first last
+				difference_type n = last - first;
+				//if the final size if bigger than capacity i realloc
+				if (_size + n > _capacity && _size + n <= _capacity * 2)
+					reserve(_capacity * 2);
+				else if (_size + n > _capacity * 2)
+					reserve(_size + n);
+				//i set an iterator pointing on the index got from position.
+				iterator newPos(&_data[index]);
+				//if the iterator isnt at the end of the vector, i shift every thing to the right
+				if (newPos != end()){
+					//i shift to n place all elements from the end to ther new position end + n.
+					for (iterator initialEnd(end()); initialEnd != newPos; initialEnd--)
+						_alloc.construct(&(*(initialEnd + static_cast<int>(n) - 1)), *(initialEnd - 1));
+				}
+				//i put the elements to insert
+				while (first != last){
+					_alloc.construct(&(*newPos), *first);
+					first++;
+					newPos++;
+				}
+				//i increase the size
+				_size += n;
+			}
 
 			//Remove 1 or a range of elements from the container and reduce the container size by the number of elements removed.
 				//Single element

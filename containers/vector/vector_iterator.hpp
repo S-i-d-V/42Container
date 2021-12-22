@@ -129,13 +129,13 @@ namespace ft{
 			}
 
 			//Addition operator
-			vector_iterator operator+(int n){
+			vector_iterator operator+(difference_type n){
 				vector_iterator tmp(_valPtr + n);
 				return (tmp);
 			}
 
 			//Substraction operator
-			vector_iterator operator-(int n){
+			vector_iterator operator-(difference_type n){
 				vector_iterator tmp(_valPtr - n);
 				return (tmp);
 			}

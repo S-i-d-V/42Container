@@ -423,8 +423,6 @@ namespace ft{
 				}
 			}
 
-	
-
 			//Exchanges the content of the container by the content of src which is a container object of the same type.
 			void					swap(vector& x);
 
@@ -435,7 +433,6 @@ namespace ft{
 					_size--;
 				}
 			}
-
 
 			//===========//
 			// Allocator //

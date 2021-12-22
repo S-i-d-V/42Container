@@ -251,8 +251,6 @@ namespace ft{
 				return (_data[_size - 1]);
 			}
 
-	/*
-
 			//==========//
 			// Modifier //
 			//==========//
@@ -260,12 +258,21 @@ namespace ft{
 			//Assign new contents to the vector by replace current content and modifying its size.
 				//By range of iterators
 			template <class inputIterator>
-			void					assign(inputIterator first, inputIterator last);
+			void					assign(inputIterator first, inputIterator last){
+				//i clear the vector;
+				clear();
+				//i insert the range of iterator
+				insert(begin(), first, last);
+			}
 
 				//Fill
-			void					assign(size_type n, value_type const& val);
+			void					assign(size_type n, value_type const& val){
+				//i clear the vector;
+				clear();
+				//i insert the range of iterator
+				insert(begin(), n, val);
+			}
 
-	*/
 
 			//Add a new element at the end of the container and increases the storage space only if the new size surpasses the current capacity
 			void					push_back(value_type const& val){
@@ -346,7 +353,7 @@ namespace ft{
 				//get the index of the iterator in the vector
 				difference_type index = &(*position) - &(*begin());
 				//get the size of the range first last
-				difference_type n = last - first;
+				difference_type n = &(*last) - &(*first); 
 				//if the final size if bigger than capacity i realloc
 				if (_size + n > _capacity && _size + n <= _capacity * 2)
 					reserve(_capacity * 2);
@@ -396,7 +403,7 @@ namespace ft{
 				//get the index of the range in the vector
 				difference_type index = &(*first) - &(*begin());
 				//get the size of the range first last
-				difference_type n = last - first;
+				difference_type n = &(*last) - &(*first); 
 				//i set an iterator pointing on the index got from position.
 				iterator newPos(&_data[index]);
 				//if the iterator isnt at the end of the vector, i shift every thing to the left
@@ -434,7 +441,9 @@ namespace ft{
 			// Allocator //
 			//===========//
 				//Return a copy of the allocator object associated with the vector;
-			//allocator_type	get_Alloc()		const;
+			allocator_type	get_allocator()		const{
+				return (_alloc);
+			}
 
 
 		//=================//

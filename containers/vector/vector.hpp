@@ -182,7 +182,7 @@ namespace ft{
 				return (false);
 			}
 
-
+			//PEUT ETRE EXCEPTION SI N > MAXSIZE
 			//Resize the container so that it contains n elements;
 			void					resize(size_type n, value_type val = value_type()){
 				if (n < _size){
@@ -205,6 +205,8 @@ namespace ft{
 
 			//Request that the container capacity be at least enough to contain n elements
 			void					reserve(size_type n){
+				if (n > max_size())
+					throw std::length_error;
 				if (n > _capacity){
 					value_type *tmp = NULL;
 					tmp = _alloc.allocate(n);
@@ -223,13 +225,13 @@ namespace ft{
 			//Return a reference to the elements at positon n in the container
 			reference				at(size_type n){
 				if (_size == 0 || n > _size || n < 0)
-					throw out_of_range();
+					throw std::out_of_range();
 				return (_data[n]);
 			}
 
 			const_reference			at(size_type n)	const{
 				if (_size == 0 || n > _size || n < 0)
-					throw out_of_range();
+					throw std::out_of_range();
 				return (_data[n]);
 			}
 

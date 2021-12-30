@@ -3,7 +3,6 @@
 
 //Utils headers
 #include "../../utils/enable_if.hpp"
-#include "../../utils/out_of_range.hpp"
 #include "../../utils/equal.hpp"
 #include "../../utils/lexicographical_compare.hpp"
 
@@ -14,6 +13,7 @@
 //Header needed by vector
 #include <utility>
 #include <memory>
+#include <stdexcept>
 
 //Header temporaires
 #include <iostream>
@@ -206,7 +206,7 @@ namespace ft{
 			//Request that the container capacity be at least enough to contain n elements
 			void					reserve(size_type n){
 				if (n > max_size())
-					throw std::length_error;
+					throw std::length_error("vector: reserve: length_error");
 				if (n > _capacity){
 					value_type *tmp = NULL;
 					tmp = _alloc.allocate(n);
@@ -455,7 +455,6 @@ namespace ft{
 			allocator_type	_alloc;
 
 	}; //end of vector class
-
 
 	//====================//
 	//Non-member overloads//

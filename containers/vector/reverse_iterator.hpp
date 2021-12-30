@@ -1,39 +1,43 @@
 #ifndef REVERSE_ITERATOR_HPP
 #define REVERSE_ITERATOR_HPP
 
+/*****************************************************************************/
+/*                                Includes                                   */
+/*****************************************************************************/
+
+//Headers needed by iterators
 #include "../../utils/iterator_traits.hpp"
 
-//============//
-//namespace ft//
-//============//
+/*****************************************************************************/
+/*                                Namespace FT                               */
+/*****************************************************************************/
 namespace ft{
 
-	//====================//
-	//reverse_iterator class//
-	//====================//
+	/*****************************************************************************/
+	/*                      Class reverse vector iterator                        */
+	/*****************************************************************************/
 	template <class Iter>
 	class reverse_iterator{
 
-		//==============//
-		//Public members//
-		//==============//
+		/*****************************************************************************/
+		/*                             Public members                                */
+		/*****************************************************************************/
 		public:
-			//==================//
-			//Typedef / typename//
-			//==================//
+			
+			/*****************************************************************************/
+			/*                              Members types                                */
+			/*****************************************************************************/
 
 			typedef		Iter															iterator_type;
-
-			//Iterator traits
 			typedef typename	ft::iterator_traits<Iter>::difference_type				difference_type;
 			typedef	typename	ft::iterator_traits<Iter>::value_type					value_type;
 			typedef typename	ft::iterator_traits<Iter>::reference					reference;
 			typedef typename	ft::iterator_traits<Iter>::pointer						pointer;
 			typedef	typename	ft::iterator_traits<Iter>::iterator_category			iterator_category;
 
-			//=======================//
-			//Constructors/Destructor//
-			//=======================//
+			/*****************************************************************************/
+			/*                               Constructors                                */
+			/*****************************************************************************/
 
 			//Default constructor
 			reverse_iterator(): _base(){
@@ -50,31 +54,31 @@ namespace ft{
 				return;
 			}
 
+			/*****************************************************************************/
+			/*                                Destructors                                */
+			/*****************************************************************************/
+
 			~reverse_iterator(){
 				return;
 			}
+
+			/*****************************************************************************/
+			/*                             Member function                               */
+			/*****************************************************************************/
+
+			iterator_type base() const{
+				return (_base);
+			}
+
+			/*****************************************************************************/
+			/*                           Operators overloads                             */
+			/*****************************************************************************/
 
 			//Assignement operator
 			reverse_iterator &operator=(reverse_iterator const & rhs){
 				_base = rhs.base();
 				return (*this);
 			}
-
-			//================//
-			//Member functions//
-			//================//
-
-			iterator_type base() const{
-				return (_base);
-			}
-
-			//==================//
-			//Operator overloads//
-			//==================//
-
-				//================//
-				//Access overloads//
-				//================//
 
 			//Pointer operator
 			pointer operator->(){
@@ -88,10 +92,6 @@ namespace ft{
 				ret--;
 				return (*ret);
 			}
-
-				//=============================//
-				//Increment/Decrement overloads//
-				//=============================//
 
 			//Increment operator prefixe it++;
 			reverse_iterator &operator++(){
@@ -119,10 +119,6 @@ namespace ft{
 				return (ret);
 			}
 
-			//======================//
-			//Assignements overloads//
-			//======================//
-
 			reverse_iterator &operator+=(difference_type n){
 				_base -= n;
 				return (*this);
@@ -145,18 +141,17 @@ namespace ft{
 				return (ret);
 			}
 
-
-		//==============//
-		//Public members//
-		//==============//
+		/*****************************************************************************/
+		/*                            Private members                                */
+		/*****************************************************************************/
 		private:
 			iterator_type _base;
 
 	}; //End of reverse_iterator class;
 
-	//====================//
-	//Non-member overloads//
-	//====================//
+	/*****************************************************************************/
+	/*                          Comparaisons overloads                           */
+	/*****************************************************************************/
 
 	//Equal operator
 	template<class Iterator>
@@ -220,4 +215,4 @@ namespace ft{
 
 } //End of namespace ft
 
-#endif
+#endif//End of the header

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 02:43:24 by user42            #+#    #+#             */
-/*   Updated: 2022/01/07 16:13:40 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/08 22:04:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,17 @@ bool	size_cleared_stack(){
 	return false;
 }
 
-bool	stack_size_test(){
+bool	size_test_stack(){
 	std::cout << std::endl << "\033[34;1mSize() :\033[0m" << std::endl;
+	bool ret = true;
 	if (size_empty_stack() == false)
-		return (print_function_ko());
+		ret = false;
 	if (size_filled_stack() == false)
-		return (print_function_ko());
+		ret = false;
 	if (size_cleared_stack() == false)
+		ret = false;
+	if (ret == false)
 		return (print_function_ko());
-	return (print_function_ok());
+	else
+		return (print_function_ok());
 }

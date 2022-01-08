@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_empty.cpp                                        :+:      :+:    :+:   */
+/*   s_push.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 02:43:24 by user42            #+#    #+#             */
-/*   Updated: 2022/01/08 22:04:09 by user42           ###   ########.fr       */
+/*   Created: 2022/01/08 18:41:46 by user42            #+#    #+#             */
+/*   Updated: 2022/01/08 21:58:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test_stack.hpp"
 
-bool	empty_empty_stack(){
+bool	push_single_element_stack(){
 	std::cout << "\033[0;1mTest 1\033[0m - ";
 	std::stack<int>		rstack;
 	ft::stack<int>		mstack;
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	bool ret1 = rstack.empty();
+	rstack.push(1);
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	bool ret2 = mstack.empty();
+	mstack.push(1);
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	if (rstack.top() == mstack.top() || rstack.size() == mstack.size()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -39,30 +39,30 @@ bool	empty_empty_stack(){
 	return false;
 }
 
-bool	empty_filled_stack(){
+bool	push_on_cleared_stack(){
 	std::cout << "\033[0;1mTest 2\033[0m - ";
 	std::stack<int>		rstack;
 	ft::stack<int>		mstack;
-	for (int i = 0; i < 10; i++){
-		rstack.push(i);
-		mstack.push(i);
-	}
+	rstack.push(0);
+	mstack.push(0);
+	rstack.pop();
+	mstack.pop();
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	bool ret1 = rstack.empty();
+	rstack.push(1);
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	bool ret2 = mstack.empty();
+	mstack.push(1);
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	if (rstack.top() == mstack.top() || rstack.size() == mstack.size()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -70,49 +70,82 @@ bool	empty_filled_stack(){
 	return false;
 }
 
-bool	empty_cleared_filled_stack(){
+bool	push_1000_element_stack(){
 	std::cout << "\033[0;1mTest 3\033[0m - ";
 	std::stack<int>		rstack;
 	ft::stack<int>		mstack;
-	for (int i = 0; i < 10; i++){
-		rstack.push(i);
-		mstack.push(i);
-	}
-	for (int i = 0; i < 10; i++){
-		rstack.pop();
-		mstack.pop();
-	}
-	
+
 	//std test
 	std::time_t time1 = std::time(NULL);
-	bool ret1 = rstack.empty();
+	for (int i = 0; i < 1000; i++)
+		rstack.push(i);
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	bool ret2 = mstack.empty();
+	for (int i = 0; i < 1000; i++)
+		mstack.push(i);
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
-		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
-		return true;
+	for (int i = 0; i < 999; i++){
+		if (rstack.top() != mstack.top() || rstack.size() != mstack.size()){
+			std::cout << "\033[31mKO\033[0m" << std::endl;
+			return false;
+		}
+		rstack.pop();
+		mstack.pop();
 	}
-	std::cout << "\033[31mKO\033[0m" << std::endl;
-	return false;
+	std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
+	return true;
 }
 
-bool	empty_test_stack(){
-	std::cout << "\033[34;1mEmpty() :\033[0m" << std::endl;
+bool	push_10000000_element_stack(){
+	std::cout << "\033[0;1mTest 4\033[0m - ";
+	std::stack<int>		rstack;
+	ft::stack<int>		mstack;
+
+	//std test
+	std::time_t time1 = std::time(NULL);
+	for (int i = 0; i < 10000000; i++)
+		rstack.push(i);
+	time1 = std::time(NULL) - time1;
+
+	//ft test
+	std::time_t time2 = std::time(NULL);
+	for (int i = 0; i < 10000000; i++)
+		mstack.push(i);
+	time2 = std::time(NULL) - time2;
+
+	//get diff time
+	std::time_t diff = time2 - time1;
+
+	//ret
+	for (int i = 0; i < 9999999; i++){
+		if (rstack.top() != mstack.top() || rstack.size() != mstack.size()){
+			std::cout << "\033[31mKO\033[0m" << std::endl;
+			return false;
+		}
+		rstack.pop();
+		mstack.pop();
+	}
+	std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
+	return true;
+}
+
+bool	push_test_stack(){
+	std::cout << std::endl << "\033[34;1mPush() :\033[0m" << std::endl;
 	bool ret = true;
-	if (empty_empty_stack() == false)
+	if (push_single_element_stack() == false)
 		ret = false;
-	if (empty_filled_stack() == false)
+	if (push_on_cleared_stack() == false)
 		ret = false;
-	if (empty_cleared_filled_stack() == false)
+	if (push_1000_element_stack() == false)
+		ret = false;
+	if (push_10000000_element_stack() == false)
 		ret = false;
 	if (ret == false)
 		return (print_function_ko());

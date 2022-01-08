@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_empty.cpp                                        :+:      :+:    :+:   */
+/*   s_top.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 02:43:24 by user42            #+#    #+#             */
+/*   Created: 2022/01/08 18:18:02 by user42            #+#    #+#             */
 /*   Updated: 2022/01/08 22:04:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test_stack.hpp"
 
-bool	empty_empty_stack(){
+bool	top_single_elem_stack(){
 	std::cout << "\033[0;1mTest 1\033[0m - ";
 	std::stack<int>		rstack;
 	ft::stack<int>		mstack;
+	rstack.push(1);
+	mstack.push(1);
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	bool ret1 = rstack.empty();
+	int ret1 = rstack.top();
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	bool ret2 = mstack.empty();
+	int ret2 = mstack.top();
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
@@ -39,7 +41,7 @@ bool	empty_empty_stack(){
 	return false;
 }
 
-bool	empty_filled_stack(){
+bool	top_filled_stack(){
 	std::cout << "\033[0;1mTest 2\033[0m - ";
 	std::stack<int>		rstack;
 	ft::stack<int>		mstack;
@@ -50,12 +52,12 @@ bool	empty_filled_stack(){
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	bool ret1 = rstack.empty();
+	int ret1 = rstack.top();
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	bool ret2 = mstack.empty();
+	int ret2 = mstack.top();
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
@@ -70,7 +72,7 @@ bool	empty_filled_stack(){
 	return false;
 }
 
-bool	empty_cleared_filled_stack(){
+bool	top_cleared_stack(){
 	std::cout << "\033[0;1mTest 3\033[0m - ";
 	std::stack<int>		rstack;
 	ft::stack<int>		mstack;
@@ -78,19 +80,15 @@ bool	empty_cleared_filled_stack(){
 		rstack.push(i);
 		mstack.push(i);
 	}
-	for (int i = 0; i < 10; i++){
-		rstack.pop();
-		mstack.pop();
-	}
-	
+
 	//std test
 	std::time_t time1 = std::time(NULL);
-	bool ret1 = rstack.empty();
+	int ret1 = rstack.top();
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	bool ret2 = mstack.empty();
+	int ret2 = mstack.top();
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
@@ -105,14 +103,14 @@ bool	empty_cleared_filled_stack(){
 	return false;
 }
 
-bool	empty_test_stack(){
-	std::cout << "\033[34;1mEmpty() :\033[0m" << std::endl;
+bool	top_test_stack(){
+	std::cout << std::endl << "\033[34;1mTop() :\033[0m" << std::endl;
 	bool ret = true;
-	if (empty_empty_stack() == false)
+	if (top_single_elem_stack() == false)
 		ret = false;
-	if (empty_filled_stack() == false)
+	if (top_filled_stack() == false)
 		ret = false;
-	if (empty_cleared_filled_stack() == false)
+	if (top_cleared_stack() == false)
 		ret = false;
 	if (ret == false)
 		return (print_function_ko());

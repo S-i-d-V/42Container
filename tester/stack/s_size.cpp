@@ -6,11 +6,11 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 02:43:24 by user42            #+#    #+#             */
-/*   Updated: 2022/01/08 22:04:09 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/09 01:10:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_stack.hpp"
+#include "../tester.hpp"
 
 bool	size_empty_stack(){
 	std::cout << "\033[0;1mTest 1\033[0m - ";

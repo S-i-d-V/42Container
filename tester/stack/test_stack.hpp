@@ -10,13 +10,6 @@
 #include <stack>
 #include "../../containers/stack/stack.hpp"
 
-//utils
-void	print_stack();
-bool	print_ok();
-bool	print_ko();
-bool	print_function_ok();
-bool	print_function_ko();
-
 //stack empty test
 bool	empty_empty_stack();
 bool	empty_filled_stack();

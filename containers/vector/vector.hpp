@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2021/12/30 18:04:33 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/09 00:45:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ namespace ft{
 				_size = src._size;
 				_capacity = src._capacity;
 				_data = _alloc.allocate(_capacity);
-				for (int i = 0; i < _size; i++)
+				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&_data[i], src._data[i]);
 				return;
 			}
@@ -221,7 +221,7 @@ namespace ft{
 				if (n > _capacity){
 					value_type *tmp = NULL;
 					tmp = _alloc.allocate(n);
-					for (int i = 0; i < _size; i++)
+					for (size_type i = 0; i < _size; i++)
 						_alloc.construct(&tmp[i], _data[i]);
 					_alloc.deallocate(_data, _capacity);
 					_capacity = n;

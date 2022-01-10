@@ -17,7 +17,10 @@ EXEC = ContainerTester
 
 #FILES
 MAIN = main.cpp
-SRCS =	stack/s_empty.cpp stack/s_pop.cpp stack/s_push.cpp stack/s_size.cpp stack/s_top.cpp stack/test_stack.cpp vector/test_vector.cpp utils.cpp 
+SRCS =	stack/s_empty.cpp stack/s_pop.cpp stack/s_push.cpp stack/s_size.cpp stack/s_top.cpp stack/test_stack.cpp \
+		vector/test_vector.cpp \
+		map/test_map.cpp \
+		utils.cpp 
 SRCSPATH = $(addprefix $(SRCSDIR), $(SRCS))
 OBJSDIR = objects
 OBJS = $(SRCS:%.cpp=$(OBJSDIR)/%.o)
@@ -25,7 +28,7 @@ OBJS = $(SRCS:%.cpp=$(OBJSDIR)/%.o)
 #RULES
 $(OBJSDIR)/%.o: %.cpp
 	echo "$(BLUE)Compiling $(YELLOW)$@$(BLUE) from $(YELLOW)$^$(BLUE) ..$(CLEAR)"
-	mkdir -p $(OBJSDIR) $(OBJSDIR)/stack $(OBJSDIR)/vector
+	mkdir -p $(OBJSDIR) $(OBJSDIR)/stack $(OBJSDIR)/vector $(OBJSDIR)/map
 	$(CC) $(CCFLAGS) -c $< -o $@
 	echo "$(BLUE) - $(YELLOW)$@$(CLEAR) [$(GREEN)OK$(CLEAR)]"
 

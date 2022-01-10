@@ -21,8 +21,9 @@
 #include "vector/test_vector.hpp"
 
 //utils
-void	print_stack();
 void	print_vector();
+void	print_stack();
+void	print_map();
 bool	print_ok();
 bool	print_ko();
 bool	print_function_ok();
@@ -31,7 +32,8 @@ bool	print_container_ok();
 bool	print_container_ko();
 
 //testers
-bool	test_stack();
 bool	test_vector();
+bool	test_stack();
+bool	test_map();
 
 #endif

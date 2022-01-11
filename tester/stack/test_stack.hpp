@@ -2,13 +2,7 @@
 #define TEST_STACK_HPP
 
 //Utils headers
-#include <iostream>
-#include <ctime>
-
-//Stacks headers
-#include <algorithm>
-#include <stack>
-#include "../../containers/stack/stack.hpp"
+#include "../tester.hpp"
 
 //stack empty test
 bool	empty_empty_stack();

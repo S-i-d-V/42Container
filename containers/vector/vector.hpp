@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2022/01/09 00:45:01 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/11 02:33:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,20 +197,18 @@ namespace ft{
 			//Resize the container so that it contains n elements;
 			void					resize(size_type n, value_type val = value_type()){
 				if (n < _size){
-					for (int i = _size - 1; i >= n; i--){
-						_alloc.destroy(&_data[i]);
-						_size--;
-					}
+					while (_size != n)
+						erase(end());
 				}
 				else if (n > _size && n <= _capacity){
 					while (_size < n)
-						push_back(0);
+						push_back(val);
 				}
 				else if (n > _capacity){
-					int tmpSize = _size;
+					size_type tmpSize = _size;
 					reserve(n);
-					for (int i = tmpSize; i < n; i++)
-						push_back(0);
+					for (size_type i = tmpSize; i < n; i++)
+						push_back(val);
 				}
 			}
 
@@ -332,7 +330,7 @@ namespace ft{
 					for (iterator initialEnd(end()); initialEnd != newPos; initialEnd--)
 						_alloc.construct(&(*(initialEnd + static_cast<int>(n) - 1)), *(initialEnd - 1));
 				}
-				for (size_type i = 0; i < static_cast<int>(n); i++, newPos++)
+				for (size_type i = 0; i < n; i++, newPos++)
 					_alloc.construct(&(*newPos), val);
 				_size += n;
 			}
@@ -365,7 +363,9 @@ namespace ft{
 			iterator				erase(iterator position){
 				difference_type index = &(*position) - &(*begin());
 				iterator newPos(&_data[index]);
+				iterator ret = NULL;
 				if (newPos != end()){
+					ret = newPos + 1;
 					while (newPos != end()){
 						_alloc.construct(&(*(newPos)), *(newPos + 1));
 						newPos++;
@@ -373,6 +373,9 @@ namespace ft{
 				}
 				_alloc.destroy(&(*end()));
 				_size -= 1;
+				if (ret == NULL)
+					ret = end();
+				return (ret);
 			}
 
 			//2-Erase every elements between first and last.
@@ -380,7 +383,9 @@ namespace ft{
 				difference_type index = &(*first) - &(*begin());
 				difference_type n = &(*last) - &(*first); 
 				iterator newPos(&_data[index]);
+				iterator ret = NULL;
 				if (newPos != end()){
+					ret = newPos + 1;
 					while (newPos != last){
 						_alloc.destroy(&(*(newPos)));
 						_alloc.construct(&(*(newPos)), *(newPos + n));
@@ -392,6 +397,9 @@ namespace ft{
 					_size--;
 					n--;
 				}
+				if (ret == NULL)
+					ret = end();
+				return (ret);
 			}
 
 			//Exchanges the content of the container by the content of src which is a container object of the same type.

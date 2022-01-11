@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2022/01/11 02:33:21 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/11 22:11:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,8 @@ namespace ft{
 			void					reserve(size_type n){
 				if (n > max_size())
 					throw std::length_error("vector: reserve: length_error");
+				else if (n == max_size())
+					throw std::bad_alloc();
 				if (n > _capacity){
 					value_type *tmp = NULL;
 					tmp = _alloc.allocate(n);

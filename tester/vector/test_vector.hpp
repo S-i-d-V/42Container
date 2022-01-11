@@ -4,6 +4,34 @@
 //Utils headers
 #include "../tester.hpp"
 
+//ITERATORS
+//iterarators test
+bool	iterator_begin_vector();
+bool	iterator_end_vector();
+bool	iterator_iterating_vector();
+bool	iterator_iterating_empty_vector();
+bool	iterator_checking_vector();
+bool	iterator_checking_cleared_vector();
+bool	iterator_plus_overload_vector();
+bool	iterator_sub_overload_vector();
+bool	iterator_plusequal_overload_vector();
+bool	iterator_subequal_overload_vector();
+bool	iterator_test_vector();
+
+//reverse iterator test
+bool	reviterator_rbegin_vector();
+bool	reviterator_rend_vector();
+bool	reviterator_iterating_vector();
+bool	reviterator_iterating_empty_vector();
+bool	reviterator_checking_vector();
+bool	reviterator_checking_cleared_vector();
+bool	reviterator_plus_overload_vector();
+bool	reviterator_sub_overload_vector();
+bool	reviterator_plusequal_overload_vector();
+bool	reviterator_subequal_overload_vector();
+bool	reviterator_test_vector();
+
+//CAPACITY
 //size test
 bool	size_empty_vector();
 bool	size_filled_vector();

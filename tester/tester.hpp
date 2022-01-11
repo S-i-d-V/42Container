@@ -5,6 +5,10 @@
 #include <iostream>
 #include <ctime>
 
+//Iterators
+#include <iterator>
+#include "../containers/vector/vector_iterator.hpp"
+
 //Algorithm headers
 #include <algorithm>
 

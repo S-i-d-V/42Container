@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 16:47:29 by user42            #+#    #+#             */
-/*   Updated: 2022/01/11 17:17:48 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/11 22:13:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,19 +130,31 @@ bool	reserve_zero_filled_vector(){
 
 bool	reserve_max_size_vector(){
 	std::cout << "\033[0;1mTest 5\033[0m - ";
-	std::vector<int>		rvect;
-	ft::vector<int>			mvect;
+	std::vector<int>		rvect(5, 0);
+	ft::vector<int>			mvect(5, 0);
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	rvect.reserve(mvect.max_size());
-	double ret1 = rvect.capacity();
+	double ret1;
+	try {
+		rvect.reserve(rvect.max_size());
+		ret1 = rvect.capacity();
+	}
+	catch (std::bad_alloc){
+		ret1 = 0;
+	}
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	mvect.reserve(mvect.max_size());
-	double ret2 = mvect.capacity();
+	double ret2;
+	try {
+		mvect.reserve(mvect.max_size());
+		ret2 = mvect.capacity();
+	}
+	catch (std::bad_alloc){
+		ret2 = 0;
+	}
 	time2 = std::time(NULL) - time2;
 
 	//get diff time

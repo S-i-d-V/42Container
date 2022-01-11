@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 01:57:16 by user42            #+#    #+#             */
-/*   Updated: 2022/01/11 02:33:46 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/11 22:04:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ bool	size_resized_vector(){
 }
 
 bool	size_test_vector(){
-	std::cout << "\033[34;1mSize() :\033[0m" << std::endl;
+	std::cout << std::endl << "\033[34;1mSize() :\033[0m" << std::endl;
 	bool ret = true;
 	if (size_empty_vector() == false)
 		ret = false;

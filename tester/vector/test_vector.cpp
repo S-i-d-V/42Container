@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 01:13:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/11 17:01:01 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/12 00:18:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ bool		test_vector(){
 	bool ret = true;
 
 	print_vector();
+	if (iterator_test_vector() == false)
+		ret = false;
+	if (reviterator_test_vector() == false)
+		ret = false;
 	if (size_test_vector() == false)
 		ret = false;
 	if (max_size_test_vector() == false)

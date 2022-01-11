@@ -38,4 +38,21 @@ bool	capacity_filled_vector();
 bool	capacity_filled_cleared_vector();
 bool	capacity_test_vector();
 
+//empty test
+bool	empty_empty_vector();
+bool	empty_filled_vector();
+bool	empty_cleared_filled_vector();
+bool	empty_test_vector();
+
+//reserve test
+bool	reserve_empty_vector();
+bool	reserve_zero_empty_vector();
+bool	reserve_filled_vector();
+bool	reserve_zero_filled_vector();
+bool	reserve_max_size_vector();
+bool	reserve_more_maxsize_vector();
+bool	reserve_zero_cleared_vector();
+bool	reserve_cleared_vector();
+bool	reserve_test_vector();
+
 #endif

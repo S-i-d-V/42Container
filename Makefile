@@ -39,9 +39,6 @@ fclean:
 	$(RM) $(EXEC1) $(EXEC2)
 	echo "$(RED) - Binaries $(YELLOW)$(EXEC1) & $(EXEC2)$(RED) deleted.$(CLEAR)"
 
-newline:
-	echo ""
-
-re: fclean newline all
+re: fclean all
 
 .PHONY: all

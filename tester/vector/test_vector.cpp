@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 01:13:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/11 02:37:28 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/11 17:01:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ bool		test_vector(){
 	if (resize_test_vector() == false)
 		ret = false;
 	if (capacity_test_vector() == false)
+		ret = false;
+	if (empty_test_vector() == false)
+		ret = false;
+	if (reserve_test_vector() == false)
 		ret = false;
 	if (ret == false)
 		return (print_container_ko());

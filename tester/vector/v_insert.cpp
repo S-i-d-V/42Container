@@ -1,37 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   v_reverse_iterators.cpp                            :+:      :+:    :+:   */
+/*   v_insert.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 18:26:26 by user42            #+#    #+#             */
-/*   Updated: 2022/01/14 00:53:44 by user42           ###   ########.fr       */
+/*   Created: 2022/01/13 15:06:40 by user42            #+#    #+#             */
+/*   Updated: 2022/01/14 00:51:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../tester.hpp"
 
-bool	reviterator_rbegin_vector(){
+bool	insert_elem_front_vector(){
 	std::cout << "\033[0;1mTest 1\033[0m - ";
-	std::vector<int>	rvect(25, 5);
+	std::vector<int>		rvect(25, 5);
 	ft::vector<int>		mvect(25, 5);
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	int ret1 = *rvect.rbegin();
+	rvect.insert(rvect.begin(), 1);
+	int ret1 = rvect.front();
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	int ret2 = *mvect.rbegin();
+	mvect.insert(mvect.begin(), 1);
+	int ret2 = mvect.front();
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	if (ret1 == ret2 && rvect.size() == mvect.size() && rvect.empty() == mvect.empty()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -39,26 +41,28 @@ bool	reviterator_rbegin_vector(){
 	return false;
 }
 
-bool	reviterator_rend_vector(){
+bool	insert_elem_back_vector(){
 	std::cout << "\033[0;1mTest 2\033[0m - ";
-	std::vector<int>	rvect(25, 5);
+	std::vector<int>		rvect(25, 5);
 	ft::vector<int>		mvect(25, 5);
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	int ret1 = *rvect.rend();
+	rvect.insert(rvect.end(), 1);
+	int ret1 = rvect.back();
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	int ret2 = *mvect.rend();
+	mvect.insert(mvect.end(), 1);
+	int ret2 = mvect.back();
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	if (ret1 == ret2 && rvect.size() == mvect.size() && rvect.empty() == mvect.empty()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -66,38 +70,28 @@ bool	reviterator_rend_vector(){
 	return false;
 }
 
-bool	reviterator_iterating_vector(){
+bool	insert_elem_in_vector(){
 	std::cout << "\033[0;1mTest 3\033[0m - ";
-	std::vector<int>	rvect(25, 5);
+	std::vector<int>		rvect(25, 5);
 	ft::vector<int>		mvect(25, 5);
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	std::reverse_iterator<std::vector<int>::iterator> rrit = rvect.rbegin();
-	std::reverse_iterator<std::vector<int>::iterator> rrite = rvect.rend();
-	size_t ret1 = 0;
-	while (rrit != rrite){
-		rrit++;
-		ret1++;
-	}
+	rvect.insert(rvect.begin() + 5, 1);
+	int ret1 = *(rvect.begin() + 5);
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	ft::reverse_iterator<ft::vector<int>::iterator> mrit = mvect.rbegin();
-	ft::reverse_iterator<ft::vector<int>::iterator> mrite = mvect.rend();
-	size_t ret2 = 0;
-	while (mrit != mrite){
-		mrit++;
-		ret2++;
-	}
+	mvect.insert(mvect.begin() + 5, 1);
+	int ret2 = *(mvect.begin() + 5);
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	if (ret1 == ret2 && rvect.size() == mvect.size() && rvect.empty() == mvect.empty()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -105,38 +99,28 @@ bool	reviterator_iterating_vector(){
 	return false;
 }
 
-bool	reviterator_iterating_empty_vector(){
+bool	insert_fill_in_vector(){
 	std::cout << "\033[0;1mTest 4\033[0m - ";
-	std::vector<int>	rvect;
-	ft::vector<int>		mvect;
+	std::vector<int>		rvect(25, 5);
+	ft::vector<int>		mvect(25, 5);
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	std::reverse_iterator<std::vector<int>::iterator> rrit = rvect.rbegin();
-	std::reverse_iterator<std::vector<int>::iterator> rrite = rvect.rend();
-	size_t ret1 = 0;
-	while (rrit != rrite){
-		rrit++;
-		ret1++;
-	}
+	rvect.insert(rvect.begin() + 5, 10, 1);
+	int ret1 = *(rvect.begin() + 5);
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	ft::reverse_iterator<ft::vector<int>::iterator> mrit = mvect.rbegin();
-	ft::reverse_iterator<ft::vector<int>::iterator> mrite = mvect.rend();
-	size_t ret2 = 0;
-	while (mrit != mrite){
-		mrit++;
-		ret1++;
-	}
+	mvect.insert(mvect.begin() + 5, 10, 1);
+	int ret2 = *(mvect.begin() + 5);
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	if (ret1 == ret2 && rvect.size() == mvect.size() && rvect.empty() == mvect.empty()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -144,40 +128,30 @@ bool	reviterator_iterating_empty_vector(){
 	return false;
 }
 
-bool	reviterator_checking_vector(){
+bool	insert_fill_cleared_vector(){
 	std::cout << "\033[0;1mTest 5\033[0m - ";
-	std::vector<int>	rvect(25, 0);
-	ft::vector<int>		mvect(25, 0);
-	
+	std::vector<int>		rvect(25, 5);
+	ft::vector<int>		mvect(25, 5);
+	rvect.clear();
+	mvect.clear();
+
 	//std test
 	std::time_t time1 = std::time(NULL);
-	std::reverse_iterator<std::vector<int>::iterator> rrit = rvect.rbegin();
-	std::reverse_iterator<std::vector<int>::iterator> rrite = rvect.rend();
-	bool ret1 = true;
-	while (rrit != rrite){
-		if (*rrit != 0)
-			ret1 = false;
-		rrit++;
-	}
+	rvect.insert(rvect.begin(), 10, 1);
+	int ret1 = *(rvect.begin());
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	ft::reverse_iterator<ft::vector<int>::iterator> mrit = mvect.rbegin();
-	ft::reverse_iterator<ft::vector<int>::iterator> mrite = mvect.rend();
-	bool ret2 = true;
-	while (mrit != mrite){
-		if (*mrit != 0)
-			ret2 = false;
-		mrit++;
-	}
+	mvect.insert(mvect.begin(), 10, 1);
+	int ret2 = *(mvect.begin());
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	if (ret1 == ret2 && rvect.size() == mvect.size() && rvect.empty() == mvect.empty()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -185,38 +159,40 @@ bool	reviterator_checking_vector(){
 	return false;
 }
 
-bool	reviterator_plus_overload_vector(){
+bool	insert_range_in_vector(){
 	std::cout << "\033[0;1mTest 6\033[0m - ";
-	std::vector<int>	rvect;
-	ft::vector<int>		mvect;
-	rvect.push_back(1);
-	mvect.push_back(1);
-	rvect.push_back(2);
-	mvect.push_back(2);
-	rvect.push_back(3);
-	mvect.push_back(3);
-	rvect.push_back(4);
-	mvect.push_back(4);
-	rvect.push_back(5);
-	mvect.push_back(5);
+	std::vector<int>		rvect(25, 5);
+	ft::vector<int>		mvect(25, 5);
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	std::reverse_iterator<std::vector<int>::iterator> rrit = rvect.rbegin() + 3;
-	int ret1 = *rrit;
+	std::vector<int>		rvect2(25, 2);
+	rvect.insert(rvect.begin(), rvect2.begin(), rvect2.end());
+	int ret1 = *(rvect.begin());
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	ft::reverse_iterator<ft::vector<int>::iterator> mrit = mvect.rbegin() + 3;
-	int ret2 = *mrit;
+	ft::vector<int>		mvect2(25, 2);
+	mvect.insert(mvect.begin(), mvect2.begin(), mvect2.end());
+	int ret2 = *(mvect.begin());
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	std::vector<int>::iterator rit = rvect.begin();
+	ft::vector<int>::iterator mit = mvect.begin();
+	while (rit != rvect.end() && mit != mvect.end()){
+		if (*rit != *mit){
+			std::cout << "\033[31mKO\033[0m" << std::endl;
+			return false;
+		}
+		rit++;
+		mit++;
+	}
+	if (ret1 == ret2 && rvect.size() == mvect.size() && rvect.empty() == mvect.empty()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -224,38 +200,42 @@ bool	reviterator_plus_overload_vector(){
 	return false;
 }
 
-bool	reviterator_sub_overload_vector(){
+bool	insert_range_cleared_vector(){
 	std::cout << "\033[0;1mTest 7\033[0m - ";
-	std::vector<int>	rvect;
-	ft::vector<int>		mvect;
-	rvect.push_back(1);
-	mvect.push_back(1);
-	rvect.push_back(2);
-	mvect.push_back(2);
-	rvect.push_back(3);
-	mvect.push_back(3);
-	rvect.push_back(4);
-	mvect.push_back(4);
-	rvect.push_back(5);
-	mvect.push_back(5);
+	std::vector<int>		rvect(25, 5);
+	ft::vector<int>		mvect(25, 5);
+	rvect.clear();
+	mvect.clear();
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	std::reverse_iterator<std::vector<int>::iterator> rrit = rvect.rend() - 3;
-	int ret1 = *rrit;
+	std::vector<int>		rvect2(25, 2);
+	rvect.insert(rvect.begin(), rvect2.begin(), rvect2.end());
+	int ret1 = *(rvect.begin());
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	ft::reverse_iterator<ft::vector<int>::iterator> mrit = mvect.rend() - 3;
-	int ret2 = *mrit;
+	ft::vector<int>		mvect2(25, 2);
+	mvect.insert(mvect.begin(), mvect2.begin(), mvect2.end());
+	int ret2 = *(mvect.begin());
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	std::vector<int>::iterator rit = rvect.begin();
+	ft::vector<int>::iterator mit = mvect.begin();
+	while (rit != rvect.end() && mit != mvect.end()){
+		if (*rit != *mit){
+			std::cout << "\033[31mKO\033[0m" << std::endl;
+			return false;
+		}
+		rit++;
+		mit++;
+	}
+	if (ret1 == ret2 && rvect.size() == mvect.size() && rvect.empty() == mvect.empty()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -263,41 +243,42 @@ bool	reviterator_sub_overload_vector(){
 	return false;
 }
 
-bool	reviterator_plusequal_overload_vector(){
+bool	insert_range_empty_vector(){
 	std::cout << "\033[0;1mTest 8\033[0m - ";
-	std::vector<int>	rvect;
-	ft::vector<int>		mvect;
-	rvect.push_back(1);
-	mvect.push_back(1);
-	rvect.push_back(2);
-	mvect.push_back(2);
-	rvect.push_back(3);
-	mvect.push_back(3);
-	rvect.push_back(4);
-	mvect.push_back(4);
-	rvect.push_back(5);
-	mvect.push_back(5);
-
+	std::vector<int>		rvect(25, 5);
+	ft::vector<int>		mvect(25, 5);
+	rvect.clear();
+	mvect.clear();
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	std::reverse_iterator<std::vector<int>::iterator> rrit = rvect.rbegin();
-	rrit += 3;
-	int ret1 = *rrit;
+	std::vector<int>		rvect2;
+	rvect.insert(rvect.begin(), rvect2.begin(), rvect2.end());
+	int ret1 = *(rvect.begin());
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	ft::reverse_iterator<ft::vector<int>::iterator> mrit = mvect.rbegin();
-	mrit += 3;
-	int ret2 = *mrit;
+	ft::vector<int>		mvect2;
+	mvect.insert(mvect.begin(), mvect2.begin(), mvect2.end());
+	int ret2 = *(mvect.begin());
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	std::vector<int>::iterator rit = rvect.begin();
+	ft::vector<int>::iterator mit = mvect.begin();
+	while (rit != rvect.end() && mit != mvect.end()){
+		if (*rit != *mit){
+			std::cout << "\033[31mKO\033[0m" << std::endl;
+			return false;
+		}
+		rit++;
+		mit++;
+	}
+	if (ret1 == ret2 && rvect.size() == mvect.size() && rvect.empty() == mvect.empty()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -305,40 +286,36 @@ bool	reviterator_plusequal_overload_vector(){
 	return false;
 }
 
-bool	reviterator_subequal_overload_vector(){
+bool	insert_performance_vector(){
 	std::cout << "\033[0;1mTest 9\033[0m - ";
-	std::vector<int>	rvect;
-	ft::vector<int>		mvect;
-	rvect.push_back(1);
-	mvect.push_back(1);
-	rvect.push_back(2);
-	mvect.push_back(2);
-	rvect.push_back(3);
-	mvect.push_back(3);
-	rvect.push_back(4);
-	mvect.push_back(4);
-	rvect.push_back(5);
-	mvect.push_back(5);
+	std::vector<int>		rvect;
+	ft::vector<int>			mvect;
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	std::reverse_iterator<std::vector<int>::iterator> rrit = rvect.rbegin();
-	rrit -= 3;
-	int ret1 = *rrit;
+	rvect.insert(rvect.begin(), 10000, 0);
 	time1 = std::time(NULL) - time1;
 
 	//ft test
 	std::time_t time2 = std::time(NULL);
-	ft::reverse_iterator<ft::vector<int>::iterator> mrit = mvect.rbegin();
-	mrit -= 3;
-	int ret2 = *mrit;
+	mvect.insert(mvect.begin(), 10000, 0);
 	time2 = std::time(NULL) - time2;
 
 	//get diff time
 	std::time_t diff = time2 - time1;
 
 	//ret
-	if (ret1 == ret2){
+	std::vector<int>::iterator rit = rvect.begin();
+	ft::vector<int>::iterator mit = mvect.begin();
+	while (rit != rvect.end() && mit != mvect.end()){
+		if (*rit != *mit){
+			std::cout << "\033[31mKO\033[0m" << std::endl;
+			return false;
+		}
+		rit++;
+		mit++;
+	}
+	if (rvect.size() == mvect.size() && rvect.empty() == mvect.empty()){
 		std::cout << "\033[32mOK\033[0m - \033[33m" << diff << " ms\033[0m" << std::endl;
 		return true;
 	}
@@ -346,26 +323,26 @@ bool	reviterator_subequal_overload_vector(){
 	return false;
 }
 
-bool	reviterator_test_vector(){
-	std::cout  << std::endl << "\033[34;1mReverse_Iterators :\033[0m" << std::endl;
+bool	insert_test_vector(){
+	std::cout << std::endl << "\033[34;1mInsert() :\033[0m" << std::endl;
 	bool ret = true;
-	if (reviterator_rbegin_vector() == false)
+	if (insert_elem_front_vector() == false)
 		ret = false;
-	if (reviterator_rend_vector() == false)
+	if (insert_elem_back_vector() == false)
 		ret = false;
-	if (reviterator_iterating_vector() == false)
+	if (insert_elem_in_vector() == false)
 		ret = false;
-	if (reviterator_iterating_empty_vector() == false)
+	if (insert_fill_in_vector() == false)
 		ret = false;
-	if (reviterator_checking_vector() == false)
+	if (insert_fill_cleared_vector() == false)
 		ret = false;
-	if (reviterator_plus_overload_vector() == false)
+	if (insert_range_in_vector() == false)
 		ret = false;
-	if (reviterator_sub_overload_vector() == false)
+	if (insert_range_cleared_vector() == false)
 		ret = false;
-	if (reviterator_plusequal_overload_vector() == false)
+	if (insert_range_empty_vector() == false)
 		ret = false;
-	if (reviterator_subequal_overload_vector() == false)
+	if (insert_performance_vector() == false)
 		ret = false;
 	if (ret == false)
 		return (print_function_ko());

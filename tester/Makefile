@@ -18,7 +18,7 @@ EXEC = ContainerTester
 #FILES
 MAIN = main.cpp
 SRCS =	stack/s_empty.cpp stack/s_pop.cpp stack/s_push.cpp stack/s_size.cpp stack/s_top.cpp stack/test_stack.cpp \
-		vector/test_vector.cpp vector/v_iterators.cpp vector/v_reverse_iterators.cpp vector/v_max_size.cpp vector/v_resize.cpp vector/v_size.cpp vector/v_capacity.cpp vector/v_empty.cpp vector/v_reserve.cpp\
+		vector/test_vector.cpp vector/v_iterators.cpp vector/v_reverse_iterators.cpp vector/v_max_size.cpp vector/v_resize.cpp vector/v_size.cpp vector/v_capacity.cpp vector/v_empty.cpp vector/v_reserve.cpp vector/v_access.cpp vector/v_assign.cpp vector/v_push_back.cpp vector/v_pop_back.cpp vector/v_insert.cpp vector/v_erase.cpp vector/v_clear.cpp\
 		map/test_map.cpp \
 		utils.cpp 
 SRCSPATH = $(addprefix $(SRCSDIR), $(SRCS))

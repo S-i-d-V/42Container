@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:26:26 by user42            #+#    #+#             */
-/*   Updated: 2022/01/12 00:09:29 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/14 00:53:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ bool	iterator_checking_cleared_vector(){
 
 	//std test
 	std::time_t time1 = std::time(NULL);
-	//int ret1 = *rvect.begin();
 	std::vector<int>::iterator rit = rvect.begin();
 	bool ret1 = true;
 	while (rit != rvect.end()){

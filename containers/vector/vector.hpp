@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2022/01/11 22:11:27 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/13 23:58:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,13 +236,13 @@ namespace ft{
 			//Return a reference to the elements at positon n in the container
 			reference				at(size_type n){
 				if (_size == 0 || n > _size || n < 0)
-					throw std::out_of_range();
+					throw std::out_of_range("vector: at: out_of_range");
 				return (_data[n]);
 			}
 
 			const_reference			at(size_type n)	const{
 				if (_size == 0 || n > _size || n < 0)
-					throw std::out_of_range();
+					throw std::out_of_range("vector: at: out_of_range");
 				return (_data[n]);
 			}
 
@@ -318,6 +318,7 @@ namespace ft{
 				}
 				_alloc.construct(&(*newPos), val);
 				_size += 1;
+				return (newPos);
 			}
 			
 			//2- Insert n times val in the vector from position

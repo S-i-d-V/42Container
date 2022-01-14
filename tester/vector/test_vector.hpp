@@ -83,4 +83,58 @@ bool	reserve_zero_cleared_vector();
 bool	reserve_cleared_vector();
 bool	reserve_test_vector();
 
+//ELEMENT ACCESS
+//access test
+bool	access_front_empty_vector();
+bool	access_front_vector();
+bool	access_back_empty_vector();
+bool	access_back_vector();
+bool	access_at_empty_vector();
+bool	access_at_vector();
+bool	access_at_out_vector();
+bool	access_test_vector();
+
+//MODIFIERS
+//assign test
+bool	assign_range_vector();
+bool	assign_range_empty_vector();
+bool	assign_empty_vector();
+bool	assign_empty_range_empty_vector();
+bool	assign_filled_empty_vector();
+bool	assign_nothing_empty_vector();
+bool	assign_performance_vector();
+bool	assign_test_vector();
+
+//push_back test
+bool	push_back_empty_vector();
+bool	push_back_filled_vector();
+bool	push_back_cleared_vector();
+bool	push_back_test_vector();
+
+//pop_back test
+bool	pop_back_empty_vector();
+bool	pop_back_filled_vector();
+bool	pop_back_cleared_vector();
+bool	pop_back_test_vector();
+
+//insert test
+bool	insert_elem_front_vector();
+bool	insert_elem_back_vector();
+bool	insert_elem_in_vector();
+bool	insert_elem_fill_vector();
+bool	insert_test_vector();
+
+//erase test
+bool	erase_entire_filled_vector();
+bool	erase_part_filled_vector();
+bool	erase_last_element_vector();
+bool	erase_first_element_vector();
+bool	erase_test_vector();
+
+//clear test
+bool	clear_empty_vector();
+bool	clear_filled_vector();
+bool	clear_cleared_vector();
+bool	clear_test_vector();
+
 #endif

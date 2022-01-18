@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/18 14:37:01 by user42            #+#    #+#             */
+/*   Updated: 2022/01/18 14:43:48 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef REVERSE_ITERATOR_HPP
 #define REVERSE_ITERATOR_HPP
 
@@ -6,7 +18,7 @@
 /*****************************************************************************/
 
 //Headers needed by iterators
-#include "../../utils/iterator_traits.hpp"
+#include "iterator_traits.hpp"
 
 /*****************************************************************************/
 /*                                Namespace FT                               */
@@ -130,14 +142,16 @@ namespace ft{
 			}
 
 			reverse_iterator operator+(difference_type n) const{
+				std::cout << "operator+/debug" << std::endl;
 				reverse_iterator ret(*this);
-				ret.base() = ret.base() - n;
+				ret.base() -= n;
 				return (ret);
 			}
 
 			reverse_iterator operator-(difference_type n) const{
+				std::cout << "operator-/debug" << std::endl;
 				reverse_iterator ret(*this);
-				ret.base() = ret.base() + n;
+				ret.base() += n;
 				return (ret);
 			}
 

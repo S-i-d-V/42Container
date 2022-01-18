@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2022/01/13 23:58:01 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/18 14:37:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 //Iterators
 #include "vector_iterator.hpp"
-#include "reverse_iterator.hpp"
+#include "../../utils/reverse_iterator.hpp"
 
 //Header needed by vector
 #include <utility>

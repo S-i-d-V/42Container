@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2022/01/18 14:37:36 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/20 20:06:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ namespace ft{
 				return (iterator(&_data[_size]));
 			}
 
-			const_iterator				end() const{
+			const_iterator			end() const{
 				return (const_iterator(&_data[_size]));
 			}
 
@@ -161,7 +161,7 @@ namespace ft{
 				return (reverse_iterator(&_data[_size]));
 			}
 
-			const_reverse_iterator		rbegin() const{
+			const_reverse_iterator	rbegin() const{
 				return (const_reverse_iterator(&_data[_size]));
 			}
 
@@ -169,7 +169,7 @@ namespace ft{
 				return (reverse_iterator(_data));
 			}
 
-			const_reverse_iterator		rend() const{
+			const_reverse_iterator	rend() const{
 				return (const_reverse_iterator(_data));
 			}
 
@@ -418,11 +418,26 @@ namespace ft{
 			}
 
 			//Exchanges the content of the container by the content of src which is a container object of the same type.
-			void					swap(vector& x);
+			void					swap(vector& x){
+				allocator_type	tmpAlloc = _alloc;
+				size_type		tmpCapacity = _capacity;
+				size_type		tmpSize = _size;
+				value_type		*tmpData = _data;
+
+				_alloc = x._alloc;
+				_capacity = x._capacity;
+				_size = x._size;
+				_data = x._data;
+
+				x._alloc = tmpAlloc;
+				x._capacity = tmpCapacity;
+				x._size = tmpSize;
+				x._data = tmpData;
+			}
 
 			//Remove all elements of the vector and put the size at 0
 			void					clear(){
-				for (int i = _size - 1; i >= 0; i--){
+				for (size_type i = _size - 1; i >= 0; i--){
 					_alloc.destroy(&_data[i]);
 					_size--;
 				}

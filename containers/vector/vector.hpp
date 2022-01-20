@@ -82,7 +82,7 @@ namespace ft{
 			}
 
 			//Fill (Build an array with <n> times <val> stocked in)
-			explicit	vector(size_type n, value_type const& val, allocator_type const& alloc = allocator_type()) : _alloc(alloc){
+			explicit	vector(size_type n, value_type const& val = value_type(), allocator_type const& alloc = allocator_type()) : _alloc(alloc){
 				_size = n;
 				_capacity = n;
     			_data = _alloc.allocate(_size);
@@ -106,6 +106,7 @@ namespace ft{
 
 			//Copy
 			vector(vector const& src){
+				clear();
 				_alloc = src._alloc;
 				_size = src._size;
 				_capacity = src._capacity;
@@ -120,10 +121,7 @@ namespace ft{
 			/*****************************************************************************/
 			
 			~vector(){
-				for (int i = _size - 1; i >= 0; i--){
-					_alloc.destroy(&_data[i]);
-					_size--;
-				}
+				clear();
 				_alloc.deallocate(_data, _capacity);
 				_capacity = 0;
 				return;
@@ -135,19 +133,10 @@ namespace ft{
 
 			//Assignement operator
 			vector&		operator=(vector const& rhs){
+				assign(rhs.begin(), rhs.end());
 				return (*this);
 			}
-
-			//Access operator
-			reference	operator[](size_type n){
-				return (_data[n]);
-			}
-
-			const_reference	operator[](size_type n) const{
-				return (_data[n]);
-			}
 			
-
 			/*****************************************************************************/
 			/*                           Iterators functions                             */
 			/*****************************************************************************/
@@ -156,16 +145,32 @@ namespace ft{
 				return (iterator(_data));
 			}
 
+			const_iterator			begin() const{
+				return (const_iterator(_data));
+			}
+
 			iterator				end(){
-				return (iterator(_data + _size));
+				return (iterator(&_data[_size]));
+			}
+
+			const_iterator				end() const{
+				return (const_iterator(&_data[_size]));
 			}
 
 			reverse_iterator		rbegin(){
-				return (reverse_iterator(_data + _size));
+				return (reverse_iterator(&_data[_size]));
+			}
+
+			const_reverse_iterator		rbegin() const{
+				return (const_reverse_iterator(&_data[_size]));
 			}
 
 			reverse_iterator		rend(){
 				return (reverse_iterator(_data));
+			}
+
+			const_reverse_iterator		rend() const{
+				return (const_reverse_iterator(_data));
 			}
 
 			/*****************************************************************************/
@@ -248,11 +253,11 @@ namespace ft{
 
 			//Return a reference to the first elements in the container.
 			reference				front(){
-				return (_data[0]);
+				return (*_data);
 			}
 
 			const_reference			front()			const{
-				return (_data[0]);
+				return (*_data);
 			}
 
 			//Return a reference to the last elements in the container.
@@ -262,6 +267,15 @@ namespace ft{
 
 			const_reference			back()			const{
 				return (_data[_size - 1]);
+			}
+
+			//Access operator
+			reference	operator[](size_type n){
+				return (_data[n]);
+			}
+
+			const_reference	operator[](size_type n) const{
+				return (_data[n]);
 			}
 
 			/*****************************************************************************/
@@ -284,10 +298,8 @@ namespace ft{
 
 			//Add a new element at the end of the container and increases the storage space only if the new size surpasses the current capacity
 			void					push_back(value_type const& val){
-				if (_size + 1 <= _capacity){
-					_alloc.construct(&_data[_size], val);
-					_size++;
-				}
+				if (_size + 1 <= _capacity)
+					insert(end(), val);
 				else{
 					if (_capacity != 0)
 						reserve(_capacity * 2);
@@ -295,7 +307,7 @@ namespace ft{
 						_data = _alloc.allocate(1);
 						_capacity = 1;
 					}
-					push_back(val);
+					insert(end(), val);
 				}
 			}
 

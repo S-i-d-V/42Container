@@ -81,52 +81,46 @@ namespace ft{
 			/*****************************************************************************/
 
 			//Assignement operator
-			vector_iterator &operator=(vector_iterator const & rhs){
+			vector_iterator<T> &operator=(vector_iterator<T> const &rhs){
 				_valPtr = rhs._valPtr;
 				return (*this);
 			}
 
-			vector_iterator &operator+=(int n){
-				_valPtr += n;
-				return (*this);
-			}
-
-			vector_iterator &operator-=(int n){
-				_valPtr -= n;
-				return (*this);
-			}
-
 			//Pointer operator
-			T &operator->(){
+			pointer	operator->() const{
 				return (_valPtr);
 			}
 
 			//Dereferencement pointer operator
-			T &operator*(){
+			reference	operator*() const{
 				return (*_valPtr);
 			}
 
+			reference	operator[](size_t i){
+				return (_valPtr[i]);
+			}
+
 			//Increment operator prefixe it++;
-			vector_iterator &operator++(){
+			vector_iterator<T> &operator++(){
 				++_valPtr;
 				return (*this);
 			}
 
 			//Increment operator postfixe ++it; 
-			vector_iterator operator++(T){
+			vector_iterator<T> operator++(int){
 				vector_iterator tmp;
 				tmp._valPtr = _valPtr++;
 				return (tmp);
 			}
 
 			//Increment operator prefixe it--;
-			vector_iterator &operator--(){
+			vector_iterator<T> &operator--(){
 				--_valPtr;
 				return (*this);
 			}
 
 			//Decrement operator postfixe --it; 
-			vector_iterator operator--(T){
+			vector_iterator<T> operator--(int){
 				vector_iterator tmp;
 				tmp._valPtr = _valPtr--;
 				return (tmp);
@@ -143,15 +137,27 @@ namespace ft{
 			}
 
 			//Addition operator
-			vector_iterator operator+(difference_type n){
+			vector_iterator<T> operator+(difference_type n){
 				vector_iterator tmp(_valPtr + n);
 				return (tmp);
 			}
 
 			//Substraction operator
-			vector_iterator operator-(difference_type n){
+			vector_iterator<T> operator-(difference_type n){
 				vector_iterator tmp(_valPtr - n);
 				return (tmp);
+			}
+
+			//Plus equal operaor
+			vector_iterator<T> &operator+=(int n){
+				_valPtr += n;
+				return (*this);
+			}
+
+			//Sub equal operator
+			vector_iterator<T> &operator-=(int n){
+				_valPtr -= n;
+				return (*this);
 			}
 
 			/*****************************************************************************/

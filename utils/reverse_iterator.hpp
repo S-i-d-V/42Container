@@ -142,14 +142,12 @@ namespace ft{
 			}
 
 			reverse_iterator operator+(difference_type n) const{
-				std::cout << "operator+/debug" << std::endl;
 				reverse_iterator ret(*this);
 				ret.base() -= n;
 				return (ret);
 			}
 
 			reverse_iterator operator-(difference_type n) const{
-				std::cout << "operator-/debug" << std::endl;
 				reverse_iterator ret(*this);
 				ret.base() += n;
 				return (ret);

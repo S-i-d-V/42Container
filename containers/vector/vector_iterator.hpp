@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 18:06:02 by user42            #+#    #+#             */
-/*   Updated: 2021/12/30 18:10:16 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/24 20:06:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ namespace ft{
 				return;
 			}
 
-			vector_iterator(T *valPtr){
+			vector_iterator(pointer valPtr){
 				_valPtr = valPtr;
 				return;
 			}
 
-			vector_iterator(vector_iterator const& src){
+			vector_iterator(vector_iterator<T> const& src){
 				*this = src;
 				return;
 			}
@@ -74,6 +74,15 @@ namespace ft{
 
 			~vector_iterator(){
 				return;
+			}
+
+			/*****************************************************************************/
+			/*                           Operators conversion                            */
+			/*****************************************************************************/
+
+			//Conversion operator
+			operator		vector_iterator<T const>() const{
+				return (vector_iterator<T const>(this->_valPtr));
 			}
 
 			/*****************************************************************************/
@@ -127,35 +136,35 @@ namespace ft{
 			}
 
 			//Addition operator
-			difference_type operator+(vector_iterator const &rhs) const{
+			difference_type operator+(vector_iterator<T> const &rhs) const{
 				return (_valPtr + rhs._valPtr);
 			}
 
 			//Substraction operator
-			difference_type operator-(vector_iterator const &rhs) const{
+			difference_type operator-(vector_iterator<T> const &rhs) const{
 				return (_valPtr - rhs._valPtr);
 			}
 
 			//Addition operator
 			vector_iterator<T> operator+(difference_type n){
-				vector_iterator tmp(_valPtr + n);
-				return (tmp);
+				vector_iterator ret(_valPtr + n);
+				return (ret);
 			}
 
 			//Substraction operator
 			vector_iterator<T> operator-(difference_type n){
-				vector_iterator tmp(_valPtr - n);
-				return (tmp);
+				vector_iterator ret(_valPtr - n);
+				return (ret);
 			}
 
 			//Plus equal operaor
-			vector_iterator<T> &operator+=(int n){
+			vector_iterator<T> &operator+=(difference_type n){
 				_valPtr += n;
 				return (*this);
 			}
 
 			//Sub equal operator
-			vector_iterator<T> &operator-=(int n){
+			vector_iterator<T> &operator-=(difference_type n){
 				_valPtr -= n;
 				return (*this);
 			}
@@ -209,10 +218,52 @@ namespace ft{
 		/*****************************************************************************/
 		/*                            Private members                                */
 		/*****************************************************************************/
-		private:
+		//private:
 			T *_valPtr;
 
 	}; //End of vector_iterator class;
+
+	template <class T1, class T2>
+	bool	operator==(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
+		if (lhs._valPtr == rhs._valPtr)
+			return (true);
+		return (false);
+	}
+
+	template <class T1, class T2>
+	bool	operator!=(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
+		if (lhs._valPtr != rhs._valPtr)
+			return (true);
+		return (false);
+	}
+
+	template <class T1, class T2>
+	bool	operator>(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
+		if (lhs._valPtr > rhs._valPtr)
+			return (true);
+		return (false);
+	}
+
+	template <class T1, class T2>
+	bool	operator>=(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
+		if (lhs._valPtr >= rhs._valPtr)
+			return (true);
+		return (false);
+	}
+
+	template <class T1, class T2>
+	bool	operator<(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
+		if (lhs._valPtr < rhs._valPtr)
+			return (true);
+		return (false);
+	}
+
+	template <class T1, class T2>
+	bool	operator<=(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
+		if (lhs._valPtr <= rhs._valPtr)
+			return (true);
+		return (false);
+	}
 
 } //End of namespace ft
 

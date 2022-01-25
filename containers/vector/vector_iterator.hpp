@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_iterator.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ugtheven <ugtheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 18:06:02 by user42            #+#    #+#             */
-/*   Updated: 2022/01/24 20:06:07 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/25 13:04:27 by ugtheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,28 +111,28 @@ namespace ft{
 
 			//Increment operator prefixe it++;
 			vector_iterator<T> &operator++(){
-				++_valPtr;
+				_valPtr++;
 				return (*this);
 			}
 
 			//Increment operator postfixe ++it; 
 			vector_iterator<T> operator++(int){
-				vector_iterator tmp;
-				tmp._valPtr = _valPtr++;
-				return (tmp);
+				vector_iterator ret(*this);
+				_valPtr++;
+				return (ret);
 			}
 
 			//Increment operator prefixe it--;
 			vector_iterator<T> &operator--(){
-				--_valPtr;
+				_valPtr--;
 				return (*this);
 			}
 
 			//Decrement operator postfixe --it; 
 			vector_iterator<T> operator--(int){
-				vector_iterator tmp;
-				tmp._valPtr = _valPtr--;
-				return (tmp);
+				vector_iterator ret(*this);
+				_valPtr--;
+				return (ret);
 			}
 
 			//Addition operator

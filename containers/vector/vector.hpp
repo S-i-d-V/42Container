@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2022/01/24 12:31:44 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/26 14:21:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,45 +74,27 @@ namespace ft{
 			/*****************************************************************************/
 
 			//Default constructor (Build an empty container with no elements)
-			explicit	vector(allocator_type const& alloc = allocator_type()) : _alloc(alloc){
-				_size = 0;
-				_capacity = 0;
-    			_data = _alloc.allocate(_size);
+			explicit	vector(allocator_type const& alloc = allocator_type()) : _size(0), _capacity(0), _data(NULL), _alloc(alloc){
     			return;
 			}
 
 			//Fill (Build an array with <n> times <val> stocked in)
-			explicit	vector(size_type n, value_type const& val = value_type(), allocator_type const& alloc = allocator_type()) : _alloc(alloc){
-				_size = n;
-				_capacity = n;
-    			_data = _alloc.allocate(_size);
-
-				for (size_type i = 0; i < _size; i++)
-					_alloc.construct(&_data[i], val);
+			explicit	vector(size_type n, value_type const& val = value_type(), allocator_type const& alloc = allocator_type()) : _size(0), _capacity(0), _data(NULL), _alloc(alloc){
+				assign(n, val);
     			return;
 			}
 
 			//Range (Build a contaiener with as many elements in the range)
 			template <class inputIterator>
 			vector(inputIterator first, inputIterator last, allocator_type const& alloc = allocator_type(),
-			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0) : _alloc(alloc){
-				for (inputIterator	tmp(first); tmp != last; tmp++)
-					_size++;
-				_data = _alloc.allocate(_size);
-				for (size_type i = 0; first != last; i++, first++)
-					_alloc.construct(&_data[i], *first);
+			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0) : _size(0), _capacity(0), _data(NULL), _alloc(alloc){
+				assign(first, last);
    				return;
 			}
 
 			//Copy
-			vector(vector const& src){
-				clear();
-				_alloc = src._alloc;
-				_size = src._size;
-				_capacity = src._capacity;
-				_data = _alloc.allocate(_capacity);
-				for (size_type i = 0; i < _size; i++)
-					_alloc.construct(&_data[i], src._data[i]);
+			vector(vector const& src): _size(0), _capacity(0), _data(NULL){
+				*this = src;
 				return;
 			}
 

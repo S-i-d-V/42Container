@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_iterator.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugtheven <ugtheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 18:06:02 by user42            #+#    #+#             */
-/*   Updated: 2022/01/25 13:04:27 by ugtheven         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:18:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,5 +266,15 @@ namespace ft{
 	}
 
 } //End of namespace ft
+
+template <class T>
+ft::vector_iterator<T> operator+(int n, ft::vector_iterator<T> const &rhs){
+	return (rhs._valPtr + n);
+}
+
+template <class T>
+ft::vector_iterator<T> operator-(int n, ft::vector_iterator<T> const &rhs){
+	return (rhs._valPtr - n);
+}
 
 #endif//End of the header

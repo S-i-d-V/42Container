@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugtheven <ugtheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 14:37:01 by user42            #+#    #+#             */
-/*   Updated: 2022/01/25 14:19:09 by ugtheven         ###   ########.fr       */
+/*   Updated: 2022/01/26 14:32:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ namespace ft{
 			}
 
 			template <class Iterator>
-			reverse_iterator(reverse_iterator<Iterator> const& src){
-				*this = src;
+			reverse_iterator(reverse_iterator<Iterator> const& src): _base(src.base()){
 				return;
 			}
 
@@ -155,15 +154,19 @@ namespace ft{
 			}
 
 			reverse_iterator operator+(difference_type n) const{
-				reverse_iterator ret(*this);
-				ret.base() -= n;
-				return (ret);
+				return (reverse_iterator(base() - n));
 			}
 
 			reverse_iterator operator-(difference_type n) const{
-				reverse_iterator ret(*this);
-				ret.base() += n;
-				return (ret);
+				return (reverse_iterator(base() + n));
+			}
+
+			difference_type operator+(reverse_iterator<Iter> const &rhs){
+				return (rhs.base() + base());
+			}
+
+			difference_type operator-(reverse_iterator<Iter> const &rhs){
+				return (rhs.base() - base());
 			}
 
 		/*****************************************************************************/

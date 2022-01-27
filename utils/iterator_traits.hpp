@@ -1,14 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   iterator_traits.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 20:51:57 by user42            #+#    #+#             */
+/*   Updated: 2022/01/27 01:28:49 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ITERATOR_TRAITS_HPP
 #define ITERATOR_TRAITS_HPP
 
 namespace ft{
 
-    //Iterators
+    /*****************************************************************************/
+	/*                                Iterators                                  */
+	/*****************************************************************************/
 	template <typename Iterator>
     struct iterator_traits{
-        //=======//
-		//Typedef//
-		//=======//
+        /*****************************************************************************/
+		/*                              Members types                                */
+		/*****************************************************************************/
         typedef typename	Iterator::difference_type           difference_type;
         typedef typename	Iterator::value_type                value_type;
         typedef typename	Iterator::pointer                   pointer;
@@ -16,12 +30,14 @@ namespace ft{
         typedef typename	Iterator::iterator_category         iterator_category;
     };
 
-    //Pointer
+    /*****************************************************************************/
+	/*                                 Pointer                                   */
+	/*****************************************************************************/
 	template <typename T>
     struct iterator_traits<T*>{
-        //=======//
-		//Typedef//
-		//=======//
+        /*****************************************************************************/
+		/*                              Members types                                */
+		/*****************************************************************************/
         typedef	typename	std::ptrdiff_t                      difference_type;
         typedef				T                                   value_type;
         typedef				T*                                  pointer;
@@ -29,19 +45,21 @@ namespace ft{
         typedef	typename	std::random_access_iterator_tag     iterator_category;
     };
 
-	//Pointer const
+	/*****************************************************************************/
+	/*                             Const Pointer                                 */
+	/*****************************************************************************/
 	template <typename T>
     struct iterator_traits<T const*>{
-        //=======//
-		//Typedef//
-		//=======//
+        /*****************************************************************************/
+		/*                              Members types                                */
+		/*****************************************************************************/
         typedef	typename	std::ptrdiff_t                      difference_type;
         typedef				T                                   value_type;
         typedef				T const*                            pointer;
         typedef				T const&                            reference;
         typedef	typename	std::random_access_iterator_tag     iterator_category;
     };
- 
+
 }
 
 #endif

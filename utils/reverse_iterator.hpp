@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 14:37:01 by user42            #+#    #+#             */
-/*   Updated: 2022/01/26 14:32:12 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/26 22:05:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,12 @@ namespace ft{
 			}
 
 			//Pointer operator
-			pointer operator->(){
-				iterator_type ret(_base);
-				return (&(*ret));
+			pointer operator->() const{
+				return (&(this->operator*()));
 			}
 
 			//Dereferencement pointer operator
-			reference operator*(){
+			reference operator*() const{
 				iterator_type ret(_base);
 				ret--;
 				return (*ret);

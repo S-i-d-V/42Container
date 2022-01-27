@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2022/01/26 14:21:23 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/26 22:02:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,101 +302,73 @@ namespace ft{
 			//Extend the container by inserting new element before the element pointed by position and increase the size by the number of elements.
 			//1- Insert a single element
 			iterator				insert(iterator position, value_type const& val){
-				difference_type index = &(*position) - &(*begin());
-				if (_size + 1 > _capacity)
-					reserve(_capacity * 2);
-				iterator newPos(&_data[index]);
-				if (newPos != end()){
-					for (iterator initialEnd(end()); initialEnd != newPos; initialEnd--)
-						_alloc.construct(&(*(initialEnd)), *(initialEnd - 1));
-				}
-				_alloc.construct(&(*newPos), val);
-				_size += 1;
-				return (newPos);
+				difference_type index = position - begin();
+				insert(position, 1, val);
+				return (&_data[index]);
 			}
 			
 			//2- Insert n times val in the vector from position
 			void					insert(iterator position, size_type n, value_type const& val){
-				difference_type index = &(*position) - &(*begin());
+				difference_type index = position - begin();
 				if (_size + n > _capacity && _size + n <= _capacity * 2)
 					reserve(_capacity * 2);
 				else if (_size + n > _capacity * 2)
 					reserve(_size + n);
-				iterator newPos(&_data[index]);
-				if (newPos != end()){
-					for (iterator initialEnd(end()); initialEnd != newPos; initialEnd--)
-						_alloc.construct(&(*(initialEnd + static_cast<int>(n) - 1)), *(initialEnd - 1));
-				}
-				for (size_type i = 0; i < n; i++, newPos++)
-					_alloc.construct(&(*newPos), val);
+				iterator tmpEnd = end();
 				_size += n;
+				iterator pos = iterator(&_data[index]);
+				if (pos != tmpEnd)
+					for (size_t i = 0; end() - i != pos; i++)
+						_alloc.construct(&(*(end() - i - 1)), *(tmpEnd - i - 1));
+				for (size_t i = 0; i < n; i++, pos++)
+					_alloc.construct(pos._valPtr, val);
 			}
 
 			//3- Insert a range of iterator in the vector from position
 			template <class inputIterator>
 			void					insert(iterator position, inputIterator first, inputIterator last,
 			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0){
-				difference_type index = &(*position) - &(*begin());
-				difference_type n = &(*last) - &(*first); 
-				if (_size + n > _capacity && _size + n <= _capacity * 2)
+				difference_type index = position - begin();
+				difference_type size = std::distance(first, last);
+				if (_size + size > _capacity && _size + size <= _capacity * 2)
 					reserve(_capacity * 2);
-				else if (_size + n > _capacity * 2)
-					reserve(_size + n);
-				iterator newPos(&_data[index]);
-				if (newPos != end()){
-					for (iterator initialEnd(end()); initialEnd != newPos; initialEnd--)
-						_alloc.construct(&(*(initialEnd + static_cast<int>(n) - 1)), *(initialEnd - 1));
-				}
-				while (first != last){
-					_alloc.construct(&(*newPos), *first);
-					first++;
-					newPos++;
-				}
-				_size += n;
+				else if (_size + size > _capacity * 2)
+					reserve(_size + size);
+				iterator tmpEnd = end();
+				_size += size;
+				iterator pos = iterator(&_data[index]);
+				if (pos != tmpEnd)
+					for (size_t i = 0; end() - i != pos; i++)
+						_alloc.construct(&(*(end() - i - 1)), *(tmpEnd - i - 1));
+				for (; first != last; first++, pos++)
+					_alloc.construct(pos._valPtr, *first);
 			}
 
 			//Erase 1 elements or a range of elements.
 			//1-Erase the element pointed by position on the vector 
 			iterator				erase(iterator position){
-				difference_type index = &(*position) - &(*begin());
-				iterator newPos(&_data[index]);
-				iterator ret = NULL;
-				if (newPos != end()){
-					ret = newPos + 1;
-					while (newPos != end()){
-						_alloc.construct(&(*(newPos)), *(newPos + 1));
-						newPos++;
-					}
-				}
-				_alloc.destroy(&(*end()));
-				_size -= 1;
-				if (ret == NULL)
-					ret = end();
-				return (ret);
+				return(erase(position, position + 1));
 			}
 
 			//2-Erase every elements between first and last.
 			iterator				erase(iterator first, iterator last){
-				difference_type index = &(*first) - &(*begin());
-				difference_type n = &(*last) - &(*first); 
-				iterator newPos(&_data[index]);
-				iterator ret = NULL;
-				if (newPos != end()){
-					ret = newPos + 1;
-					while (newPos != last){
-						_alloc.destroy(&(*(newPos)));
-						_alloc.construct(&(*(newPos)), *(newPos + n));
-						newPos++;
+				iterator tmpFirst = first;
+
+				if (first != last){
+					while (last != end()){
+						_alloc.construct(tmpFirst._valPtr, *last);
+						last++;
+						tmpFirst++;
 					}
+					size_type tmpSize = _size;
+					while (tmpFirst != end()){
+						_alloc.destroy(tmpFirst._valPtr);
+						tmpFirst++;
+						tmpSize--;
+					}
+					_size = tmpSize;
 				}
-				while (n > 0){
-					_alloc.destroy(&(*end()));
-					_size--;
-					n--;
-				}
-				if (ret == NULL)
-					ret = end();
-				return (ret);
+				return (first);
 			}
 
 			//Exchanges the content of the container by the content of src which is a container object of the same type.

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:54:46 by user42            #+#    #+#             */
-/*   Updated: 2022/01/27 01:19:28 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/27 15:42:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "../../utils/equal.hpp"
 #include "../../utils/lexicographical_compare.hpp"
 #include "../../utils/pair.hpp"
+#include "../../utils/binary_tree.hpp"
 
 //Iterators
 #include "map_iterator.hpp"

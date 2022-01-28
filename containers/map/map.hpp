@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:54:46 by user42            #+#    #+#             */
-/*   Updated: 2022/01/27 15:42:37 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/27 16:13:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 #include "../../utils/binary_tree.hpp"
 
 //Iterators
-#include "map_iterator.hpp"
 #include "../../utils/reverse_iterator.hpp"
 
 //Header needed by vector

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:34:52 by user42            #+#    #+#             */
-/*   Updated: 2022/01/27 15:51:59 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/28 01:46:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,13 @@ namespace ft{
 			/*                           Operators overloads                             */
 			/*****************************************************************************/
 
-			T	&operator=(T const &rhs);
+			T	&operator=(T const &rhs){
+				_data = rhs._data;
+				_left = rhs._left;
+				_right = rhs._right;
+				_parent = rhs._parent;
+				_root = rhs._root;
+			}
 	};
  
 }

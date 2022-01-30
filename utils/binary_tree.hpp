@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:34:52 by user42            #+#    #+#             */
-/*   Updated: 2022/01/28 01:46:00 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/28 17:09:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 #ifndef BINARY_TREE_HPP
 #define BINARY_TREE_HPP
+
+#include <cstring>
 
 /*****************************************************************************/
 /*                              Namespace FT                                 */
@@ -30,41 +32,62 @@ namespace ft{
 	template<class T>
 	class nodeBT{
 
+			public:
 			/*****************************************************************************/
 	    	/*                              Members types                                */
 	    	/*****************************************************************************/
 
-			T	_data;
-			T	*_left;
-			T	*_right;
-			T	*_parent;
-			T	*_root;
+			//Typedefs
+			typedef enum 	{RED, BLACK}	color_node;
+			typedef			T				value_type;
+			typedef			nodeBT<T>		*pointer;
+			typedef			nodeBT<T>		&reference;
+
+			//Public members
+			value_type				_data;
+			pointer					_left;
+			pointer					_right;
+			pointer					_parent;
+			color_node				_color;
 
 			/*****************************************************************************/
 			/*                               Constructors                                */
 			/*****************************************************************************/
 
-			nodeBT();
+			nodeBT() : _data(), _left(NULL), _right(NULL), _parent(NULL), _color(BLACK){}
 
-			nodeBT(T const &src);
+			nodeBT(value_type data, pointer left, pointer right, pointer parent) : _data(data), _left(left), _right(right), _parent(parent), _color(BLACK){}
+
+			nodeBT(T const &src){
+				*this = src;
+			}
 
 			/*****************************************************************************/
 			/*                                Destructors                                */
 			/*****************************************************************************/
 
-			~nodeBT();
+			~nodeBT(){}
 
 			/*****************************************************************************/
 			/*                           Operators overloads                             */
 			/*****************************************************************************/
 
-			T	&operator=(T const &rhs){
+			reference	operator=(T const &rhs){
 				_data = rhs._data;
 				_left = rhs._left;
 				_right = rhs._right;
 				_parent = rhs._parent;
-				_root = rhs._root;
+				_color = rhs._color;
 			}
+
+			/*****************************************************************************/
+			/*                                Functions                                  */
+			/*****************************************************************************/
+
+			void		insert(value_type key);
+			pointer		search(value_type key);
+			void		destroy_tree();
+
 	};
  
 }

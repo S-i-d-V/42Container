@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_iterator.hpp                                :+:      :+:    :+:   */
+/*   map_iterator.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/30 18:06:02 by user42            #+#    #+#             */
-/*   Updated: 2022/01/30 02:44:51 by user42           ###   ########.fr       */
+/*   Created: 2022/01/30 02:16:09 by user42            #+#    #+#             */
+/*   Updated: 2022/01/30 02:48:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //Protection of the header
-#ifndef VECTOR_ITERATOR_HPP
-#define VECTOR_ITERATOR_HPP
+#ifndef MAP_ITERATOR_HPP
+#define MAP_ITERATOR_HPP
 
 /*****************************************************************************/
 /*                                Includes                                   */
@@ -28,10 +28,10 @@
 namespace ft{
 
 	/*****************************************************************************/
-	/*                          Class vector iterator                            */
+	/*                            Class map iterator                             */
 	/*****************************************************************************/
 	template <class T>
-	class vector_iterator{
+	class map_iterator{
 
 		/*****************************************************************************/
 		/*                             Public members                                */
@@ -46,33 +46,24 @@ namespace ft{
 			typedef				T										value_type;
 			typedef 			T&										reference;
 			typedef 			T*										pointer;
-			typedef	typename	std::random_access_iterator_tag			iterator_category;
+			typedef	typename	std::bidirectional_iterator_tag			iterator_category;
 
 			/*****************************************************************************/
 			/*                               Constructors                                */
 			/*****************************************************************************/
 
 			//Default constructor
-			vector_iterator(){
-				_valPtr = NULL;
-				return;
-			}
+			map_iterator();
 
-			vector_iterator(pointer valPtr){
-				_valPtr = valPtr;
-				return;
-			}
+			map_iterator(pointer valPtr);
 
-			vector_iterator(vector_iterator<T> const& src){
-				*this = src;
-				return;
-			}
+			map_iterator(map_iterator<T> const& src);
 
 			/*****************************************************************************/
 			/*                                Destructors                                */
 			/*****************************************************************************/
 
-			~vector_iterator(){
+			~map_iterator(){
 				return;
 			}
 
@@ -81,200 +72,107 @@ namespace ft{
 			/*****************************************************************************/
 
 			//Conversion operator
-			operator		vector_iterator<T const>() const{
-				return (vector_iterator<T const>(this->_valPtr));
-			}
+			operator		map_iterator<T const>() const;
 
 			/*****************************************************************************/
 			/*                           Operators overloads                             */
 			/*****************************************************************************/
 
 			//Assignement operator
-			vector_iterator<T> &operator=(vector_iterator<T> const &rhs){
-				_valPtr = rhs._valPtr;
-				return (*this);
-			}
+			map_iterator<T>		&operator=(map_iterator<T> const &rhs);
 
 			//Pointer operator
-			pointer	operator->() const{
-				return (_valPtr);
-			}
+			pointer				operator->() const;
 
 			//Dereferencement pointer operator
-			reference	operator*() const{
-				return (*_valPtr);
-			}
+			reference			operator*() const;
 
-			reference	operator[](size_t i){
-				return (_valPtr[i]);
-			}
+			reference			operator[](size_t index);
 
 			//Increment operator prefixe it++;
-			vector_iterator<T> &operator++(){
-				_valPtr++;
-				return (*this);
-			}
+			map_iterator<T>	&operator++();
 
 			//Increment operator postfixe ++it; 
-			vector_iterator<T> operator++(int){
-				vector_iterator ret(*this);
-				_valPtr++;
-				return (ret);
-			}
+			map_iterator<T> operator++(int);
 
 			//Increment operator prefixe it--;
-			vector_iterator<T> &operator--(){
-				_valPtr--;
-				return (*this);
-			}
+			map_iterator<T> &operator--();
 
 			//Decrement operator postfixe --it; 
-			vector_iterator<T> operator--(int){
-				vector_iterator ret(*this);
-				_valPtr--;
-				return (ret);
-			}
+			map_iterator<T> operator--(int);
 
 			//Addition operator
-			difference_type operator+(vector_iterator<T> const &rhs) const{
-				return (_valPtr + rhs._valPtr);
-			}
+			difference_type operator+(map_iterator<T> const &rhs) const;
 
 			//Substraction operator
-			difference_type operator-(vector_iterator<T> const &rhs) const{
-				return (_valPtr - rhs._valPtr);
-			}
+			difference_type operator-(map_iterator<T> const &rhs) const;
 
 			//Addition operator
-			vector_iterator<T> operator+(difference_type n){
-				vector_iterator ret(_valPtr + n);
-				return (ret);
-			}
+			map_iterator<T> operator+(difference_type n);
 
 			//Substraction operator
-			vector_iterator<T> operator-(difference_type n){
-				vector_iterator ret(_valPtr - n);
-				return (ret);
-			}
+			map_iterator<T> operator-(difference_type n);
 
 			//Plus equal operaor
-			vector_iterator<T> &operator+=(difference_type n){
-				_valPtr += n;
-				return (*this);
-			}
+			map_iterator<T> &operator+=(difference_type n);
 
 			//Sub equal operator
-			vector_iterator<T> &operator-=(difference_type n){
-				_valPtr -= n;
-				return (*this);
-			}
+			map_iterator<T> &operator-=(difference_type n);
 
 			/*****************************************************************************/
 			/*                          Comparaisons overloads                           */
 			/*****************************************************************************/
 
 			//Equal operator
-			bool operator==(vector_iterator<T> const& rhs) const{
-				if (_valPtr == rhs._valPtr)
-					return (true);
-				return (false);
-			}
+			bool operator==(map_iterator<T> const& rhs) const;
 
 			//Non-equal operator
-			bool operator!=(vector_iterator<T> const& rhs) const{
-				if (_valPtr != rhs._valPtr)
-					return (true);
-				return (false);
-			}
+			bool operator!=(map_iterator<T> const& rhs) const;
 
 			//Superior or equal operator
-			bool operator>=(vector_iterator<T> const& rhs) const{
-				if (_valPtr >= rhs._valPtr)
-					return (true);
-				return (false);
-			}
+			bool operator>=(map_iterator<T> const& rhs) const;
 
 			//Inferior or equal operator
-			bool operator<=(vector_iterator<T> const& rhs) const{
-				if (_valPtr <= rhs._valPtr)
-					return (true);
-				return (false);
-			}
+			bool operator<=(map_iterator<T> const& rhs) const;
 
 			//Superior operator
-			bool operator>(vector_iterator<T> const& rhs) const{
-				if (_valPtr > rhs._valPtr)
-					return (true);
-				return (false);
-			}
+			bool operator>(map_iterator<T> const& rhs) const;
 
 			//Inferior operator
-			bool operator<(vector_iterator<T> const& rhs) const{
-				if (_valPtr < rhs._valPtr)
-					return (true);
-				return (false);
-			}
+			bool operator<(map_iterator<T> const& rhs) const;
 
 		/*****************************************************************************/
 		/*                            Private members                                */
 		/*****************************************************************************/
 		//private:
-			T *_valPtr;
+			pointer _valPtr;
 
-	}; //End of vector_iterator class;
-
-	template <class T1, class T2>
-	bool	operator==(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
-		if (lhs._valPtr == rhs._valPtr)
-			return (true);
-		return (false);
-	}
+	}; //End of map_iterator class;
 
 	template <class T1, class T2>
-	bool	operator!=(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
-		if (lhs._valPtr != rhs._valPtr)
-			return (true);
-		return (false);
-	}
+	bool	operator==(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
 
 	template <class T1, class T2>
-	bool	operator>(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
-		if (lhs._valPtr > rhs._valPtr)
-			return (true);
-		return (false);
-	}
+	bool	operator!=(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
 
 	template <class T1, class T2>
-	bool	operator>=(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
-		if (lhs._valPtr >= rhs._valPtr)
-			return (true);
-		return (false);
-	}
+	bool	operator>(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
 
 	template <class T1, class T2>
-	bool	operator<(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
-		if (lhs._valPtr < rhs._valPtr)
-			return (true);
-		return (false);
-	}
+	bool	operator>=(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
 
 	template <class T1, class T2>
-	bool	operator<=(vector_iterator<T1> const &lhs, vector_iterator<T2> const &rhs){
-		if (lhs._valPtr <= rhs._valPtr)
-			return (true);
-		return (false);
-	}
+	bool	operator<(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
+
+	template <class T1, class T2>
+	bool	operator<=(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
 
 } //End of namespace ft
 
 template <class T>
-ft::vector_iterator<T> operator+(int n, ft::vector_iterator<T> const &rhs){
-	return (rhs._valPtr + n);
-}
+ft::map_iterator<T> operator+(int n, ft::map_iterator<T> const &rhs);
 
 template <class T>
-ft::vector_iterator<T> operator-(int n, ft::vector_iterator<T> const &rhs){
-	return (rhs._valPtr - n);
-}
+ft::map_iterator<T> operator-(int n, ft::map_iterator<T> const &rhs);
 
 #endif//End of the header

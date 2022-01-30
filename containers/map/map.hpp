@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:54:46 by user42            #+#    #+#             */
-/*   Updated: 2022/01/27 16:13:31 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/30 02:14:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ namespace ft{
 	template <class Key, class T, class Compare = std::less<key_type>, class Alloc = std::allocator<ft::pair<const Key, T> >
 	class map{
 
+		public:
+		
         /*****************************************************************************/
 	    /*                              Members types                                */
 	    /*****************************************************************************/
@@ -69,6 +71,17 @@ namespace ft{
 	    //typedef		        ft::map_iterator<T const>						const_iterator;
 	    //typedef		        ft::reverse_iterator<iterator>					reverse_iterator;
 	    //typedef		        ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+
+		class value_compare: public std::binary_function<value_type, value_type, bool>{
+			protected:
+				key_compare _comp;
+				value_compare(compare c) : comp(c){}
+
+				public:
+					bool		operator()(value_type const &lhs, value_type const &rhs){
+						return (_comp(lhs.first, rhs.first));
+					}
+		}
 
         /*****************************************************************************/
 		/*                               Constructors                                */

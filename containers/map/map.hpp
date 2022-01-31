@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:54:46 by user42            #+#    #+#             */
-/*   Updated: 2022/01/30 02:14:55 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/30 02:50:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ namespace ft{
 	    typedef typename	allocator_type::const_pointer					const_pointer;
 
 	    //Defining iterators types
-	    //typedef		        ft::map_iterator<T>								iterator;
-	    //typedef		        ft::map_iterator<T const>						const_iterator;
-	    //typedef		        ft::reverse_iterator<iterator>					reverse_iterator;
-	    //typedef		        ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+	    typedef		        ft::map_iterator<T>								iterator;
+	    typedef		        ft::map_iterator<T const>						const_iterator;
+	    typedef		        ft::reverse_iterator<iterator>					reverse_iterator;
+	    typedef		        ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
 		class value_compare: public std::binary_function<value_type, value_type, bool>{
 			protected:

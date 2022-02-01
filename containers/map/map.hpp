@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:54:46 by user42            #+#    #+#             */
-/*   Updated: 2022/01/30 02:50:04 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/01 23:50:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ namespace ft{
 	    typedef		T														mapped_type;
         typedef     ft::pair<key_type const, mapped_type>                   value_type;
         typedef     Compare                                                 key_compare;
-        typedef     
         typedef 	size_t													size_type;
 	    typedef 	std::ptrdiff_t											difference_type;
+		typedef		nodeBT													node;
 
         //Defining allocators types
 	    typedef 	        Alloc 											allocator_type;
@@ -67,8 +67,8 @@ namespace ft{
 	    typedef typename	allocator_type::const_pointer					const_pointer;
 
 	    //Defining iterators types
-	    typedef		        ft::map_iterator<T>								iterator;
-	    typedef		        ft::map_iterator<T const>						const_iterator;
+	    typedef		        ft::map_iterator<value_type>					iterator;
+	    typedef		        ft::map_iterator<value_type const>				const_iterator;
 	    typedef		        ft::reverse_iterator<iterator>					reverse_iterator;
 	    typedef		        ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
@@ -88,21 +88,26 @@ namespace ft{
 		/*****************************************************************************/
 
         //Default constructor
-        explicit map (key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type());
+        explicit map (key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()):
+		_alloc(Alloc), _size(0), _cmp(comp), _root(NULL), _begin(NULL), _end(NULL){
+			return;
+		}
 
         //Range constructor
         template <class inputIterator>
         map (InputIterator first, InputIterator last, key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type());
 
         //Copy constructor
-        map (map const &src);
+        map (map const &src){
+			*this = src;
+		}
 
         /*****************************************************************************/
 		/*                                Destructors                                */
 		/*****************************************************************************/
 		
         //Destructor
-		~vector(){;
+		~vector();
 
 		/*****************************************************************************/
 		/*                           Operators overloads                             */
@@ -110,48 +115,76 @@ namespace ft{
 
 		//Assignement operator
 		map&		operator=(map const& rhs){
+			_size = rhs._size;
+			_root = rhs._root;
+			_begin = rhs._begin;
+			_end = rhs._end;
+			return (*this);
+		}
 
 		/*****************************************************************************/
 		/*                           Iterators functions                             */
 		/*****************************************************************************/
 
-		iterator				begin();
+		iterator					begin(){
+			return (iterator(_begin));
+		}
 
-		const_iterator			begin() const;
+		const_iterator				begin() const{
+			return (const_iterator(_begin));
+		}
 		
-		iterator				end();
+		iterator					end(){
+			return (iterator(_end));
+		}
 
-		const_iterator				end() const;
+		const_iterator				end() const{
+			return (const_iterator(_end));
+		}
 
-		reverse_iterator		rbegin();
+		reverse_iterator			rbegin(){
+			return (reverse_iterator(_end));
+		}
 
-		const_reverse_iterator		rbegin() const;
+		const_reverse_iterator		rbegin() const{
+			return (const_reverse_iterator(_end));
+		}
 
-		reverse_iterator		rend();
+		reverse_iterator			rend(){
+			return (reverse_iterator(_begin));
+		}
 
-		const_reverse_iterator		rend() const;
+		const_reverse_iterator		rend() const{
+			return (const_reverse_iterator(_begin));
+		}
 
 		/*****************************************************************************/
 		/*                            Capacity functions                             */
 		/*****************************************************************************/
 
 		//Return true if empty, false if not
-		bool					empty()		const;
+		bool						empty()		const{
+			if (_size == 0)
+				return (true);
+			return (false);
+		}
 
 		//Return the number of elements of the container
-		size_type				size()		const;
+		size_type					size()		const{
+			return (_size);
+		}
 
 		//Return max number of element the container can hold
-		size_type				max_size()	const;
+		size_type					max_size()	const;
 
 		/*****************************************************************************/
 		/*                         Elements access functions                         */
 		/*****************************************************************************/
 
 		//Access operator
-		reference				operator[](size_type n);
+		reference					operator[](size_type n);
 
-		const_reference			operator[](size_type n) const;
+		const_reference				operator[](size_type n) const;
 
 		/*****************************************************************************/
 		/*                            Modifiers functions                            */
@@ -166,32 +199,36 @@ namespace ft{
 
 		//3- Insert a range of iterator in the vector from position
 		template <class inputIterator>
-		void					insert(inputIterator first, inputIterator last,
+		void						insert(inputIterator first, inputIterator last,
 		typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0);
 
 		//Erase 1 elements or a range of elements.
 		//1-Erase the element pointed by position on the vector 
-		iterator				erase(iterator position);
+		iterator					erase(iterator position);
 
 		//2-
-		size_type				erase(key_type const &k);
+		size_type					erase(key_type const &k);
 
 		//3-Erase every elements between first and last.
-		iterator				erase(iterator first, iterator last);
+		iterator					erase(iterator first, iterator last);
 
 		//Exchanges the content of the container by the content of src which is a container object of the same type.
-		void					swap(map& x);
+		void						swap(map& x);
 
 		//Remove all elements of the vector and put the size at 0
-		void					clear();
+		void						clear();
 
 		/*****************************************************************************/
 		/*                            Observers functions                            */
 		/*****************************************************************************/
 
-		key_compare				key_comp() const;
+		key_compare					key_comp() const{
+			return (key_compare());
+		}
 
-		//value_compare			value_comp() const;
+		value_compare				value_comp() const{
+			return (value_compare());
+		}
 
 		/*****************************************************************************/
 		/*                            Operations functions                           */
@@ -222,10 +259,19 @@ namespace ft{
 		allocator_type				get_allocator() const;
 
 		/*****************************************************************************/
-		/*                            Private members                                */
-		/*****************************************************************************/
+	    /*                              Members types                                */
+	    /*****************************************************************************/
 
 		private:
+			size_type		*_size;
+			node			*_root;
+			node			*_begin;
+			node			*_end;
+			allocator_type	_alloc;
+
+			//Binary Tree functions :
+			//rotateLeft
+			//rotateRight
 
     };//end of map class
 

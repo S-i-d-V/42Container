@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 15:34:52 by user42            #+#    #+#             */
-/*   Updated: 2022/01/28 17:09:15 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/01 12:48:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ namespace ft{
 	    	/*****************************************************************************/
 
 			//Typedefs
-			typedef enum 	{RED, BLACK}	color_node;
-			typedef			T				value_type;
-			typedef			nodeBT<T>		*pointer;
-			typedef			nodeBT<T>		&reference;
+			typedef enum 	{RED, BLACK}			color_node;
+			typedef			T						value_type;
+			typedef			nodeBT<value_type>		*pointer;
+			typedef			nodeBT<value_type>		&reference;
 
 			//Public members
-			value_type				_data;
-			pointer					_left;
-			pointer					_right;
-			pointer					_parent;
-			color_node				_color;
+			value_type								_data;
+			pointer									_left;
+			pointer									_right;
+			pointer									_parent;
+			color_node								_color;
 
 			/*****************************************************************************/
 			/*                               Constructors                                */

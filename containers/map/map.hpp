@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ugtheven <ugtheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:54:46 by user42            #+#    #+#             */
-/*   Updated: 2022/02/01 23:50:43 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/02 11:59:56 by ugtheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ namespace ft{
 		/*****************************************************************************/
 		
         //Destructor
-		~vector();
+		~map();
 
 		/*****************************************************************************/
 		/*                           Operators overloads                             */
@@ -268,10 +268,6 @@ namespace ft{
 			node			*_begin;
 			node			*_end;
 			allocator_type	_alloc;
-
-			//Binary Tree functions :
-			//rotateLeft
-			//rotateRight
 
     };//end of map class
 

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:52:22 by user42            #+#    #+#             */
-/*   Updated: 2022/01/27 15:41:54 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/15 16:38:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,15 @@ namespace ft{
 		/*****************************************************************************/
 
         //Default
-        pair(){
-            first = 0
-            second = 0;
+        pair(): first(first_type()), second(second_type()){
             return;
         }
+
+		pair(T1 const lhs, T2 const rhs):first(lhs), second(rhs){}
 
         //Copy
-        template<class U,class V>
-        pair(pair const<U, V>& pr){
-            *this = pr;
-            return;
-        }
-
-        //Initialization
-        pair(first_type const& a, second_type const&b){
-            first = a;
-            second = b;
-            return;
-        }
+        template<class U1,class U2>
+        pair(pair<U1, U2> const &src): first(src.first), second(src.second){}
 
         /*****************************************************************************/
 		/*                           Operators overloads                             */
@@ -72,6 +62,15 @@ namespace ft{
             second = pr.second;
             return (*this);
         }
+
+		/*****************************************************************************/
+		/*                           Conversion overload                             */
+		/*****************************************************************************/
+
+		operator	pair<first_type const, second_type const>() const{
+			return (pair<first_type const, second_type const>(first, second));
+		}
+
     };//End of struct pair
 
     /*****************************************************************************/

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/30 02:16:09 by user42            #+#    #+#             */
-/*   Updated: 2022/01/30 02:48:50 by user42           ###   ########.fr       */
+/*   Created: 2022/02/16 22:24:31 by user42            #+#    #+#             */
+/*   Updated: 2022/02/22 02:30:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,156 +23,243 @@
 #include <iterator>
 
 /*****************************************************************************/
-/*                                Namespace FT                               */
+/*                              Namespace FT                                 */
 /*****************************************************************************/
-namespace ft{
 
+namespace ft{
 	/*****************************************************************************/
-	/*                            Class map iterator                             */
+	/*                           map_iterator Class                           */
 	/*****************************************************************************/
-	template <class T>
+
+	template<class nodeType, class valueType>
 	class map_iterator{
 
+	/*****************************************************************************/
+	/*                               Public members                              */
+	/*****************************************************************************/
+
+	public:
+
 		/*****************************************************************************/
-		/*                             Public members                                */
+		/*                              Members types                                */
 		/*****************************************************************************/
-		public:
 
-			/*****************************************************************************/
-			/*                              Members types                                */
-			/*****************************************************************************/
+		typedef nodeType						node_type;
+		typedef valueType						value_type;
+		typedef std::ptrdiff_t					difference_type;
+		typedef value_type*						pointer;
+		typedef value_type&						reference;
+		typedef std::bidirectional_iterator_tag	iterator_category;
 
-			typedef typename	std::ptrdiff_t							difference_type;
-			typedef				T										value_type;
-			typedef 			T&										reference;
-			typedef 			T*										pointer;
-			typedef	typename	std::bidirectional_iterator_tag			iterator_category;
 
-			/*****************************************************************************/
-			/*                               Constructors                                */
-			/*****************************************************************************/
+		/*****************************************************************************/
+		/*                               Constructors                                */
+		/*****************************************************************************/
 
-			//Default constructor
-			map_iterator();
+		map_iterator(): _valPtr(NULL), _end(NULL) {
+			return;
+		}
 
-			map_iterator(pointer valPtr);
+		map_iterator(node_type *ptr): _valPtr(ptr), _end(NULL) {
+			return;
+		}
 
-			map_iterator(map_iterator<T> const& src);
+		map_iterator(node_type *ptr, node_type *sentry): _valPtr(ptr), _end(sentry) {
+			return;
+		}
 
-			/*****************************************************************************/
-			/*                                Destructors                                */
-			/*****************************************************************************/
 
-			~map_iterator(){
-				return;
+		map_iterator(const map_iterator &copy){
+			*this = copy;
+			return;
+		}
+
+		/*****************************************************************************/
+		/*                               Constructors                                */
+		/*****************************************************************************/
+
+		~map_iterator() {
+			return;
+		}
+
+		/*****************************************************************************/
+		/*                            Operator overloads                             */
+		/*****************************************************************************/
+
+		map_iterator	&operator=(const map_iterator &other){
+			_valPtr = other._valPtr;
+			_end = other._end;
+			return (*this);
+		}
+
+
+		reference	operator*(void){
+			return (_valPtr->_data);
+		}
+
+		const value_type	&operator*(void) const{
+			return (_valPtr->_data);
+		}
+
+
+		value_type	*operator->(void){
+			return (&operator*());
+		}
+
+		const value_type	*operator->(void) const{
+			return (&operator*());
+		}
+
+
+		map_iterator	operator++(int){
+			map_iterator	it(*this);
+
+			if (_valPtr == _end && _end->_parent != NULL)
+				_valPtr = getMin(_valPtr->_parent);
+			else if (_valPtr->_right == _end){
+				node_type	*parent = _valPtr->_parent;
+
+				while (parent != NULL && _valPtr == parent->_right){
+					_valPtr = parent;
+					parent = parent->_parent;
+				}
+				if (parent == NULL)
+					_valPtr = _end;
+				else
+					_valPtr = parent;
 			}
+			else
+				_valPtr = getMin(_valPtr->_right);
+			return (it);
+		}
 
-			/*****************************************************************************/
-			/*                           Operators conversion                            */
-			/*****************************************************************************/
+		map_iterator	&operator++(void){
+			if (_valPtr == _end && _end->_parent != NULL){
+				_valPtr = getMin(_valPtr->_parent);
+				return (*this);
+			}
+			else if (_valPtr->_right == _end){
+				node_type	*parent = _valPtr->_parent;
 
-			//Conversion operator
-			operator		map_iterator<T const>() const;
+				while (parent != NULL && _valPtr == parent->_right){
+					_valPtr = parent;
+					parent = parent->_parent;
+				}
+				if (parent == NULL)
+					_valPtr = _end;
+				else
+					_valPtr = parent;
+				return (*this);
+			}
+			else{
+				_valPtr = getMin(_valPtr->_right);
+				return (*this);
+			}
+		}
 
-			/*****************************************************************************/
-			/*                           Operators overloads                             */
-			/*****************************************************************************/
 
-			//Assignement operator
-			map_iterator<T>		&operator=(map_iterator<T> const &rhs);
+		map_iterator	operator--(int){
+			map_iterator	it(*this);
 
-			//Pointer operator
-			pointer				operator->() const;
+			if (_valPtr == _end && _end->_parent != NULL)
+				_valPtr = getMax(_valPtr->_parent);
+			else if (_valPtr->_left == _end){
+				node_type	*parent = _valPtr->_parent;
 
-			//Dereferencement pointer operator
-			reference			operator*() const;
+				while (parent != NULL && _valPtr == parent->_left){
+					_valPtr = parent;
+					parent = parent->_parent;
+				}
+				if (parent == NULL)
+					_valPtr = _end;
+				else
+					_valPtr = parent;
+			}
+			else
+				_valPtr = getMax(_valPtr->_left);
+			return (it);
+		}
 
-			reference			operator[](size_t index);
+		map_iterator	&operator--(void){
+			if (_valPtr == _end && _end->_parent != NULL){
+				_valPtr = getMax(_valPtr->_parent);
+				return (*this);
+			}
+			else if (_valPtr->_left == _end){
+				node_type	*parent = _valPtr->_parent;
 
-			//Increment operator prefixe it++;
-			map_iterator<T>	&operator++();
+				while (parent != NULL && _valPtr == parent->_left){
+					_valPtr = parent;
+					parent = parent->_parent;
+				}
+				if (parent == NULL)
+					_valPtr = _end;
+				else
+					_valPtr = parent;
+				return (*this);
+			}
+			else{
+				_valPtr = getMax(_valPtr->_left);
+				return (*this);
+			}
+		}
 
-			//Increment operator postfixe ++it; 
-			map_iterator<T> operator++(int);
-
-			//Increment operator prefixe it--;
-			map_iterator<T> &operator--();
-
-			//Decrement operator postfixe --it; 
-			map_iterator<T> operator--(int);
-
-			//Addition operator
-			difference_type operator+(map_iterator<T> const &rhs) const;
-
-			//Substraction operator
-			difference_type operator-(map_iterator<T> const &rhs) const;
-
-			//Addition operator
-			map_iterator<T> operator+(difference_type n);
-
-			//Substraction operator
-			map_iterator<T> operator-(difference_type n);
-
-			//Plus equal operaor
-			map_iterator<T> &operator+=(difference_type n);
-
-			//Sub equal operator
-			map_iterator<T> &operator-=(difference_type n);
-
-			/*****************************************************************************/
-			/*                          Comparaisons overloads                           */
-			/*****************************************************************************/
-
-			//Equal operator
-			bool operator==(map_iterator<T> const& rhs) const;
-
-			//Non-equal operator
-			bool operator!=(map_iterator<T> const& rhs) const;
-
-			//Superior or equal operator
-			bool operator>=(map_iterator<T> const& rhs) const;
-
-			//Inferior or equal operator
-			bool operator<=(map_iterator<T> const& rhs) const;
-
-			//Superior operator
-			bool operator>(map_iterator<T> const& rhs) const;
-
-			//Inferior operator
-			bool operator<(map_iterator<T> const& rhs) const;
 
 		/*****************************************************************************/
-		/*                            Private members                                */
+		/*                           Conversion operator                             */
 		/*****************************************************************************/
-		//private:
-			pointer _valPtr;
 
-	}; //End of map_iterator class;
+		operator map_iterator<const nodeType, const valueType>(void) const{
+			return (map_iterator<const nodeType, const valueType>(_valPtr, _end));
+		}
 
-	template <class T1, class T2>
-	bool	operator==(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
+		/*****************************************************************************/
+		/*                           Underluying functions                           */
+		/*****************************************************************************/
 
-	template <class T1, class T2>
-	bool	operator!=(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
+		node_type	*getMin(node_type *node){
+			node_type	*_valPtr = node;
 
-	template <class T1, class T2>
-	bool	operator>(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
+			while (_valPtr->_left != _end)
+				_valPtr = _valPtr->_left;
+			return (_valPtr);
+		}
 
-	template <class T1, class T2>
-	bool	operator>=(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
 
-	template <class T1, class T2>
-	bool	operator<(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
+		node_type	*getMax(node_type *node){
+			node_type	*_valPtr = node;
 
-	template <class T1, class T2>
-	bool	operator<=(map_iterator<T1> const &lhs, map_iterator<T2> const &rhs);
+			while (_valPtr->_right != _end)
+				_valPtr = _valPtr->_right;
+			return (_valPtr);
+		}
 
-} //End of namespace ft
 
-template <class T>
-ft::map_iterator<T> operator+(int n, ft::map_iterator<T> const &rhs);
+		/*****************************************************************************/
+		/*                                 Members                                   */
+		/*****************************************************************************/
 
-template <class T>
-ft::map_iterator<T> operator-(int n, ft::map_iterator<T> const &rhs);
+		node_type			*_valPtr;
+		node_type			*_end;
+	};
 
-#endif//End of the header
+	/*****************************************************************************/
+	/*                           Non-members overloads                           */
+	/*****************************************************************************/
+
+	template<class Tx, class Ux, class Ty, class Uy>
+	bool	operator==(const map_iterator<Tx, Ux> &x, const map_iterator<Ty, Uy> &y){
+		if (x._valPtr == y._valPtr)
+			return (true);
+		return (false);
+	}
+
+	template<class Tx, class Ux, class Ty, class Uy>
+	bool	operator!=(const map_iterator<Tx, Ux> &x, const map_iterator<Ty, Uy> &y){
+		if (x._valPtr != y._valPtr)
+			return (true);
+		return (false);
+	}
+}
+
+#endif

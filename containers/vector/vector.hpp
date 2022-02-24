@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2022/01/26 22:02:07 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/22 02:14:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,8 +326,7 @@ namespace ft{
 
 			//3- Insert a range of iterator in the vector from position
 			template <class inputIterator>
-			void					insert(iterator position, inputIterator first, inputIterator last,
-			typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0){
+			void					insert(iterator position, inputIterator first, inputIterator last, typename ft::enable_if<!ft::is_integral<inputIterator>::value>::type* = 0){
 				difference_type index = position - begin();
 				difference_type size = std::distance(first, last);
 				if (_size + size > _capacity && _size + size <= _capacity * 2)
@@ -437,7 +436,7 @@ namespace ft{
 	template <class T, class Alloc>
 	bool	operator==(vector<T, Alloc> const& lhs, vector<T, Alloc> const& rhs){
 		if (lhs.size() == rhs.size())
-			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		return (false);
 	}
 

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 14:37:01 by user42            #+#    #+#             */
-/*   Updated: 2022/01/26 22:05:10 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/16 02:36:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ namespace ft{
 
 			//Conversion operator
 			operator		reverse_iterator<Iter const>() const{
-				return (vector_iterator<Iter const>(this->_base()));
+				return (reverse_iterator<Iter const>(_base()));
 			}
 
 			/*****************************************************************************/
@@ -106,7 +106,7 @@ namespace ft{
 
 			//Pointer operator
 			pointer operator->() const{
-				return (&(this->operator*()));
+				return (&(operator*()));
 			}
 
 			//Dereferencement pointer operator

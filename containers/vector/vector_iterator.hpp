@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 18:06:02 by user42            #+#    #+#             */
-/*   Updated: 2022/01/30 02:44:51 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/03 16:30:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ namespace ft{
 
 			//Conversion operator
 			operator		vector_iterator<T const>() const{
-				return (vector_iterator<T const>(this->_valPtr));
+				return (vector_iterator<T const>(_valPtr));
 			}
 
 			/*****************************************************************************/

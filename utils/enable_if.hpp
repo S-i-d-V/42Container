@@ -6,13 +6,9 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:52:10 by user42            #+#    #+#             */
-/*   Updated: 2022/01/27 15:41:54 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/16 01:54:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*****************************************************************************/
-/*                                Includes                                   */
-/*****************************************************************************/
 
 #ifndef ENABLE_IF_HPP
 #define ENABLE_IF_HPP
@@ -27,12 +23,12 @@ namespace ft{
 	/*                              Struct SNIFAE                                */
 	/*****************************************************************************/
 
-	template <bool isInt>
-	struct enable_if;
+	template <bool isInt, class T = void>
+	struct enable_if{};
 
-	template<>
-	struct enable_if<true>{
-		typedef int type;
+	template<class T>
+	struct enable_if<true, T>{
+		typedef T type;
 	};
 
 	//Set value to false if T is not an int

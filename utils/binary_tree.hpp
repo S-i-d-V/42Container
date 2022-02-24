@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 02:06:43 by user42            #+#    #+#             */
-/*   Updated: 2022/02/24 03:08:03 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/24 11:47:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ namespace ft{
 		typedef std::ptrdiff_t															difference_type;
 
 		typedef Allocator																allocator_type;
-		//typedef node_type*																pointer;
 		typedef typename allocator_type::pointer										pointer;
 		typedef typename allocator_type::const_pointer									const_pointer;
 		typedef typename allocator_type::reference										reference;
@@ -158,8 +157,8 @@ namespace ft{
 
 		//Default
 		explicit treeRB(Compare const &comp = key_compare(), Allocator const &alloc = Allocator()): _size(0), _alloc(alloc), _comp(comp){
+			//allocation of the tNull node
 			_tNull = _alloc.allocate(1);
-
 			_alloc.construct(_tNull, value_type());
 			_tNull->_left = NULL;
 			_tNull->_right = NULL;
@@ -170,13 +169,14 @@ namespace ft{
 
 		//Copy
 		treeRB(treeRB const &src): _size(0), _root(NULL){
+			//allocation of the tNull node
 			_tNull = _alloc.allocate(1);
-
 			_alloc.construct(_tNull, value_type());
 			_tNull->_left = NULL;
 			_tNull->_right = NULL;
 			_tNull->_color = BLACK;
 			_root = _tNull;
+			//copy of the three
 			*this = src;
 			return;
 		}
@@ -258,7 +258,7 @@ namespace ft{
 
 		//Insert an element
 		ft::pair<iterator, bool>	insert(value_type const &val){
-			//alloc of the node to insert
+			//allocation of the node to insert
 			pointer node = _alloc.allocate(1);
 			_alloc.construct(node, val);
 			node->_left = _tNull;
@@ -466,72 +466,84 @@ namespace ft{
 				if (toInsert == _root)
 					break;
 			}
+			//the root is allways a black node
 			_root->_color = BLACK;
 		}
 
 
 		//FixErase start from the inserted node to the root to fix the violations of the rules
 		void	fixErase(pointer x){
-			pointer	s;
+			pointer	w;
 
+			//i traverse the tree to the root
 			while (x != _root && x->_color == BLACK){
+				//if x is the right child of his parent
 				if (x == x->_parent->_left){
-					s = x->_parent->_right;
-					if (s->_color == RED){
-						s->_color = BLACK;
+					//i assign to w the right child
+					w = x->_parent->_right;
+					//if w is RED, he come black and his parent become red then we apply left rotation
+					if (w->_color == RED){
+						w->_color = BLACK;
 						x->_parent->_color = RED;
 						rotateLeft(x->_parent);
-						s = x->_parent->_right;
+						w = x->_parent->_right;
 					}
-					
-					if (s->_left->_color == BLACK && s->_right->_color == BLACK){
-						s->_color = RED;
+
+					//if both childs are black, w become red and x become his own parent
+					if (w->_left->_color == BLACK && w->_right->_color == BLACK){
+						w->_color = RED;
 						x = x->_parent;
 					}
 					else{
-						if (s->_right->_color == BLACK){
-							s->_left->_color = BLACK;
-							s->_color = RED;
-							rotateRight(s);
-							s = x->_parent->_right;
+						//if the right child is black, then i do a right-left rotation
+						if (w->_right->_color == BLACK){
+							w->_left->_color = BLACK;
+							w->_color = RED;
+							rotateRight(w);
+							w = x->_parent->_right;
 						}
-
-						s->_color = x->_parent->_color;
+						//if both a red, both become black and i do a leftrotation
+						w->_color = x->_parent->_color;
 						x->_parent->_color = BLACK;
-						s->_right->_color = BLACK;
+						w->_right->_color = BLACK;
 						rotateLeft(x->_parent);
 						x = _root;
 					}
 				}
 				else{
-					s = x->_parent->_left;
-					if (s->_color == RED){
-						s->_color = BLACK;
+					//i assign to w the left child
+					w = x->_parent->_left;
+					//if w is RED, he come black and his parent become red then we apply right rotation
+					if (w->_color == RED){
+						w->_color = BLACK;
 						x->_parent->_color = RED;
 						rotateRight(x->_parent);
-						s = x->_parent->_left;
+						w = x->_parent->_left;
 					}
 
-					if (s->_right->_color == BLACK && s->_left->_color == BLACK){
-						s->_color = RED;
+					//if both childs are black, w become red and x become his own parent
+					if (w->_right->_color == BLACK && w->_left->_color == BLACK){
+						w->_color = RED;
 						x = x->_parent;
 					}
 					else{
-						if (s->_left->_color == BLACK){
-							s->_right->_color = BLACK;
-							s->_color = RED;
-							rotateLeft(s);
-							s = x->_parent->_left;
+						//if the right child is black, then i do a left-right rotation
+						if (w->_left->_color == BLACK){
+							w->_right->_color = BLACK;
+							w->_color = RED;
+							rotateLeft(w);
+							w = x->_parent->_left;
 						}
-
-						s->_color = x->_parent->_color;
+						//if both a red, both become black and i do a right rotation
+						w->_color = x->_parent->_color;
 						x->_parent->_color = BLACK;
-						s->_left->_color = BLACK;
+						w->_left->_color = BLACK;
 						rotateRight(x->_parent);
 						x = _root;
 					}
 				}
 			}
+			//x is the root so we set it to black
 			x->_color = BLACK;
 		}
 		

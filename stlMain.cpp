@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stlMain.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 02:57:34 by user42            #+#    #+#             */
-/*   Updated: 2022/02/28 03:14:47 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/28 15:59:38 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -606,10 +606,10 @@ void map_operations_test(){
 	printMSize(2, map1, map2, map3, map4);
 
 	//lower_bound
-	it1 = map1.lower_bound(15);
-	TESTED_NAMESPACE::map<int, std::string>::const_iterator it22 = map2.lower_bound(2000);
+	it1 = map1.lower_bound(1);
+	TESTED_NAMESPACE::map<int, std::string>::const_iterator it22 = map2.lower_bound(2);
 	it3 = map3.lower_bound(-1);
-	TESTED_NAMESPACE::map<int, std::string>::const_iterator it44 = map4.lower_bound(5000);
+	TESTED_NAMESPACE::map<int, std::string>::const_iterator it44 = map4.lower_bound(-646);
 	std::cout << (*it1).second << std::endl;
 	std::cout << (*it22).second << std::endl;
 	std::cout << (*it3).second << std::endl;
@@ -617,10 +617,10 @@ void map_operations_test(){
 	printMSize(3, map1, map2, map3, map4);
 
 	//upper_bound
-	it1 = map1.upper_bound(15);
-	TESTED_NAMESPACE::map<int, std::string>::const_iterator it222 = map2.upper_bound(2000);
+	it1 = map1.upper_bound(1);
+	TESTED_NAMESPACE::map<int, std::string>::const_iterator it222 = map2.upper_bound(2);
 	it3 = map3.upper_bound(-1);
-	TESTED_NAMESPACE::map<int, std::string>::const_iterator it444 = map4.upper_bound(5000);
+	TESTED_NAMESPACE::map<int, std::string>::const_iterator it444 = map4.upper_bound(-646);
 	std::cout << (*it1).second << std::endl;
 	std::cout << (*it222).second << std::endl;
 	std::cout << (*it3).second << std::endl;

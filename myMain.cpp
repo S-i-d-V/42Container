@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   myMain.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 02:57:23 by user42            #+#    #+#             */
-/*   Updated: 2022/02/28 15:59:38 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2022/02/28 17:52:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -689,6 +689,40 @@ void	map_test(){
 	map_comparaison_test();
 }
 
+void	reverse_iterator_test(){
+	clock_t ticks = clock();
+	TESTED_NAMESPACE::vector<int> vect(50000, 5);
+	TESTED_NAMESPACE::map<int, std::string> map;
+	for(int i = 0; i < 50000; i++){
+		TESTED_NAMESPACE::pair<int, std::string> pair = TESTED_NAMESPACE::make_pair(i, "Key");
+		map.insert(pair);
+	}
+
+	TESTED_NAMESPACE::vector<int>::reverse_iterator ritv1 = vect.rbegin();
+	TESTED_NAMESPACE::vector<int>::const_reverse_iterator ritv2 = vect.rend();
+	TESTED_NAMESPACE::map<int, std::string>::reverse_iterator ritm1 = map.rbegin();
+	TESTED_NAMESPACE::map<int, std::string>::const_reverse_iterator ritm2 = map.rend();
+
+	while (ritv1 != ritv2){
+		int i = 0;
+		if ((i / 5000) == 1)
+			std::cout << *ritv1 << std::endl;
+		i++;
+		ritv1++;
+	}
+
+	while (ritm1 != ritm2){
+		int i = 0;
+		if ((i / 5000) == 1)
+			std::cout << (*ritm1).second << std::endl;
+		i++;
+		ritm1++;
+	}
+
+  	ticks = clock() - ticks;
+  	std::cout << tested_namespace << "'s execution time on reverse_iterator test:" << ((float)ticks) / CLOCKS_PER_SEC << std::endl << std::endl;
+}
+
 /*****************************************************************************/
 /*                                  Main                                     */
 /*****************************************************************************/
@@ -702,4 +736,7 @@ int main(){
 
 	//Map TEST
 	map_test();
+
+	//Reverse_iterator TEST
+	reverse_iterator_test();
 }

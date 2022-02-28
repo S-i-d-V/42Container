@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stlMain.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 02:57:34 by user42            #+#    #+#             */
-/*   Updated: 2022/02/28 17:51:19 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/28 18:38:02 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -690,11 +690,15 @@ void	map_test(){
 	map_comparaison_test();
 }
 
+/*****************************************************************************/
+/*                             reverse_iterator                              */
+/*****************************************************************************/
+
 void	reverse_iterator_test(){
 	clock_t ticks = clock();
-	TESTED_NAMESPACE::vector<int> vect(1000, 5);
+	TESTED_NAMESPACE::vector<int> vect(2000, 5);
 	TESTED_NAMESPACE::map<int, std::string> map;
-	for(int i = 0; i < 1000; i++){
+	for(int i = 0; i < 2000; i++){
 		TESTED_NAMESPACE::pair<int, std::string> pair = TESTED_NAMESPACE::make_pair(i, "Key");
 		map.insert(pair);
 	}
@@ -706,7 +710,7 @@ void	reverse_iterator_test(){
 
 	while (ritv1 != ritv2){
 		int i = 0;
-		if ((i / 500) == 1)
+		if ((i / 20) == 1)
 			std::cout << *ritv1 << std::endl;
 		i++;
 		ritv1++;
@@ -714,7 +718,7 @@ void	reverse_iterator_test(){
 
 	while (ritm1 != ritm2){
 		int i = 0;
-		if ((i / 500) == 1)
+		if ((i / 20) == 1)
 			std::cout << (*ritm1).second << std::endl;
 		i++;
 		ritm1++;

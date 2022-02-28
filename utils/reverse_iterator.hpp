@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 14:37:01 by user42            #+#    #+#             */
-/*   Updated: 2022/02/16 02:36:30 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/25 18:21:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ namespace ft{
 	//Superior or equal operator
 	template<class Iterator1, class Iterator2>
 	bool operator>=(reverse_iterator<Iterator1> const& lhs, reverse_iterator<Iterator2> const& rhs){
-		if (lhs.base() >= rhs.base())
+		if (lhs.base() <= rhs.base())
 			return (true);
 		return (false);
 	}
@@ -207,7 +207,7 @@ namespace ft{
 	//Inferior or equal operator
 	template<class Iterator1, class Iterator2>
 	bool operator<=(reverse_iterator<Iterator1> const& lhs, reverse_iterator<Iterator2> const& rhs){
-		if (lhs.base() <= rhs.base())
+		if (lhs.base() >= rhs.base())
 			return (true);
 		return (false);
 	}
@@ -215,7 +215,7 @@ namespace ft{
 	//Superior operator
 	template<class Iterator1, class Iterator2>
 	bool operator>(reverse_iterator<Iterator1> const& lhs, reverse_iterator<Iterator2> const& rhs){
-		if (lhs.base() > rhs.base())
+		if (lhs.base() < rhs.base())
 			return (true);
 		return (false);
 	}
@@ -223,7 +223,7 @@ namespace ft{
 	//Inferior operator
 	template<class Iterator1, class Iterator2>
 	bool operator<(reverse_iterator<Iterator1> const& lhs, reverse_iterator<Iterator2> const& rhs){
-		if (lhs.base() < rhs.base())
+		if (lhs.base() > rhs.base())
 			return (true);
 		return (false);
 	}
@@ -236,6 +236,16 @@ namespace ft{
 	template <class Iterator>
 	reverse_iterator<Iterator> operator-(typename reverse_iterator<Iterator>::difference_type n, reverse_iterator<Iterator> const &revIt){
 		return (revIt - n);
+	}
+
+	template <class Iterator>
+	reverse_iterator<Iterator> operator+(reverse_iterator<Iterator> const &lhs, reverse_iterator<Iterator> const &rhs){
+		return (rhs.base() - lhs.base());
+	}
+
+	template <class Iterator>
+	reverse_iterator<Iterator> operator-(reverse_iterator<Iterator> const &lhs, reverse_iterator<Iterator> const &rhs){
+		return (rhs.base() + lhs.base());
 	}
 
 } //End of namespace ft

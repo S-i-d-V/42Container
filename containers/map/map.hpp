@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 01:51:37 by user42            #+#    #+#             */
-/*   Updated: 2022/02/24 00:22:20 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/28 02:57:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,9 +202,13 @@ namespace ft{
 		/*                             Element access                                */
 		/*****************************************************************************/
 
-		//Return a reference is k is matching with a key in the map
+		//Return a reference is k is matching or insert it
 		mapped_type	&operator[](key_type const &k){
-			return ((insert(ft::make_pair(k, mapped_type()))).first->second);
+			iterator findRet = find(k);
+			if (findRet != end())
+				return (findRet->second);
+			ft::pair<iterator, bool> insertRet = insert(ft::make_pair(k, mapped_type()));
+			return (insertRet.first->second);
 		}
 
 		/*****************************************************************************/
@@ -218,8 +222,7 @@ namespace ft{
 
 		//With hint
 		iterator	insert(iterator position, value_type const &val){
-			(void)position;
-			return ((insert(val)).first);
+			return (_tree.insert(position, val));
 		}
 
 		//Range
@@ -316,46 +319,34 @@ namespace ft{
 
 
 		iterator	lower_bound(key_type const &k){
-			iterator it = begin();
-
-			while (it != end()){
-				if (!(_comp(it._valPtr->_data, k)))
+			for (iterator it = begin(); it != end(); it++){
+				if (!(_comp(it->first, k)))
 					return (it);
-				it++;
 			}
 			return (end());
 		}
 
 		const_iterator	 lower_bound(key_type const &k) const{
-			const_iterator it = begin();
-
-			while (it != end()){
-				if (!(_comp(it._valPtr->_data, k)))
+			for (const_iterator it = begin() ;it != end(); it++){
+				if (!(_comp(it->first, k)))
 					return (it);
-				it++;
 			}
 			return (end());
 		}
 
 
 		iterator	upper_bound(key_type const &k){
-			iterator it = begin();
-
-			while (it != end()){
-				if (!(_comp(it._valPtr->_data, k)) && _comp(k, it._valPtr->_data))
+			for (iterator it = begin(); it != end(); it++){
+				if (!(_comp(it->first, k)) && _comp(k, it->first))
 					return (it);
-				it++;
 			}
 			return (end());
 		}
 
 		const_iterator	upper_bound(key_type const &k) const{
-			const_iterator it = begin();
-
-			while (it != end()){
-				if (!(_comp(it._valPtr->_data, k)) && _comp(k, it._valPtr->_data))
+			for (const_iterator it = begin() ;it != end(); it++){
+				if (!(_comp(it->first, k)) && _comp(k, it->first))
 					return (it);
-				it++;
 			}
 			return (end());
 		}
@@ -363,7 +354,6 @@ namespace ft{
 
 		ft::pair<iterator, iterator>	equal_range(key_type const &k){
 			ft::pair<iterator, iterator>	range;
-
 			range.first = lower_bound(k);
 			range.second = upper_bound(k);
 			return (range);
@@ -371,7 +361,6 @@ namespace ft{
 
 		ft::pair<const_iterator, const_iterator>	equal_range(key_type const &k) const{
 			ft::pair<const_iterator, const_iterator>	range;
-
 			range.first = lower_bound(k);
 			range.second = upper_bound(k);
 			return (range);

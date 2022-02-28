@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:11 by user42            #+#    #+#             */
-/*   Updated: 2022/02/22 02:14:11 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/28 01:15:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,20 +183,10 @@ namespace ft{
 
 			//Resize the container so that it contains n elements;
 			void					resize(size_type n, value_type val = value_type()){
-				if (n < _size){
-					while (_size != n)
-						erase(end());
-				}
-				else if (n > _size && n <= _capacity){
-					while (_size < n)
-						push_back(val);
-				}
-				else if (n > _capacity){
-					size_type tmpSize = _size;
-					reserve(n);
-					for (size_type i = tmpSize; i < n; i++)
-						push_back(val);
-				}
+				if (n < size())
+					erase(begin() + n, end());
+				else if (n > size())
+					insert(end(), n - size(), val);
 			}
 
 			//Request that the container capacity be at least enough to contain n elements
@@ -317,9 +307,10 @@ namespace ft{
 				iterator tmpEnd = end();
 				_size += n;
 				iterator pos = iterator(&_data[index]);
-				if (pos != tmpEnd)
+				if (pos != tmpEnd){
 					for (size_t i = 0; end() - i != pos; i++)
 						_alloc.construct(&(*(end() - i - 1)), *(tmpEnd - i - 1));
+				}
 				for (size_t i = 0; i < n; i++, pos++)
 					_alloc.construct(pos._valPtr, val);
 			}
@@ -336,11 +327,17 @@ namespace ft{
 				iterator tmpEnd = end();
 				_size += size;
 				iterator pos = iterator(&_data[index]);
-				if (pos != tmpEnd)
+				if (pos != tmpEnd){
 					for (size_t i = 0; end() - i != pos; i++)
 						_alloc.construct(&(*(end() - i - 1)), *(tmpEnd - i - 1));
-				for (; first != last; first++, pos++)
+				}
+				//for (; first != last; first++, pos++)
+				//	_alloc.construct(pos._valPtr, *first);
+				while (first != last){
 					_alloc.construct(pos._valPtr, *first);
+					first++;
+					pos++;
+				}
 			}
 
 			//Erase 1 elements or a range of elements.

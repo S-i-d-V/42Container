@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 02:06:43 by user42            #+#    #+#             */
-/*   Updated: 2022/02/24 11:47:52 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/25 16:16:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,6 +306,12 @@ namespace ft{
 			return (ft::make_pair(node, true));
 		}
 
+		//With hint
+		iterator	insert(iterator position, value_type const &val){
+			(void)position;
+			return ((insert(val)).first);
+		}
+
 		//Delete an element
 		void	erase(pointer toDelete){
 			pointer		x;
@@ -399,6 +405,7 @@ namespace ft{
 			}
 			return (end());
 		}
+
 
 		/*****************************************************************************/
 		/*                           Underluying functions                           */

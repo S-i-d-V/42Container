@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:33:17 by user42            #+#    #+#             */
-/*   Updated: 2021/12/30 18:04:33 by user42           ###   ########.fr       */
+/*   Updated: 2022/02/25 11:30:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,35 @@ namespace ft{
 			}
 
 		/*****************************************************************************/
-		/*                            Private members                                */
+		/*                             Prptected members                               */
 		/*****************************************************************************/
-	    private:
+	    protected:
 			container_type	_data;
+
+			//Friend because operator == can't be public
+			template <class T1, class Container1>
+			friend bool	operator==(stack<T1, Container1> const&, stack<T1, Container1> const&);
+		
+			//Friend because operator == can't be public
+			template <class T1, class Container1>
+			friend bool	operator!=(stack<T1, Container1> const&, stack<T1, Container1> const&);
+		
+			//Friend because operator == can't be public
+			template <class T1, class Container1>
+			friend bool	operator<(stack<T1, Container1> const&, stack<T1, Container1> const&);
+		
+			//Friend because operator == can't be public
+			template <class T1, class Container1>
+			friend bool	operator<=(stack<T1, Container1> const&, stack<T1, Container1> const&);
+		
+			//Friend because operator == can't be public
+			template <class T1, class Container1>
+			friend bool	operator>(stack<T1, Container1> const&, stack<T1, Container1> const&);
+		
+			//Friend because operator == can't be public
+			template <class T1, class Container1>
+			friend bool	operator>=(stack<T1, Container1> const&, stack<T1, Container1> const&);
+
 
 	};//End of stack class
 

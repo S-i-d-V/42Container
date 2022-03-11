@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:52:10 by user42            #+#    #+#             */
-/*   Updated: 2022/02/16 01:54:18 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/11 02:19:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ namespace ft{
 		typedef T type;
 	};
 
-	//Set value to false if T is not an int
 	template <typename T>
 	struct	is_integral{
 		static const bool value = false;
